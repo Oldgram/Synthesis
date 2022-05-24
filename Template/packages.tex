@@ -1,0 +1,94 @@
+%---Structure---%
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%Language
+\usepackage[babel,french=guillemets]{csquotes}
+\usepackage[greek,french]{babel}
+%silence the annoying warning
+\frenchsetup{SuppressWarning}
+\usepackage{tabularx}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2.25cm,right=2.25cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xkeyval}
+\usepackage{ifthen}
+\usepackage{url}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{multicol}
+
+%---tikz---%
+\usepackage{tikz}
+\usetikzlibrary{mindmap}
+\usepackage{chemfig}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+%---Form---%
+\setlength{\parindent}{0pt}
+\usepackage{parskip}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{xspace}
+\MakeAutoQuote {«}{»}
+%\usepackage[Bjornstrup]{fncychap} % Chapter
+
+%---Picture---%
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{eurosym}
+\usepackage{mwe}
+\usepackage{listings}
+\usepackage{etoolbox}
+\usepackage{setspace}
+\usepackage{ccaption}
+\usepackage{colortbl}
+\usepackage{framed}
+\usepackage{xcolor}
+\usepackage{fourier}
+\usepackage[pages=some]{background}
+\usepackage{wrapfig}
+
+%---Math---%
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows,matrix,positioning}
+\usetikzlibrary{3d,calc}
+\usepackage[makeroom]{cancel}
+\usepackage{esint}
+\usepackage{float}
+
+%---Multicolumn TOC---%
+\makeatletter
+\patchcmd{\l@section}
+  {\hfil}
+  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep     mu$}\hfill}
+  {}{}
+
+\renewcommand\tableofcontents{%
+    \begin{multicols}{2}[\section*{\contentsname
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}]%
+    \@starttoc{toc}%
+    \end{multicols}%
+    }
+\makeatother
+
+%---Custom commands---%
+\DeclareRobustCommand{\bigO}{\text{\usefont{OMS}{cmsy}{m}{n}O}}
+
+%---Other---%
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\graphicspath{ {./res/pics/} }
+
+\titleformat{\paragraph}{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
