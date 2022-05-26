@@ -1,280 +1,387 @@
 \chapter{Graph Theory}
 
-\section{Notions}
+\section{Basic concepts}
+
+\subsection{Graph}
 
 \begin{itemize}
-	\item Node : Point du graphe
-	\item Edge : Connection sur le graphe
-	\item Path : Séquences de nœuds de tel sorte qu'il y ait une edge entre chaque paire qui existe sur le graphe
-	\item Simple Path : Chemin contenant au plus une fois un même nœud
-	\item Distance between two nodes : Le plus court chemin entre deux nœuds
-	\item Cycle :
-	\item Connected graph :
-	\item Component : Sous-ensemble de nœuds tel que :
-	\begin{itemize}
-		\item Le sous-ensemble est \textbf{connexe}
-		\item Le sous-ensemble est \textbf{maximal} ("Prend tout le graphe")
-	\end{itemize}
+\item A graph $G = (N, E)$ with $N$ a set of nodes and $E$ a set of edges, swhere an edge is a pair of two nodes.
+\item Example : $N = {a, b, c}, E = {{a, b}, {b, c}}$
 \end{itemize}
 
-\section{Triadic closure}
+\subsection{Directed Graph}
 
-Soit 3 nœuds $A$, $B$, et $C$. Si $A$ est connecté à $B$ et $C$ est connecté à $B$, il y a de grande chances que $A$ et $C$ se connectent.
+\begin{itemize}
+\item Each edge has a direction, and is represented as a tuple with a \textit{first} and a \textit{second}
+\item Example : $E = {(a, b), (b, c)}$
+\end{itemize}
+
+\subsection{Undirected Graph}
+
+\begin{itemize}
+\item Edges have no direction, they are represented as a set
+\item Example : $E = {{a, b}, {b, c}}$
+\end{itemize}
+
+\section{Paths and connectivity}
+
+\subsection{Path}
+
+A path in a graph is a sequence of nodes such that each successive pair in the sequence is an edge of the graph.
+
+\subsection{Simple path}
+
+A simple path is a path where each node occurs at most once.
+
+\subsection{Cycle}
+
+A cycle is a path with 3 or more edges such that the first and last nodes are the same and otherwise all node are distinct.
+
+\subsection{Connected Graph}
+
+A graph is connected if there exists a path between every pair of nodes.
+
+\subsection{Component of a graph}
+
+A component is a subset of nodes that satisfies two properties :
+\begin{enumerate}
+\item The subset is \textit{connected}.
+\item The subset is \textit{maximal} : there is no superset that is connected.
+\end{enumerate}
+
+\subsubsection{Strongly connected component}
+
+A component is strongly connected if it satisfies two properties :
+\begin{enumerate}
+\item Each node in the subset has a path to each other node in the subset.
+\item The subset is \textit{maximal} : it is not part of a larger subset with the property that each node can reach the other.
+\end{enumerate}
+
+\subsection{Analyzing a graph}
+
+\begin{itemize}
+\item A graph can be divided into its components.
+\item For each component, we can study its internal structure. For example, removing a node (with its edges) may split it in more components.
+\end{itemize}
+
+\subsection{Giant components}
+
+Large social networks often have a giant component, which is a component that contains a significant fraction of the graph's nodes.
+
+\subsection{Bipartite graph}
+
+A bipartite graph is a graph where the nodes can be separated into two sets such that each edge connects a node from one set to the other.
+
+\subsection{Clique or complete graph}
+
+There exist an edge joining every pair of nodes.
+
+\subsubsection{Labeled complete graph}
+
+A complete graph where every edge is labeled.
+
+\section{Distance in a graph}
+
+\subsection{Length}
+
+The length of a path is the number of edges it contains.
+
+\subsection{Distance between two nodes}
+
+Length of the shortest path between these two nodes.
+
+\subsection{Breadth-first-search}
+
+For finding distances between nodes.
+
+\chapter{How to combine graph theory and sociology}
+
+\section{Social networks}
+
+A graph where the nodes denote human beings and the edges denote a connection between two human beings.
+
+\subsubsection{Triadic closures}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.25\textwidth]{triadic_closure}
-    \caption{Exemple de Triadic closure}
+    \includegraphics[width=0.4\textwidth]{triadic_closure}
 \end{figure}
 
-\subsection{Strong connection}
+if two people in a social network have a common friend, then the likelihood that they will become friends in the future is increased :
 
-Dans une triadic closure, si $A$ est fortement connecté à $B$ et que $C$ est aussi fortement lié à $B$, alors $A$ est faiblement lié à $C$.
+\begin{itemize}
+\item B and C have more opportunities to meet.
+\item B and C both thrust A so they have a basis for trusting each other.
+\item B and C have common interests with A so they may have common interests with each other.
+\item A has an incentive to bring B and C together since if they are not friends, it stresses A.
+\end{itemize}
 
-\section{Clustering coefficient}
+\subsubsection{Strong triadic closure}
 
-\begin{equation}
-	CC(A) = \frac{Nombre de paires d'amis de A qui sont amis enter eux}{Nombre d'amis de A}
-\end{equation}
+If A and B are close friends as well as A and C, then it is especially likely that B and C will become connected.
+
+\subsection{Clustering coefficient}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{clust_coef}
-    \caption{Exemple de clustering coefficient}
+    \includegraphics[width=0.5\textwidth]{clust_coef}
 \end{figure}
 
-\section{Bridge}
+The \textit{clustering coefficient} $CC(A)$ of node A in a graph is :
+\begin{itemize}
+\item $CC(A) =$ probability that two randomly selected friends of A are friends with each other.
+\item $CC(A) = \frac{X}{Y}$
+	\begin{itemize}
+	\item $X =$ the number of pairs of A's friends that are connected.
+	\item $Y =$ the maximum number of pairs of A's friends that are connected.
+	\end{itemize}
+\item Triadic closures causes the clustering coefficient to increase
+\end{itemize}
 
-Edge qui si retirée augmente le nombre de composants du graph.
+\subsection{Bridges}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{bridge}
-    \caption{Exemple de bridge}
+    \includegraphics[width=0.5\textwidth]{bridge}
 \end{figure}
 
-\subsection{Local bridge}
+The edge joining A and B is a \textit{bridge} if removing this edge causes A and B to be in different components.
 
-Edge qui si retirée la distance pour rejoindre l'autre nœud est strictement supérieure à 2.
+\subsubsection{Local bridges}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{local_bridge}
-    \caption{Exemple de local bridge}
+    \includegraphics[width=0.5\textwidth]{local_bridge}
 \end{figure}
+
+\begin{itemize}
+\item The edge joining A and B is a \textit{local bridge} if A and B have no friends in common, so deleting the edge will increase the distance between A and B to a value \textit{strictly greater than 2}.
+\item Local bridges play roughly the same role as bridges, but in a less extreme way : they connect a node to another node that would otherwise be far away.
+\end{itemize}
 
 \subsection{Neighborhood overlap}
 
-Permet de calculer le nombre de local bridges.
-
-\begin{equation}
-overlaping(A, B) = \frac{\text{Nombre d'amis de A ET B}}{\text{Nombre d'amis de A OU B}}
-\end{equation}
-
+The neighborhood overlap generalizes local bridges :
+$\frac{X}{Y}$ where
 \begin{itemize}
-	\item[$overlaping$ = 0] Local bridge
-	\item[$overlaping$ tend vers 0] "Almost" local bridge
+\item $X =$ number of nodes who are neighbors of \textit{both} A and B.
+\item $Y =$ number of nodes who are neighbors of \textit{at least one} of A and B.
 \end{itemize}
+
+\chapter{Networks in their surrounding context}
+
+\section{Longitudinal studies}
+
+The network must be followed over time.
 
 \section{Homophily}
 
-Décrit la tendance a être amis avec des personnes ayant des choses en commun.
-
-\subsection{Caractéristiques immutables}
-
-Caractéristiques impossible a changer (age, groupe ethnique, sexe, etc.).
-
-\subsection{Caractéristiques mutables}
-
-Caractéristiques possibles a changer (occupation, croyances, couleur de cheveux; etc.).
-
-\subsection{Mécanismes sous-jasent}
-
+They are two basic mechanisms that cause friends to resemble each other : selection and social influence (both are sociological concepts)
 \begin{itemize}
-	\item[Selection] Choisir les gens qui te ressemblent
-	\item[Social Influence] Se faire influencer par les autres (par exemple aller sur un réseau social parce que tout le monde y est) 
+\item \textit{Selection} : people select friends with similar characteristics (an internal mechanism).
+	\begin{itemize}
+	\item individuals drive the formation of new links.
+	\end{itemize}
+\item \textit{Social influence} : people modify their behaviors to be closer to their friends (an external mechanism), also called "peer pressure".
+	\begin{itemize}
+	\item Existing links drive the formation of new links
+	\end{itemize}
 \end{itemize}
 
-\section{Affiliation network}
+\subsection{Affiliation network}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.25\textwidth]{affiliation_network}
-    \caption{Exemple d'affiliation network}
+    \includegraphics[width=0.35\textwidth]{affiliation_network}
 \end{figure}
 
-\textit{Bipartite graph} représentant les \textit{individuals} (personnes) et leurs \textit{foci} (activités).
+An affiliation network is a bipartite graph that shows which individuals are affiliated with which activities.
+\begin{itemize}
+\item The first set is the individuals.
+\item The second set is the foci.
+\end{itemize}
 
-Note : un \textit{bipartite graph} est un graphe contenant deux set de nœuds, où chaque nœud d'un set ne se connecte qu'à au moins un nœud de l'autre set.
-
-\section{Mesurer l'homophilie}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.25\textwidth]{homophilie_calc}
-    \caption{Exemple de calcul d'homophilie}
-\end{figure}
-
-\#boys = $6$, \#girls = $3$, et \#boys-girls = $5$
-
-Sachant que $P_b + P_g = 1$ et que $(P_b + P_g)^2 = P_b^2 + 2P_bP_g + P_g^2$\\
-S'il n'y a pas d'homophilie, le nombre de liaisons boys-girls doit être $\geq$ à $2P_bP_g$\\
-Ici $2P_bP_g = \frac{8}{18}$, or comme \#boys-girls = $5$ on a : $\frac{5}{18}$
-
-Il y a donc bien de l'homophilie.
-
-\section{Différents types de closures}
+\subsubsection{Three forms of closures in a social-affiliation network}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{closures_types}
-    \caption{Différents types de closures}
 \end{figure}
 
-\section{Positive/negative relationships}
+\subsection{Measuring homophily}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{structural_balance_triangles}
-    \caption{Différentes configurations de triangles relationnels}
+    \includegraphics[width=0.8\textwidth]{homophilie_calc}
 \end{figure}
 
-\subsection{Structural balance theorem}
+\chapter{Positive and negative relationships}
 
-Si un graphe labellisé complet est équilibré, alors soit toute les paires sont amies, soit les nœuds peuvent être divisés en deux groupes tel que les nœuds au sein d'un groupe sont amis, et que les nœuds entre les groupes sont ennemis.
+\section{Structural balance}
 
-\paragraph{Preuve}
+\subsection{Balanced and unbalanced triangles}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.2\textwidth]{structural_balance_theorem}
-    %\caption{Différentes configurations de triangles relationnels}
+    \includegraphics[width=0.6\textwidth]{balanced_unbalanced}
 \end{figure}
 
-On considère qu'il y a au moins un lien négatif.\\
-On définit X : A + ses amis, et Y : tout les ennemis de A.\\
-On remarque facilement que B et C doivent être amis, idem pour D et E.\\
-Dans ce cas :
-\begin{itemize}
-	\item BAC aurait une structure $++-$
-	\item EDA aurait une structure $---$
-\end{itemize}
-Or ces structures sont exclues par la Structural Balance Hypothesis.
+\subsection{Balance for networks}
 
-\chapter{Game Theory}
+\subsubsection{Local definition}
 
-\section{Notions}
+A network is balanced if all the triangles in it are balanced
 
-\begin{itemize}
-	\item Payoff : Ce que rapporte un choix au joueur (profit)
-	\item Strategy : Action que le joueur va faire
-	\item Best response : Réaction a une action prédite d'un autre joueur
-	\item Dominante strategy : La meilleure réponse à toutes les stratégies de l'autre
-	\item Strictly dominante strategy : Le choix le plus avantageux peut importe l'action de l'autre joueur
-\end{itemize}
+\subsubsection{Global definition}
 
-\section{Hypothèses}
+If a labeled complete graph is balanced, then either all pairs of nodes are friends, or else the nodes can be divided into two groups such that nodes within a group are friends and nodes between groups are enemies.
 
-Pour garder des jeux équivalents, on va poser une hypothèse sur les jeux qu'on va évaluer :
-\begin{itemize}
-	\item Les joueurs ne comptent que sur le payoff (si le joueur est altruiste et qu'il tient compte des autres cela doit être mit dans son payoff)
-	\item Tous les joueurs sont au courant de tout ce qui se passe dans le jeu
-	\item Chaque joueur cherche à maximiser son profit (payoff)
-\end{itemize}
+\subsection{Weak structural balance}
 
-\begin{table}[H]
+\subsubsection{Local definition}
+
+A network is balanced if all the triangles in it are balanced or they are (---).
+
+\subsubsection{Global definition}
+
+If a labeled complete graph is weakly balanced, then its nodes can be divided into groups such that any two nodes belonging to the same group are friends and any two nodes belonging to different groups are enemies.
+
+\subsubsection{Degrees of structural balance}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{choice_table}
-    \caption{Exemple de tableau de choix}
-\end{table}
+    \includegraphics[width=0.6\textwidth]{degree_structural_balance}
+\end{figure}
 
-En appliquant ces hypothèses sur l'exemple ci-dessus, on peut voir que le payoff de choisir \textit{Présentation} est de 88\% contre un payoff de 90\% si on choisit \textit{Exam}. Notre partenaire à le même choix et donc rationnellement, les deux vont choisir \textit{Exam} pour maximiser leur payoff. Cependant, on arrive dans une situation où les deux ont 88\% au lieu d'avoir 90\% 'qui est possible). C'est ce qu'on appelle un équilibre de Nash.
+\chapter{Introduction to game theory}
 
-\section{Exemple d'équilibres}
+Game theory studies the interaction of participants.
 
-\subsection{Formalisation : Best response}
+\section{Game with two rational player}
 
-\begin{table}[H]
+\subsection{Game}
+
+\begin{itemize}
+\item There is a set of participants, called the players.
+\item Each player has a set of options for how to behave : we will refer to these options as the player's strategies.
+\item For each choice of strategies (one by each player), each player receives a payoff. The payoff depends on the strategies selected by all players. Payoffs are generally numbers, and each player prefers larger payoffs to smaller ones.
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\begin{enumerate}
+\item All that a player care about is summarized in the payoff.
+\item Each player knows everything about the game.
+\item Each player chooses a strategy to maximize their own payoff, given a belied about the strategy ysed be the other player.
+\end{enumerate}
+
+\subsubsection{On shot game}
+
+Two players that play only once and where the players simultaneously and independently choose their actions.
+
+\subsubsection{Dynamic games}
+
+Games that are played sequentially over time.
+
+\subsubsection{Forms}
+
+\paragraph{Normal form}
+
+In normal form, each player commits ahead of time to a complete plan for playing the whole game.
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.25\textwidth]{best_response}
-    \caption{Best response pour Player 1 si $P_1 > P1'$\\Strictly best response pour Player 1 si $P_1 \geq P'_1$}
-\end{table}
+    \includegraphics[width=0.6\textwidth]{normal_form}
+\end{figure}
 
+\paragraph{Extensive form}
 
-\subsection{Stratégie dominante}
+In extensive form, each player makes an optimal decision at each intermediate step.
 
-\begin{table}[H]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{dominant_strategy}
-    \caption{Stratégie dominante (les deux choisissent de confesser)}
-\end{table}
+    \includegraphics[width=0.7\textwidth]{extensive_form}
+\end{figure}
 
-\subsection{Stratégie strictement dominante}
+\subsection{Strategies}
+
+\subsubsection{Strictly dominant strategy}
+
+When a player has a strategy strictly better than all others, regardless of what the other player does (not always possible).
 
 \begin{table}[H]
     \centering
     \includegraphics[width=0.35\textwidth]{strictly_dominant_strategy}
-    \caption{– Stratégie strictement dominante pour Player 1 (il choisira toujours S’)}
 \end{table}
 
-\subsection{Équilibre de Nash}
+\subsubsection{Mixed strategies}
 
-Un équilibre de Nash est pour une stratégie où chaque joueurs a la meilleur réponse par rapport aux autres.
-
-\begin{table}[H]
-    \centering
-    \includegraphics[width=0.28\textwidth]{nash_equilibrium}
-    \caption{$P(C2, C1)$ est un équilibre de Nash si $a < c$ et $h < d$}
-\end{table}
-
-\subsection{Formalisation}
+We introduce randomness.
 
 \begin{table}[H]
     \centering
     \includegraphics[width=0.35\textwidth]{mixed_strategies}
-    \caption{Mixed strategy (aucun équilibre de Nash)}
 \end{table}
 
-On pose $p$ la probabilité de \textit{Player 1} de faire la stratégie \textit{Head}, et $q$ celle de \textit{Player 2}.\\
-\textit{Player 1} va donc analyser les choix de son adversaire : $-p + (1-p) = 2p - 1 \Leftrightarrow p = \frac{1}{2}$.\\
-De même pour \textit{Player 2}, qui obtient $q = \frac{1}{2}$.
-
-\subsubsection{Principe d'indifférence}
-
-Si \textit{Player 2} a tendance à plus jouer \textit{Head}, alors pour gagner \textit{Player 1} aura tendance à jouer plus \textit{Tail}.
-
-\subsection{Équilibre pareto optimal}
-
-Équilibre où aucun acteur ne peut améliorer sa situation sans dégrader celle de l'autre.\\
-Un équilibre pareto optimal n'est pas nécessairement un équilibre de Nash (et inversement).
+\subsubsection{Best response}
 
 \begin{table}[H]
     \centering
-    \includegraphics[width=0.3\textwidth]{nash_pareto}
-    \caption{$(88, 88)$ est un équilibre de Nash tandis que les 3 autres options sont des équilibres pareto optimaux}
+    \includegraphics[width=0.25\textwidth]{best_response}
 \end{table}
 
-\section{Dynamic Games}
+\begin{itemize}
+\item S for player 1 is best response to T for Player 2 if :
+	\begin{itemize}
+	\item For all other strategies, $S'$ of Player 1 : $P1(S, T) \geq P1(S', T)$
+	\end{itemize}
+\item S for player 1 is strictly best response to T for Player 2 if :
+	\begin{itemize}
+	\item For all other strategies, $S'$ of Player 1 : $P1(S, T) > P1(S', T)$
+	\end{itemize}
+\end{itemize}
 
-Jeux évoluant au fil de la partie.
+\subsubsection{Nash equilibrium}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.3\textwidth]{dynamic_game}
-    \caption{Exemple de jeu dynamique (extensive form)}
-\end{figure}
+\begin{itemize}
+\item Each player's strategy is a best response to the other.
+\item Corresponds to free market.
+\end{itemize}
 
 \begin{table}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{dynamic_game_table}
-    \caption{Exemple de jeu dynamique (normal form}
+    \includegraphics[width=0.28\textwidth]{nash_equilibrium}\\
+    $P(C2, C1)$ is a Nash equilibrium if $a < c$ and $h < d$
 \end{table}
 
-\section{Résumé}
+\paragraph{Coordination / anti-coordination games}
+
+Games with multiple Nash equilibria.
+
+\subsubsection{Pareto optimality}
+
+\begin{itemize}
+\item A choice of strategies (one by each player) is Pareto optimal if there is no other choice in which all players receive payoffs at least as high, and at least one player receives a strictly higher payoff.
+\item Corresponds to regulation.
+\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{nash_pareto}\\
+    $(88, 88)$ is a Nash equilibrium, whereas the 3 others options are Pareto optimal.
+\end{table}
+
+\subsubsection{Social optimality}
+
+\begin{itemize}
+\item A choice of strategies (one by each player) is \textit{socially optimal} if it maximizes the sum of the players' payoff.
+\item It is also Pareto optimal.
+\end{itemize}
+
+\section{Summary}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{game_theory_sum}
-    \caption{TL;DR}
 \end{figure}
 
