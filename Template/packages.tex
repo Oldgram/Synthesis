@@ -3,9 +3,10 @@
 \usepackage[T1]{fontenc}
 %Language
 \usepackage[babel,french=guillemets]{csquotes}
-\usepackage[greek,french]{babel}
+%\usepackage[greek,french]{babel} % For French
+\usepackage[greek,english]{babel} % For English
 %silence the annoying warning
-\frenchsetup{SuppressWarning}
+%\frenchsetup{SuppressWarning} % Comment this line if in English package version of babel is used
 \usepackage{tabularx}
 \usepackage[a4paper,top=2cm,bottom=2cm,left=2.25cm,right=2.25cm]{geometry}
 \usepackage{hyperref}
@@ -15,6 +16,9 @@
 \usepackage{url}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{multicol}
+%Chapters
+%\usepackage[Glenn]{fncychap}
+\usepackage{titlesec}
 
 %---tikz---%
 \usepackage{tikz}
@@ -44,9 +48,10 @@
 \usepackage{colortbl}
 \usepackage{framed}
 \usepackage{xcolor}
-\usepackage{fourier}
+%\usepackage{fourier}
 \usepackage[pages=some]{background}
 \usepackage{wrapfig}
+\graphicspath{ {./pictures/} }
 
 %---Math---%
 \usepackage{mathtools}
@@ -76,8 +81,76 @@
     }
 \makeatother
 
+%---For quotes/definitions---%
+% From : https://jevon.org/wiki/Fancy_Quotation_Boxes_in_Latex
+\usepackage[strict]{changepage}
+\usepackage{framed}
+\definecolor{formalshade}{rgb}{0.95,0.95,1}
+
+\newenvironment{formal}{%
+  \def\FrameCommand{%
+    \hspace{1pt}%
+    {\color{blue}\vrule width 2pt}%
+    {\color{formalshade}\vrule width 4pt}%
+    \colorbox{formalshade}%
+  }%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+  \noindent\hspace{-4.55pt}% disable indenting first paragraph
+  \begin{adjustwidth}{}{7pt}%
+  \vspace{2pt}\vspace{2pt}%
+}
+{%
+  \vspace{2pt}\end{adjustwidth}\endMakeFramed%
+}
+
+%---Section styles---%
+\newcommand{\marginchapnumber}[1]{%
+  \makebox[-18pt][r]{#1\hspace{1pt}}%
+}
+\newcommand{\marginsecnumber}[1]{%
+  \makebox[0pt][r]{#1\hspace{6pt}}%
+}
+
+\titleformat{\chapter}[hang]
+  {\normalfont\huge\bfseries}
+  {\marginchapnumber\thechapter\hspace{6pt}\textcolor{blue}{|}\hspace{6pt}}
+  {0pt}
+  {}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {\marginsecnumber\thesection}
+  {0pt}
+  {}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\marginsecnumber\thesubsection}
+  {0pt}
+  {}
+\titleformat{\subsubsection}
+  {\color{blue}\normalfont\normalsize\bfseries}
+  {\color{black}\marginsecnumber\thesubsubsection}
+  {0pt}
+  {}
+\titleformat{\paragraph}[hang]
+  {\color{cyan}\normalfont\normalsize\bfseries}
+  {\color{black}\marginsecnumber\theparagraph}
+  {0pt}
+  {}
+\titleformat{\subparagraph}[hang]
+  {\color{teal}\normalfont\normalsize\bfseries}
+  {\color{black}\marginsecnumber\thesubparagraph}
+  {0pt}
+  {}
+
+\titlespacing*{\subsection}{0pt}{*3.25}{*1.5}%
+\titlespacing{\chapter}{0pt}{2pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
+
 %---Custom commands---%
 \DeclareRobustCommand{\bigO}{\text{\usefont{OMS}{cmsy}{m}{n}O}}
+
+%---Custom colors---%
+\definecolor{clearBlue}{RGB}{93,180,231}
 
 %---Other---%
 \hypersetup{
@@ -87,8 +160,3 @@
     linkcolor=black,
     urlcolor=black
 }
-
-\graphicspath{ {./images/} }
-
-\titleformat{\paragraph}{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
-\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
