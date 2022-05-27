@@ -1,0 +1,88 @@
+\documentclass{report}
+\usepackage{url}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\usepackage[greek,french]{babel}
+\frenchbsetup{StandardLayout=true}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{fourier}
+
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage{amssymb}
+
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{ {./images/} }
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{wrapfig}
+\usepackage{multicol}
+\usepackage{etoolbox}
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+%----------------------------------------------------------------------------------------------%
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------------%
+
+\begin{titlepage}
+	\centering
+	{\scshape\LARGE LESPO1122C \par}
+	\vspace{1cm}
+	{\scshape\Large Pierre Bazier\par}
+	\vspace{1.5cm}
+	{\huge\bfseries Introduction aux fondements du droit public et privé\par}
+	\vspace{2cm}
+	{\Large\itshape\par}
+	\vfill
+	\vfill
+	Nicolas \textsc{Daube}\par
+	Dylan \textsc{Goffinet}\par
+	{\large 2020-2021\par}
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------------%
+
+% Comment from here
+\makeatletter
+
+\patchcmd{\l@section}
+  {\hfil}
+  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep     mu$}\hfill}
+  {}{}
+
+\renewcommand\tableofcontents{%
+    \begin{multicols}{2}[\section*{\contentsname
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}]%
+    \@starttoc{toc}%
+    \end{multicols}%
+    }
+
+\makeatother
+% To here if you don't want a multicolumn toc
+
+\setcounter{tocdepth}{1} %sets toc depth
+\tableofcontents
+\clearpage
+
+%----------------------------------------------------------------------------------------------%
+
+\include{content}
+
+%----------------------------------------------------------------------------------------------%
+
+\end{document}
