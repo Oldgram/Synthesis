@@ -240,7 +240,7 @@ If a labeled complete graph is balanced, then either all pairs of nodes are frie
 
 \subsubsection{Local definition}
 
-A network is balanced if all the triangles in it are balanced or they are (---).
+A network is balanced if all the triangles in it are balanced or they are $(---)$.
 
 \subsubsection{Global definition}
 
@@ -272,7 +272,7 @@ Game theory studies the interaction of participants.
 \begin{enumerate}
 \item All that a player care about is summarized in the payoff.
 \item Each player knows everything about the game.
-\item Each player chooses a strategy to maximize their own payoff, given a belied about the strategy ysed be the other player.
+\item Each player chooses a strategy to maximize their own payoff, given a belief about the strategy used by the other player.
 \end{enumerate}
 
 \subsubsection{On shot game}
@@ -294,6 +294,7 @@ In normal form, each player commits ahead of time to a complete plan for playing
     \includegraphics[width=0.6\textwidth]{normal_form}
 \end{figure}
 
+\newpage
 \paragraph{Extensive form}
 
 In extensive form, each player makes an optimal decision at each intermediate step.
@@ -316,7 +317,7 @@ When a player has a strategy strictly better than all others, regardless of what
 
 \subsubsection{Mixed strategies}
 
-We introduce randomness.
+A random choice between two pure strategies is called a mixed strategy.
 
 \begin{table}[H]
     \centering
@@ -341,6 +342,7 @@ We introduce randomness.
 	\end{itemize}
 \end{itemize}
 
+\newpage
 \subsubsection{Nash equilibrium}
 
 \begin{itemize}
@@ -357,6 +359,12 @@ We introduce randomness.
 \paragraph{Coordination / anti-coordination games}
 
 Games with multiple Nash equilibria.
+
+\paragraph{Principle of indifference}
+
+If Player 1 believes that Player 2 will play H more than $\frac{1}{2}$ of the time, then Player should play T (and conversely).\\
+Choice of $q = \frac{1}{2}$ by Player 2 makes Player 1 \textcolor{orange}{indifferent} to H or T.\\
+Each player should randomize to make the other player indifferent.\\
 
 \subsubsection{Pareto optimality}
 
@@ -389,6 +397,11 @@ Games with multiple Nash equilibria.
 
 \section{Braess' Paradox}
 
+In a network representing a certain traffic (here, a car traffic network), adding a new edge (a new strategy) can result in a strictly worse Nash equilibria than the previous one.
+In short, there are many situations where adding more choices leads to worse situations.
+
+Example :
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{braess_1}
@@ -398,8 +411,6 @@ Games with multiple Nash equilibria.
     \centering
     \includegraphics[width=0.82\textwidth]{braess_2}
 \end{figure}
-
-There is no paradox because there are many situations where adding more choices leads to worse situations.
 
 \chapter{Auctions}
 
@@ -521,6 +532,7 @@ Given any set $S$ of nodes on the right side, we define the neighbor set $N(S)$ 
 If a bipartite graph with equal numbers of left and right nodes has no perfect matching, then it must contain a constricted set.
 \end{formal}
 
+\newpage
 \subsection{Matching markets with prices}
 
 \subsubsection{Prices and market clearing}
@@ -533,7 +545,7 @@ If a bipartite graph with equal numbers of left and right nodes has no perfect m
 \item In a bipartite matching market, there exists a set of market-clearing prices for any set of buyer valuations.
 \item \textcolor{orange}{Market-clearing prices are always socially optimal} :
 	\begin{itemize}
-	\item For any st of market-clearing prices in a bipartite matching market, a perfect matching in the preferred-seller graph has the maximum total payoff for sellers and buyers, for any assignment of sellers to buyers.
+	\item For any set of market-clearing prices in a bipartite matching market, a perfect matching in the preferred-seller graph has the maximum total payoff for sellers and buyers, for any assignment of sellers to buyers.
 	\end{itemize}
 \end{itemize}
 
@@ -551,7 +563,7 @@ We construct a procedure that gradually increase prices and we show that this wi
 The bipartite matching market generalize an ascending-bid auction :
 \begin{itemize}
 \item The ascending-bid auction has $n$ buyers and $1$ seller. The seller keeps increasing prices until one buyer wins the auction.
-\item The bipartite matching market has $n$ and $n$ sellers. The sellers keep increasing the prices until each buyer has found one seller.
+\item The bipartite matching market has $n$ buyers and $n$ sellers. The sellers keep increasing the prices until each buyer has found one seller.
 \end{itemize}
 
 \subsubsection{Valuations}
@@ -577,7 +589,7 @@ It is an assignment of highest possible quality.
 
 \subsection{Order book}
 
-Is a list of orders that buyers and sellers hae submitted.
+Is a list of orders that buyers and sellers have submitted.
 
 \begin{itemize}
 \item \textcolor{orange}{Ask} : lowest sell offer.
@@ -624,6 +636,7 @@ If a buyer can :
 	\end{itemize}
 \end{enumerate}
 
+\newpage
 \textcolor{orange}{At most} one copy of the good moves along any edge in the network.
 
 \begin{itemize}
@@ -665,11 +678,11 @@ Sometimes prices are \textcolor{orange}{pushed to the limit} so there is \textco
     \includegraphics[width=0.7\textwidth]{flow_of_goods_payoff}
 \end{figure}
 
-\subsection{Equilibria in trading networks}
+\subsection{Equilibrium in trading networks}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{equilibria_networks}
+    \includegraphics[width=0.3\textwidth]{equilibria_networks}
 \end{figure}
 
 \subsubsection{Monopoly}
@@ -693,6 +706,7 @@ Sometimes prices are \textcolor{orange}{pushed to the limit} so there is \textco
     \includegraphics[width=0.7\textwidth]{second_price_auction}
 \end{figure}
 
+\newpage
 \subsubsection{Ripple effect}
 
 The network is partially under the control of the participants.
@@ -885,14 +899,14 @@ Combining a small amount of very popular content with a huge amount of less popu
 \subsubsection{Limiting values}
 
 \begin{itemize}
-\item Limiting values re \textcolor{orange}{independent of the initial values} of hub ad authority scores.
+\item Limiting values are \textcolor{orange}{independent of the initial values} of hub ad authority scores.
 \item The \textcolor{orange}{normalized values converge to limits}.
 \end{itemize}
 
 \subsection{PageRank}
 
 \begin{itemize}
-\item Uses only \textcolor{orange}{one value per page} and it is its \textcolor{orange}{importance}.
+\item Uses only \textcolor{orange}{one value per page} : its \textcolor{orange}{importance}.
 \item Intuitively the \textcolor{orange}{PageRank} value is a kind of "fluid" that circulates through the network, where nodes are containers and links are pages.
 	\begin{itemize}
 	\item[$\rightarrow$] The amount of fluid is \textcolor{orange}{constant}, so \textcolor{orange}{normalization is automatic}.
@@ -917,7 +931,7 @@ We assume that the network has n nodes.
 	\end{itemize}
 \item Sum all fluid for incoming links of page $p$.
 	\begin{itemize}
-	\item[$\rightarrow$] $\forall p : pr(p) := \sum_{p'} \text{incoming links } pr_{\text{link}}(p, p')$
+	\item[$\rightarrow$] $\forall p : pr(p) := \sum_{p'\text{ incoming links}} pr_{\text{link}}(p, p')$
 	\end{itemize}
 \end{enumerate}
 
@@ -960,4 +974,466 @@ Some nodes can collect all the PageRank values.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{web_sum}
+\end{figure}
+
+\section{Random Walks, Matrices, and Page Rank}
+
+\subsection{Random Walks on Graphs}
+
+\subsubsection{Random Walks}
+
+Let $G(V, E)$ be a connected graph. Consider random walk on $G$ :
+\begin{itemize}
+\item We start at node $v_0$ and at the $t$-th step, we are at node $v_t$
+\item We move to a neighbor of $v_t$ with a probability of $\frac{1}{d(v_t)}$.
+\item The sequence of random walks is called the Markov chain.
+\end{itemize}
+
+\subsubsection{Convergence}
+
+For any \textcolor{orange}{connected non-bipartite} bidirectional graph, and any starting point, the random walk converges to a \textcolor{orange}{unique} stationary distribution.
+
+\subsection{Stationary Distribution}
+
+Random walk converges to the stationary distribution :
+$\pi(v) = \frac{d(v)}{2m}$, where :
+\begin{itemize}
+\item $d(v) =$ degree of $v$, i.e. the number of neighbors of $v$.
+\item $m = |E|$, i.e. the number of edges is $G$.
+\end{itemize}
+
+\section{Matrix Representations}
+
+\subsection{Definitions}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{matrix_representation}
+\end{figure}
+
+\subsection{Adjacency Matrix}
+
+$A$ is $n*n$ adjacency matrix of $G=(V,E)$ where $A_{ij} = 1$ if there is a link between node $i$ and node $j$ ($0$ otherwise).
+
+\subsubsection{Matrix manipulations}
+
+\begin{itemize}
+\item $A$ give us all 1-hop paths.
+\item $A^2$ gives us the number of 2-hops paths.
+	\begin{itemize}
+	\item $A^k$ gives us the umber of $k$-hops paths.
+	\end{itemize}
+\item Let $v = (1\ 0\ 0\ 0\ 0)$ represent a message from the first node
+	\begin{itemize}
+	\item $vA^k$ indicates how many walks of length $k$ from node $1$ end up in node $i$.
+	\end{itemize}
+\end{itemize}
+
+\section{Google PageRank}
+
+\subsection{PageRank "Voting" formulation}
+
+\begin{itemize}
+\item Each page has a budget of "votes" and distributes them evenly to all the outgoing links.
+\item The importance of node $j$ is the sum of the votes on its in-links.
+\end{itemize}
+
+\subsection{Google PageRank}
+
+\begin{itemize}
+\item Principal eigenvector on the transition matrix of the web graph.
+\item Computed with Power iteration.
+\item Issues in directional graph : \textcolor{orange}{Dead end} (nodes with no out-degree) and \textcolor{orange}{spider traps} (loop inside a component).
+\end{itemize}
+
+\newpage
+\subsubsection{How do we fix PageRank}
+
+\begin{itemize}
+\item Make the graph \textcolor{orange}{strongly connected} and \textcolor{orange}{aperiodic}
+\item Make "tiny" links from each node to every other node, and keep the \textcolor{orange}{core} of the initial graph.
+\item Google random walker will :
+	\begin{itemize}
+	\item follow the "real" link with prob \textcolor{orange}{$\beta$}
+	\item jump to a random connected page with prob \textcolor{orange}{$1-\beta$}
+		\begin{itemize}
+		\item[$\rightarrow$] Random walk will escape any \textcolor{orange}{spider traps} after 5-10 steps ($\beta$ is in the range of $0.8$ to $0.9$), and will always teleport out of a \textcolor{orange}{dead end} after the first step ($1-\beta=1$).
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Problems with PageRank ?}
+
+\begin{itemize}
+\item Measures "generic" popularity of a page, might miss topic-specific authorities.
+	\begin{itemize}
+	\item[$\rightarrow$] Solved with \textcolor{orange}{Topic Specific} PageRank.
+	\end{itemize}
+\item Susceptible to link spam (artificial link topologies create to boost page rank).
+	\begin{itemize}
+	\item[$\rightarrow$] Solved with \textcolor{orange}{TrustRank}.
+	\end{itemize}
+\item Uses a single measure of importance.
+\end{itemize}
+
+\section{Beyond PageRank}
+
+\subsection{Topic Specific PageRank}
+
+\begin{itemize}
+\item Bias the random walk by giving more influence to the webpages that are close to a particular topic
+\item Teleport to "relevant pages" (\textcolor{orange}{teleport set}, obtained from the "previous generation" search engines) instead of random ones.
+\end{itemize}
+
+\subsection{SimRank}
+
+\begin{itemize}
+\item Also known as PageRank with restarts
+\item Random walks from a fixed node on $k$-partite graphs with $k$ types of nodes.
+\end{itemize}
+
+\subsection{PageRank summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{pagerank_sum}
+\end{figure}
+
+\section{Web spamming and how to combat it}
+
+\subsection{Web spamming}
+
+Deliberate action to boost a webpage position in ranking. Used by those with commercial interest to try to \textcolor{orange}{exploit search engines} to bring people to their own site (regardless of the relevance).\\
+\textcolor{orange}{Spam} : techniques for achieving high relevance/importance for a web page.
+
+\newpage
+\subsection{Term-spam}
+
+Putting a specific word 1000 times on your page and/or copy a highly relevant page to yours and make it "invisible"
+
+\subsubsection{Google's solution to Term-spam}
+Believe what people say about you rather than what you say about yourself, and use PageRank as a tool to measure the relevance of Web pages.
+
+
+\subsection{Spam Farming}
+
+Concentrating PageRank on a single page by creating link structures (\textcolor{orange}{link farms}) that boost Page rank of a particular page.
+
+Webpages from spammers' point of view :
+\begin{itemize}
+\item \textcolor{blue}{Inaccessible} pages.
+\item \textcolor{green}{Accessible} pages (blogs, comments, reviews where spammers can post).
+\item \textcolor{red}{Owned} pages (pages/domains controlled by spammers).
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{link_farm}
+\end{figure}
+
+\begin{itemize}
+\item \textcolor{green}{$x$} : PageRank contributed by accessible pages.
+\item \textcolor{orange}{$y$} : PageRank of target page $t$.
+	\begin{itemize}
+	\item[$\rightarrow$] $\textcolor{orange}{y} = \frac{\textcolor{green}{x}}{\textcolor{red}{1-\beta^2}} + c \frac{M}{N}$ where $c = \frac{\beta}{1 + \beta}$
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{How to combat LinkSpam ?}
+
+\begin{itemize}
+\item \textcolor{orange}{Identifying and Blacklisting of spam farms} $\rightarrow$ Not good, arms race of hiding and detecting spam farms.
+\item \textcolor{orange}{TrustRank} : teleport to trusted pages only.
+\item \textcolor{orange}{Teleport set = trusted pages}, similar to Topic-Specific PageRank, each page gets a trust value between 0 and 1.
+\end{itemize}
+
+\newpage
+\subsection{Spam Mass}
+
+Goal : estimate the fraction of a page's PageRank that comes from spam pages.
+
+Solutions :
+\begin{enumerate}
+\item \textcolor{orange}{Mark as spam} all pages \textcolor{orange}{bellow the trust threshold}.
+	\begin{itemize}
+	\item[$\rightarrow$] Legitimate pages but with naturally low page rank (e.g. new pages) will be ignored as we look at the \textcolor{orange}{absolute value} of the page rank.
+	\end{itemize}
+\item With $r_p$ the PageRank of page $p$ and $r^+_p$ the PageRank of $p$ with teleport into trusted pages only :
+	\begin{itemize}
+	\item[$\rightarrow$] The fraction of a page's PageRank that comes from spam pages : $r^-_p = r_p - r^+_p$
+	\item[$\Rightarrow$] \textcolor{orange}{Spam mass} of $p = \frac{r^-_p}{r_p}$
+	\end{itemize}
+\end{enumerate}
+
+\chapter{Information cascades}
+
+\paragraph{Following the crowd}
+
+People connected in a network will influence each other, this results in herding or information cascade.
+
+\paragraph{Definition of an information cascade}
+
+An information cascade has the potential to occur when people make decisions sequentially, with \textcolor{orange}{later people watching the actions of earlier people} and inferring what the earlier people know (occurs when people abandon their own information in favor of inferences based on other people's actions, it is not a mindless imitation).
+
+There are two kinds of cascades :
+\begin{enumerate}
+\item \textcolor{orange}{Information cascade}
+	\begin{itemize}
+	\item[$\rightarrow$] It is inference that makes the cascade.
+	\end{itemize}
+\item \textcolor{orange}{direct-benefit cascade}
+	\begin{itemize}
+	\item[$\rightarrow$] It is benefit to you that makes the cascade.
+	\end{itemize}
+\end{enumerate}
+
+\section{A simple herding experiment}
+
+Simple experiment with :
+\begin{itemize}
+\item A \textcolor{orange}{decision} to be made.
+\item People make the decision \textcolor{orange}{sequentially} and each \textcolor{orange}{observes choices made earlier}.
+\item Each person has some \textcolor{orange}{private information} to help them decide.
+\item Each person makes inferences about other's private information from their actions.
+\end{itemize}
+
+We use Bayes' Rule to justify the reasoning used in the herding experiment.
+
+\section{Bayes' Rule}
+
+\subsection{General conclusions}
+
+\begin{enumerate}
+\item It is very easy for a cascade to occur.
+\item A cascade can lead to suboptimal outcomes.
+\item Cascades can be fragile.
+\end{enumerate}
+
+\subsection{Conditional probability and Bayes' Rule}
+
+"What is the probability of $X$, given that I know $Y$ and the previous person asserted $Z$ ?"
+\begin{itemize}
+\item We compute the \textcolor{orange}{probabilities of events}
+	\begin{itemize}
+	\item An event is something that may occur, but only once. Given event A, it has a probability of occurring that we denote $Pr[A]$.
+	\item Whether or not an event occurs depends on many random previous occurrences. We consider a sample space where each point in the space consists of a particular realization for each of these outcomes.
+	\end{itemize}.
+\item From there, we can compute the probability of $Pr[A|B]$ in terms of $Pr[B|A]$ :
+	\begin{equation}
+	Pr[A|B] = Pr[A] * \frac{Pr[B|A]}{Pr[B]}
+	\end{equation}
+\end{itemize}
+
+\section{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{information_cascade_sum}
+\end{figure}
+
+\chapter{Direct-Benefit Cascades (Network Effects)}
+
+Sometimes there is an explicit benefit to aligning your behavior with that of over, in economics they are called \textcolor{orange}{positive externalities}.\\
+An \textcolor{orange}{externality} is a situation where the welfare of an individual depends on the actions of other individuals, without mutually agreed-upon compensations.
+
+\section{The Economy without Network Effects}
+
+\subsection{Studying network effects}
+
+\begin{itemize}
+\item All consumers are given names as real numbers from 0 to 1.
+\item Each consumer has a reservation price, which is the maximum amount he is willing to pay for one unit of the product.
+	\begin{itemize}
+	\item Let $r(x)$ denote the reservation price of consumer $x$.
+	\item Reservation prices are \textcolor{orange}{arranged in decreasing order} : if $r(x') > r(x)$, then $x' < x$.
+	\end{itemize}
+\item Suppose that the \textcolor{orange}{market price} for a unit of the product is $p$ (graphic 1).
+	\begin{itemize}
+	\item If the price were r(0) or more, nobody would buy, conversely if the price were r(1) or less, everyone would buy
+	\item[$\rightarrow$] $r(1) < p < r(0)$.
+	\end{itemize}
+\item The equilibrium between price and demand is socially optimum (graphic 2).
+	\begin{itemize}
+	\item With this, we can compute the social welfare (which for all consumers from $0$ to $x$ is the area between the curve $y=r(x)$ and the line $y=p*$.
+	\end{itemize}
+\item When the \textcolor{orange}{production cost is $p*$ per unit}, the market price is $p*$ as it cannot be below $p*$ because of the production cost, nor above $p*$ because of competition (graphic 3).
+	\begin{itemize}
+	\item[$\rightarrow$] \textcolor{orange}{The equilibrium of the product is $x*$}, such as $r(x*) = p*$.
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.325\textwidth]{price-demand_relationship}\hfill
+	\includegraphics[width=0.325\textwidth]{social_welfare_equilibrium}\hfill
+	\includegraphics[width=0.325\textwidth]{quantity_equilibrium}
+\end{figure}
+
+\section{The Economy with Network Effects}
+
+Withe network effects, a potential consumer takes into account their own reservation price as well as the total number of users. This gives :
+\begin{itemize}
+\item $r(x)$ : the intrinsic reservation price for consumer $x$.
+\item $f(z)$ : the benefit to each consumer when fraction $z$ has bought the product.
+	\begin{itemize}
+	\item[$\rightarrow$] The actual reservation price of consumer $x$ is $r(x)f(z)$, \textcolor{orange}{he buys if $r(x)f(z) \geq p*$}.
+	\end{itemize}
+\end{itemize}
+
+\newpage
+\subsection{Comparing the two models}
+
+Equilibrium price $p* =$
+\begin{itemize}
+\item $r(x*)$ in the model without network effects.
+\item $r(z)f(z)$ in the model with network effects.
+\end{itemize}
+
+\subsection{Equilibria with network effects}
+
+We assume that all consumers expect that the fraction of the population buying the product is $z$, and they know what is the fraction actually buying.
+\begin{itemize}
+\item[$\rightarrow$] This is a \textcolor{orange}{self-fulfilling expectations equilibrium} as the fraction who actually purchase the product will be $z$.
+\item If everybody expects $z = 0$ to buy, then $r(x)f(0) = 0$ (and nobody will buy).
+\end{itemize}
+
+For $0<z<1$ :
+\begin{itemize}
+\item The set of purchasers is exactly the consumers from $0$ to $z$, and the price is the price of consumer $z$ whose reservation price is $r(z)f(z)$.
+\item The equilibrium price is $p* = r(z)f(z)$.
+\end{itemize}
+
+\paragraph{Example}
+
+For $r(x) = 1-x$ and $f(z) = z$, $r(z)f(z) = z(1-z)$. This means :
+\begin{itemize}
+\item If $p* > 1/4$, there are no equilibria other then for $z=0$.
+\item If $0 < p* < 1/4$, there are two other equilibria : $z'$ and $z''$
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{network_effects_example}
+\end{figure}
+
+\subsection{Stability, instability, and tipping points}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{stablility_instability_tipping}
+\end{figure}
+
+\subsection{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{economy_network_effects_sum}
+\end{figure}
+
+\chapter{Power Laws and Rich-Get-Richer Phenomena}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{power_law_rich_sum}
+\end{figure}
+
+\chapter{How Network Structure Influences Cascades (Cascading Behavior in Networks)}
+
+\section{Diffusion in networks}
+
+The \textcolor{orange}{innovation diffuses in two waves} :
+\begin{enumerate}
+\item The first wave of \textcolor{orange}{person-to-person influence is informational}.
+\item The second wave of \textcolor{orange}{person-to-person influence is direct-benefit}.
+\end{enumerate}
+Homophily can act as a barrier to diffusion (homogeneous communities) as innovations tend to arrive from "outside" the system.
+
+\section{Modeling Diffusion through a Network}
+
+\subsection{Defining a formal model}
+
+\begin{itemize}
+\item A person's decisions are based on the decisions of their neighbors.
+\item A person has social network neighbors
+	\begin{itemize}
+	\item[$\rightarrow$] The benefits of adopting a new behavior increase as more neighbors adopt it.
+	\item[$\rightarrow$] Simple self-interest dictates to adopt a new behavior as soon as a sufficiently high proportion of your neighbors adopted it.
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{diffusion_formal_model}
+\end{figure}
+
+\subsection{Cascading model}
+
+\begin{itemize}
+\item All nodes initially use B as their behavior.
+\item A small set of initial adopters decide to use A.
+\item The remaining nodes evaluate their payoffs according to the coordination game.
+\item Some neighbors might decide to switch to $A$, and so forth.
+\end{itemize}
+
+\paragraph{Example}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{cascading_diffusion_example}
+\end{figure}
+
+\subsection{Complete cascade at threshold $q$}
+
+They are two possibilities :
+\begin{enumerate}
+\item The cascades runs for a while but then stops without flipping all nodes.
+\item There is a complete cascade, where all nodes flip.
+\end{enumerate}
+
+Consider a set of initial adopters with behavior A and all remaining nodes have behavior B. Nodes repeatedly evaluate the decision whether to switch from B to A using a threshold of q. If the resulting cascade of adoptions of A eventually causes all nodes to switch from B to A, then we say that the set of initial adopters \textcolor{orange}{causes a complete cascade at threshold q}.
+
+\subsection{"Viral marketing"}
+
+\begin{itemize}
+\item Tightly-knit communities can hinder the spread of an innovation.
+\item Techniques exists to push adoption beyond the barriers (raise quality to drop $q$, convince a small number of key people to switch).
+\end{itemize}
+
+\section{Cascades and Clusters}
+
+\subsection{Defining a cluster}
+
+A \textcolor{orange}{cluster of density $p$} is a set of nodes such that each node in the set has at least a fraction $p$ of its neighbors in the set.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{cluster_example}
+\end{figure}
+
+\subsection{Cluster-cascade theorem}
+
+Consider a set of initial adopters of behavior A with a threshold of $q$ for nodes in the remaining network to adopt behavior A. Then,
+\begin{enumerate}
+\item If the remaining network contains a cluster of density greater than $(1-q)$, the set of initial adopters will not cause a complete cascade.
+\item Whenever a set of initial adopters does not cause a complete cascade with threshold $q$, then the remaining network must contain a cluster of density greater than $(1-q)$.
+\end{enumerate}
+A \textcolor{orange}{complete cascade is blocked \textit{if and only if} the remaining network contains a cluster of density greater than $(1-q)$}.
+
+\subsection{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{cluster_cascade_sum}
+\end{figure}
+
+\chapter{Convergence Toolkit}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{convergence_toolkit_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{convergence_toolkit_2}
 \end{figure}
