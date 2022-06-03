@@ -1,3 +1,5 @@
+%& -job-name=cheatsheet
+
 \documentclass{customSynthesis}
 \begin{document}
 
@@ -36,10 +38,10 @@ This is a example of \stackanchor{text}{over} text using \verb|\stackanchor{top}
 using \verb|\begin{Parallel} ... \end{Parallel}| from the parallel package :
 
 \begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
-\ParallelLText{\noindent
+\ParallelLText{
 \lipsum[1][1]
 }
-\ParallelRText{\noindent
+\ParallelRText{
 \lipsum[1][2]
 }
 \ParallelPar
@@ -87,11 +89,26 @@ public static int cherche(String a, String b){
 	\includegraphics[width=0.3\textwidth,keepaspectratio]{placeholder}
 \end{figure}
 
+\subsection*{With text on the side}
+
+\begin{minipage}{0.5\textwidth}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth,keepaspectratio]{placeholder}
+	\end{figure}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+	This goes to the right.
+\end{minipage}
+
 \subsection*{Other}
 
 \subsection*{Custom commands}
 
-\verb|\bigO| : \bigO
+\verb|\bigO| : \bigO\\
+\verb|\textgreen{}| : \textgreen{Green text}\\
+\verb|\textblue{}| : \textblue{Blue text}\\
+\verb|\textred{}| : \textred{Red text}
 
 \subsection*{Custom colors}
 

@@ -38,10 +38,10 @@ This is a example of \stackanchor{text}{over} text using \verb|\stackanchor{top}
 using \verb|\begin{Parallel} ... \end{Parallel}| from the parallel package :
 
 \begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
-\ParallelLText{\noindent
+\ParallelLText{
 \lipsum[1][1]
 }
-\ParallelRText{\noindent
+\ParallelRText{
 \lipsum[1][2]
 }
 \ParallelPar
@@ -105,7 +105,10 @@ public static int cherche(String a, String b){
 
 \subsection*{Custom commands}
 
-\verb|\bigO| : \bigO
+\verb|\bigO| : \bigO\\
+\verb|\textgreen{}| : \textgreen{Green text}\\
+\verb|\textblue{}| : \textblue{Blue text}\\
+\verb|\textred{}| : \textred{Red text}
 
 \subsection*{Custom colors}
 
