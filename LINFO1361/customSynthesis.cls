@@ -1,3 +1,6 @@
+\ProvidesClass{customSynthesis}
+\LoadClass{report}
+
 %---Structure---%
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -19,6 +22,7 @@
 %Chapters
 %\usepackage[Glenn]{fncychap}
 \usepackage{titlesec}
+\usepackage{lipsum} 
 
 %---tikz---%
 \usepackage{tikz}
@@ -35,6 +39,12 @@
 \usepackage{xspace}
 \MakeAutoQuote {«}{»}
 %\usepackage[Bjornstrup]{fncychap} % Chapter
+\usepackage{array}
+\usepackage{makecell} % For cell managment in tables
+\usepackage{parallel} % For parallel text (multicolumn style)
+\usepackage{pdfcolparallel}
+\usepackage{stackengine} % Fro stacke text (text over text)
+\usepackage{listings} % For syntax highlighting
 
 %---Picture---%
 \usepackage{graphicx}
@@ -64,6 +74,14 @@
 \usepackage[makeroom]{cancel}
 \usepackage{esint}
 \usepackage{float}
+
+%---Custom colors---%
+\definecolor{clearBlue}{RGB}{93,180,231}
+\definecolor{darkBlue}{rgb}{0.0, 0.0, 1.0}
+\definecolor{darkGreen}{rgb}{0.0, 0.4, 0.0}
+\definecolor{deepRed}{rgb}{0.68, 0.05, 0.0}
+\colorlet{shadecolor}{cyan!30!white}
+\colorlet{framecolor}{blue!50!black}
 
 %---Multicolumn TOC---%
 \makeatletter
@@ -146,11 +164,41 @@
 \titlespacing*{\subsection}{0pt}{*3.25}{*1.5}%
 \titlespacing{\chapter}{0pt}{2pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
 
-%---Custom commands---%
-\DeclareRobustCommand{\bigO}{\text{\usefont{OMS}{cmsy}{m}{n}O}}
+%--Boxed environement--%
+\newenvironment{frshaded*}{%
+	\def\FrameCommand{\fboxrule=\FrameRule\fboxsep=\FrameSep \fcolorbox{framecolor}{shadecolor}}%
+	\MakeFramed {\advance\hsize-\width \FrameRestore}}%
+{\endMakeFramed}
 
-%---Custom colors---%
-\definecolor{clearBlue}{RGB}{93,180,231}
+%--Syntax Highlighting--%
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{vert},       % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mauve},       % string literal style
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth, % centers code
+  numbers=left                     % lines number
+}
+
+\lstdefinelanguage{Dafny}{
+  keywords={insert, Node},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={method, datatype, returns, if, else, var, match, case},
+  ndkeywordstyle=\color{mauve}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//}
+}
+
+%---Custom commands---%
+\newcommand{\bigO}{\text{\usefont{OMS}{cmsy}{m}{n}O}}
+\newcommand{\textred}[1]{\textcolor{deepRed}{#1}}
+\newcommand{\textblue}[1]{\textcolor{darkBlue}{#1}}
+\newcommand{\textgreen}[1]{\textcolor{darkGreen}{#1}}
 
 %---Other---%
 \hypersetup{
