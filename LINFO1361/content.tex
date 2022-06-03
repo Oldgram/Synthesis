@@ -85,7 +85,7 @@ Agent = \textred{Architecture} + \textgreen{Program}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth,keepaspectratio]{basic_struct}
+    \includegraphics[width=0.6\textwidth,keepaspectratio]{basic_struct}
 \end{figure}
 
 \chapter{Problem Solving}
@@ -677,7 +677,7 @@ When $X$ is assigned a value $V$ :
 
 \paragraph{Arc consistency}
 
-A constraint $c(X, Y)$ is arc consistent if for every value a in the domain $X$, there is a value $b$ in the domain of $Y$, such that $c(a,b)$ is satisfied.\\
+A constraint $c(X, Y)$ is arc consistent if for every value a in the domain $X$, there is a value $b$ in the domain of $Y$ such that $c(a,b)$ is satisfied.\\
 Objective : make all constraints arc consistent.
 
 \paragraph{Bound consistency}
@@ -996,3 +996,184 @@ Maintain a search tree, growing it at each iteration :
 \item Simulation : playout (without recording the moves)
 \item Back-propagation : update all the parents in the search tree
 \end{itemize}
+
+\chapter{Knowledge, Reasoning \& Planning}
+
+\section{Local Agent and Propositional Logic}
+
+\textred{Motivation} : achieving a goal frequently requires more than searching
+\begin{itemize}
+\item \textgreen{Planning} : looking ahead for outcomes of actions
+\item \textgreen{Reasoning} : combining evidence to obtain new knowledge
+\item \textgreen{Acting} : translation of knowledge into actions
+\end{itemize}
+
+\textred{Objectives} :
+\begin{itemize}
+\item Understand the need to apply knowledge-based reasoning for some tasks
+\item know the elementary concepts of representation, inference and logic
+\item Know the importance aspects of propositional logic (syntax, semantics, models, inference rules, complexity)
+\item understand the limitations of propositional logic
+\item Apply simple reasoning techniques to specific tasks
+\end{itemize}
+
+\subsection{Knowledge Based Agents}
+
+\begin{minipage}{0.6\textwidth}
+	\begin{itemize}
+	\item Knowledge \textred{representation}
+	\item \textred{Reasoning} with knowledge : determining which action to take
+	\item \textred{Logic} deals with both of these :
+		\begin{itemize}
+		\item Classic logic : definite knowledge (knowledge that is true or false in the world)
+		\item Other logic : uncertain knowledge
+		\end{itemize}
+	\end{itemize}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]{knowledge_based_agents}
+	\end{figure}
+\end{minipage}
+
+\begin{itemize}
+\item The \textred{knowledge base} (KB) is the central component (a set of \textred{sentences} representing assertions about the world, sentences are represented with  a \textgreen{knowledge representation language})
+\item Two operations on KBs : \textgreen{Tell} and \textgreen{Ask}. Both may involve \textred{inferencing}, deriving new sentences from old.
+\item Agent may have initial information in KB (background knowledge)
+\end{itemize}
+
+\subsection{Declarative vs. Procedural}
+
+\begin{center}
+\textred{Knowledge representation}
+\end{center}
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{
+\textred{Declarative} approach
+\begin{itemize}
+\item Design representation language making it easy to express knowledge
+\item Simplify construction of solutions
+\end{itemize}
+}
+\ParallelRText{
+\textred{Procedural} approach
+\begin{itemize}
+\item Knowledge is embodied in the algorithms and program code itself
+\item Potentially more efficient, but more difficult to develop solutions
+\end{itemize}
+}
+\ParallelPar
+\end{Parallel}
+
+\section{Logic}
+
+A logic consists of \textred{syntax} and \textred{semantics}
+\begin{itemize}
+\item \textred{Syntax} defines well formed sentences
+\item \textred{Semantics} defines "meaning" of sentences. in logic, defines the \textgreen{truth} of each sentence with respect to each \textgreen{possible word (interpretation)}
+\end{itemize}
+
+\subsection{Interpretation and Models}
+
+An \textred{interpretation} is a mathematical abstraction of a possible world
+\begin{itemize}
+\item Possible worlds represents real environments
+\item Given an interpretation, a sentence is either true or false in this interpretation
+\end{itemize}
+
+A \textred{model} of a sentence $\alpha$ is an interpretation where the sentence $\alpha$ is true
+\begin{itemize}
+\item The phrase "$m$ is a model of $\alpha$" ($\alpha \models \beta$) means that the sentence $\alpha$ is true in interpretation $m$
+\end{itemize}
+
+\subsection{Logical Reasoning}
+
+\begin{itemize}
+\item Logical \textred{entailment} between sentences $\alpha$ and $\beta$\\
+\item $\beta$ is a \textred{logical consequence} of $\alpha$\\
+\item $\alpha \models \beta$ if and only if
+	\begin{itemize}
+	\item M($\alpha$) $\subseteq$ M($\beta$) where M($\alpha$ is the set of all models of $\alpha$
+	\item $\beta$ is true in every model of $\alpha$
+	\item in every interpretation in which $\alpha$ is true, $\beta$ is also true
+	\end{itemize}
+\end{itemize}
+
+\paragraph{How to verify entailment ?}
+
+$\alpha \models \beta$
+
+\textred{Logical inference}, transformation to derive conclusions.\\
+Example : \textred{Model checking} :
+\begin{itemize}
+\item Enumeration of the interpretations
+\item Find the interpretations which are models of $\alpha$
+\item Check that $\beta$ is true in these models $\alpha \vdash \beta$
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth,keepaspectratio]{soundness_completeness}
+\end{figure}
+
+\subsubsection{Monotonicity}
+
+\begin{itemize}
+\item If KB $\models \alpha$ then KB $\land \beta \models \alpha$
+\item The set of entailed formulas can only increase as information is added to the KB
+\item If a formula is entailed by a subset of KB, it is also entailed by KB
+\end{itemize}
+
+\newpage
+\section{Propositional Logic}
+
+A very simple logic (syntax, semantics, inference algorithm) centered around \textred{propositions} (statements about the world that may be true or false).
+
+\subsection{Syntax}
+
+\begin{itemize}
+\item Symbols
+	\begin{itemize}
+	\item logical constants : True, False
+	\item propositional symbols : P, Q, ...
+	\item logical connectives : negation $\neg$, conjunction $\land$, disjunction $\lor$, implication $\Rightarrow$, equivalence $\iff$
+	\item parentheses (, )
+	\end{itemize}
+\item Sentences
+	\begin{itemize}
+	\item Constructed from simple sentences
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth,keepaspectratio]{syntax}
+\end{figure}
+
+\subsection{Model}
+
+\begin{itemize}
+\item An interpretation of a proposition formula is an assignment of a truth value to each of its proposition symbol
+\item If $n$ proposition symbols : $2^n$ different interpretations 
+\end{itemize}
+
+\subsection{Semantics}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{truth_table}
+\end{figure}
+
+\subsection{Model checking}
+
+Depth-first enumeration of all interpretations. Is is \textgreen{sound} and \textgreen{complete}.\\
+For $n$ symbols :
+\begin{itemize}
+\item Time complexity is $\bigO (2^n)$
+\item Space complexity is $\bigO (n)$
+\end{itemize}
+
+\section{Propositional Theorem Proving}
+
+\lipsum
