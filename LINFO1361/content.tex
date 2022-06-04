@@ -157,11 +157,11 @@ Unique path back from a node to the root.
 \ParallelPar
 \end{Parallel}
 
-\begin{minipage}{0.5\textwidth}
+\begin{minipage}{0.48\textwidth}
   \centering
   \includegraphics[width=0.3\linewidth,keepaspectratio]{state_space}
 \end{minipage}
-\begin{minipage}{0.5\textwidth}
+\begin{minipage}{0.48\textwidth}
   \centering
   \includegraphics[width=0.4\linewidth,keepaspectratio]{search_tree}
 \end{minipage}
@@ -214,7 +214,7 @@ Time and space complexity are measured in terms of :
 \subsubsection{Breadth-First Search}
 
 \paragraph{Properties}
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.59\textwidth}
 	\begin{itemize}
 	\item Complete
 	\item Time complexity : $\bigO (b^d)$
@@ -386,7 +386,7 @@ A* (using \textgreen{Tree Search} is optimal if h(n) is admissible.
 A heuristic function is \textred{consistent} if for every node \textred{$n$} and successor \textred{$n'$} obtained with action \textred{a} :
 
 
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.59\textwidth}
 	\begin{itemize}
 	\item Estimated cost of reaching goal from \textred{$n$} is no greater than cost of getting to \textred{$n'$} plus estimated cost of reaching goal from \textred{$n'$}
 	\item $h(n) \leq c(n, a, n') + h(n')$
@@ -495,7 +495,7 @@ Or
 
 \subsection{Heuristics and metaheuristics}
 
-\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\begin{Parallel}[v]{0.48\textwidth}{0.46\textwidth}
 \ParallelLText{
 	\textred{Heuristics}
 	\begin{itemize}
@@ -763,7 +763,7 @@ CSP search algorithms should only consider a single variable at each node.
 \paragraph{Removing nodes}
 
 
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.58\textwidth}
 	\begin{itemize}
 	\item Determine the cycle cutset $S$ (size $c$)
 	\item Solve the reduced problem for each consistent assignment of the cutset
@@ -780,7 +780,7 @@ CSP search algorithms should only consider a single variable at each node.
 
 \paragraph{Grouping nodes}
 
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.58\textwidth}
 	\begin{itemize}
 	\item Tree decomposition of the constraint graph into a set of connected subproblems
 	\item Each variable appears in at least one subproblem
@@ -888,7 +888,7 @@ Two players : \textit{MAX} and \textit{MIN}.
 		\includegraphics[width=0.6\textwidth,keepaspectratio]{alpha-beta}
 	\end{figure}
 \end{minipage}
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.58\textwidth}
 	\begin{enumerate}
 	\item The \textred{MIN}-value (1) is already smaller than the MAX-value of the parent (2)
 	\item The \textred{MIN}-value can only decrease further
@@ -901,7 +901,7 @@ Two players : \textit{MAX} and \textit{MIN}.
 
 \paragraph{Terminology}
 
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.58\textwidth}
 	The (temporary) values at \stackanchor[8pt]{\textblue{MAX}}{\textred{MIN}}-nodes are \stackanchor[8pt]{\textblue{ALPHA}}{\textred{BETA}}-values
 \end{minipage}
 \begin{minipage}{0.4\textwidth}
@@ -980,7 +980,7 @@ Because of the depth-bound, we prefer to delay disasters although we don't preve
 
 \subsubsection{Search vs. lookup}
 
-Many game-playing programs use table lookup rather than search for the opening and ending of games. End game can be completely solved by the computer.\\
+Many game-playing programs use table lookup rather than search for the opening and ending of games. End game can be completely solved by the computer.
 
 \subsubsection{Monte Carlo tree search}
 
@@ -999,27 +999,11 @@ Maintain a search tree, growing it at each iteration :
 
 \chapter{Knowledge, Reasoning \& Planning}
 
-\section{Local Agent and Propositional Logic}
-
-\textred{Motivation} : achieving a goal frequently requires more than searching
-\begin{itemize}
-\item \textgreen{Planning} : looking ahead for outcomes of actions
-\item \textgreen{Reasoning} : combining evidence to obtain new knowledge
-\item \textgreen{Acting} : translation of knowledge into actions
-\end{itemize}
-
-\textred{Objectives} :
-\begin{itemize}
-\item Understand the need to apply knowledge-based reasoning for some tasks
-\item know the elementary concepts of representation, inference and logic
-\item Know the importance aspects of propositional logic (syntax, semantics, models, inference rules, complexity)
-\item understand the limitations of propositional logic
-\item Apply simple reasoning techniques to specific tasks
-\end{itemize}
+\section{Logical Agents and Propositional Logic}
 
 \subsection{Knowledge Based Agents}
 
-\begin{minipage}{0.6\textwidth}
+\begin{minipage}{0.58\textwidth}
 	\begin{itemize}
 	\item Knowledge \textred{representation}
 	\item \textred{Reasoning} with knowledge : determining which action to take
@@ -1043,7 +1027,7 @@ Maintain a search tree, growing it at each iteration :
 \item Agent may have initial information in KB (background knowledge)
 \end{itemize}
 
-\subsection{Declarative vs. Procedural}
+\subsubsection{Declarative vs. Procedural}
 
 \begin{center}
 \textred{Knowledge representation}
@@ -1066,7 +1050,7 @@ Maintain a search tree, growing it at each iteration :
 \ParallelPar
 \end{Parallel}
 
-\section{Logic}
+\subsection{Logic}
 
 A logic consists of \textred{syntax} and \textred{semantics}
 \begin{itemize}
@@ -1074,7 +1058,7 @@ A logic consists of \textred{syntax} and \textred{semantics}
 \item \textred{Semantics} defines "meaning" of sentences. in logic, defines the \textgreen{truth} of each sentence with respect to each \textgreen{possible word (interpretation)}
 \end{itemize}
 
-\subsection{Interpretation and Models}
+\subsubsection{Interpretation and Models}
 
 An \textred{interpretation} is a mathematical abstraction of a possible world
 \begin{itemize}
@@ -1087,14 +1071,14 @@ A \textred{model} of a sentence $\alpha$ is an interpretation where the sentence
 \item The phrase "$m$ is a model of $\alpha$" ($\alpha \models \beta$) means that the sentence $\alpha$ is true in interpretation $m$
 \end{itemize}
 
-\subsection{Logical Reasoning}
+\subsubsection{Logical Reasoning}
 
 \begin{itemize}
-\item Logical \textred{entailment} between sentences $\alpha$ and $\beta$\\
-\item $\beta$ is a \textred{logical consequence} of $\alpha$\\
+\item Logical \textred{entailment} between sentences $\alpha$ and $\beta$
+\item $\beta$ is a \textred{logical consequence} of $\alpha$
 \item $\alpha \models \beta$ if and only if
 	\begin{itemize}
-	\item M($\alpha$) $\subseteq$ M($\beta$) where M($\alpha$ is the set of all models of $\alpha$
+	\item M($\alpha$) $\subseteq$ M($\beta$) where M($\alpha$) is the set of all models of $\alpha$
 	\item $\beta$ is true in every model of $\alpha$
 	\item in every interpretation in which $\alpha$ is true, $\beta$ is also true
 	\end{itemize}
@@ -1126,18 +1110,18 @@ Example : \textred{Model checking} :
 \end{itemize}
 
 \newpage
-\section{Propositional Logic}
+\subsection{Propositional Logic}
 
 A very simple logic (syntax, semantics, inference algorithm) centered around \textred{propositions} (statements about the world that may be true or false).
 
-\subsection{Syntax}
+\subsubsection{Syntax}
 
 \begin{itemize}
 \item Symbols
 	\begin{itemize}
 	\item logical constants : True, False
 	\item propositional symbols : P, Q, ...
-	\item logical connectives : negation $\neg$, conjunction $\land$, disjunction $\lor$, implication $\Rightarrow$, equivalence $\iff$
+	\item logical connectives : negation $\neg$, conjunction $\land$, disjunction $\lor$, implication $\Rightarrow$, equivalence $\Leftrightarrow$
 	\item parentheses (, )
 	\end{itemize}
 \item Sentences
@@ -1151,21 +1135,21 @@ A very simple logic (syntax, semantics, inference algorithm) centered around \te
     \includegraphics[width=0.6\textwidth,keepaspectratio]{syntax}
 \end{figure}
 
-\subsection{Model}
+\subsubsection{Model}
 
 \begin{itemize}
 \item An interpretation of a proposition formula is an assignment of a truth value to each of its proposition symbol
 \item If $n$ proposition symbols : $2^n$ different interpretations 
 \end{itemize}
 
-\subsection{Semantics}
+\subsubsection{Semantics}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth,keepaspectratio]{truth_table}
 \end{figure}
 
-\subsection{Model checking}
+\subsubsection{Model checking}
 
 Depth-first enumeration of all interpretations. Is is \textgreen{sound} and \textgreen{complete}.\\
 For $n$ symbols :
@@ -1174,6 +1158,512 @@ For $n$ symbols :
 \item Space complexity is $\bigO (n)$
 \end{itemize}
 
-\section{Propositional Theorem Proving}
+\subsection{Propositional Theorem Proving}
 
-\lipsum
+\subsubsection{Validity and satisfiability}
+
+\begin{itemize}
+\item \textred{Logical equivalence} : $\alpha$ and $\beta$ are logically equivalent ($\alpha \equiv \beta$) if they are true in the same interpretations ($\alpha \equiv \beta \text{ iff } \alpha \models \beta \text{ and } \beta \models \alpha$)
+\item A sentence is \textred{valid} (tautology) if it is true in \textred{all} interpretations
+\item A sentence is \textred{satisfiable} if it is true is \textred{some} interpretations
+\item A sentence is \textred{unsatisfiable} if it is true in \textred{no} interpretations
+\end{itemize}
+
+\subsubsection{Standard Equivalences}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth,keepaspectratio]{standard_equivalences}
+\end{figure}
+
+\subsubsection{Proof methods}
+
+Two kinds :
+\begin{enumerate}
+\item \textgreen{Application of inference rules}
+	\begin{itemize}
+	\item Legitimate (sound) generation of new sentences from old
+	\item \textgreen{Proof} = a sequence of inference rule applications
+	\item Can use inference rules as operators in a standard search algorithm
+	\item Typically require transformation of sentences into a \textred{normal form}
+	\end{itemize}
+\item \textgreen{Model checking}
+	\begin{itemize}
+	\item Truth table enumeration (always exponential in $n$)
+	\item Improved backtracking, e.g. : David-Putnam-Logemann-Loveland (DPLL)
+	\item Heuristic search in model space (sound but incomplete), e.g. : mon-conflicts-like hill-climbing algorithms
+	\end{itemize}
+\end{enumerate}
+
+\paragraph{Proof As Search}
+
+\begin{itemize}
+\item Initial state : Initial KB
+\item Successor function : Each KB that results from applying one inference rule to selected rules in the KB
+\item Goal test : Does the KB contain the goal sentence ?
+\item Path cost : The number of inference rules applied
+\end{itemize}
+
+\subsubsection{Conjunctive Normal form (CNF)}
+
+Every sentence in propositional logic is logically equivalent to a \textred{conjunction} of clauses (i.e. \textred{disjunction} of \textred{literals})
+
+\paragraph{Conversion to CNF}
+
+\begin{equation*}
+B_{1,1} \Leftrightarrow (P_{1,2} \lor P_{2, 1})
+\end{equation*}
+\begin{itemize}
+\item \textgreen{Eliminate $\Leftrightarrow$} with $(\alpha \Rightarrow \beta) \land (\beta \Rightarrow \alpha)$
+	\begin{equation*}
+	(B_{1,1} \Rightarrow (P_{1,2} \lor P_{2, 1})) \land ((P_{1,2} \lor P_{2, 1}) \Rightarrow B_{1,1})
+	\end{equation*}
+\item \textgreen{Eliminate $\Rightarrow$} with ($\neg \alpha \lor \beta$)
+	\begin{equation*}
+	(\neg B_{1,1} \lor (P_{1,2} \lor P_{2, 1})) \land (\neg(P_{1,2} \lor P_{2, 1}) \lor B_{1,1})
+	\end{equation*}
+\item \textgreen{"Move $\neg$ inwards"}, double negation, de Morgan
+	\begin{equation*}
+	(\neg B_{1,1} \lor P_{1,2} \lor P_{2, 1}) \land ((\neg P_{1,2} \land \neg P_{2, 1}) \lor B_{1,1})
+	\end{equation*}
+\item \textgreen{Distribute $\lor$ over $\land$}
+	\begin{equation*}
+	(\neg B_{1,1} \lor P_{1,2} \lor P_{2, 1}) \land (\neg P_{1,2} \lor B_{1, 1}) \land (\neg P_{2, 1} \lor B_{1,1})
+	\end{equation*}
+\end{itemize}
+
+\subsubsection{Horn Clauses}
+
+Linear time algorithms exist when knowledge bases are restricted to \textred{Horn clauses}. A Horn clause is a disjunction of literals of which \textgreen{at most one is positive}.
+
+\paragraph{Inference with Horn clauses}
+
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{
+	\textred{Forward Chaining}
+	\begin{itemize}
+	\item Start with the knowledge base and through repeated applications of Modus Ponens, derive all logically entailed atomic sentences.
+	\item Fire any rule whose premises are satisfied in the KB, add its conclusion to the KB, until query is found
+	\item Data driven
+	\item Sound and complete
+	\end{itemize}
+}
+\ParallelRText{
+	\textred{Backward Chaining}
+	\begin{itemize}
+	\item Apply resolution until empty clause if found
+	\item Start with a query $q$
+	\item Find all implications that conclude $q$
+	\item If all premises are true, then $q$ is true, otherwise use backward chaining on premises with unknown values.
+	\item Goal-directed
+	\item Sound and refutation complete
+	\end{itemize}
+}
+\ParallelPar
+\end{Parallel}
+
+\subsection{Effective Propositional Model Checking}
+
+\subsubsection{DPLL : Davis Putman algorithm}
+
+\begin{itemize}
+\item Similar to TT-entail
+\item Use a CNF input sentence
+\item Recursive depth-first enumeration of interpretations
+\item Various improvements (consistency, early detection of true clauses, pure symbol heuristics, unit clause heuristics)
+\item One of the fastest satisfiability algorithm
+\end{itemize}
+
+\subsubsection{WalkSAT : Local Search}
+
+\begin{itemize}
+\item Model-based approach
+\item Based on MinConflict CSP local search
+\item Balance between greediness and randomness
+\item Introduce some perturbations to avaoid local minima
+\item Sound but not complete
+\end{itemize}
+
+\subsection{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{summary_propositional}
+\end{figure}
+
+\section{First-Order Logic}
+
+\subsection{Representation revisited}
+
+\begin{itemize}
+\item \textgreen{Procedural representation} : representing knowledge with data structure has limitations. Need a declarative structure.
+\item \textgreen{Propositional logic} :
+	\begin{itemize}
+	\item Declarative : relationships between variables are described through sentences. A method for propagating relationships
+	\item Expressive : can represent partial information using disjunction
+	\item Compositional : if A means "it is raining" and B means "i like beer", A $\land$ B means "it is raining and I like beer"
+	\item But lacks expressive power to describe the environment concisely
+	\end{itemize}
+\item \textgreen{FOL basic blocks}
+	\begin{itemize}
+	\item PL assumes the world contains \textred{facts}
+	\item FOL (like natural language) assumes the world contains \textred{objects}, \textred{relations}, \textred{functions}.
+	\end{itemize}
+\end{itemize}
+
+\subsection{Syntax and semantics of FOL}
+
+\subsubsection{Syntax}
+
+\begin{minipage}{0.52\textwidth}
+	\begin{itemize}
+	\item An \textred{alphabet} consists of variables, constants, function symbols, predicate symbols (all user-defined) and of connectors, punctuations and quantifiers.
+	\item \textred{Terms} are either variables, constants or function symbols provided with as many terms as arguments, as the function expects
+	\item \textred{Well-formed formulas} are constructed from predicate symbols, provided with terms as arguments, and from connectors, quantifiers and punctuation - according to the rules of the connectors
+	\end{itemize}
+\end{minipage}
+\begin{minipage}{0.46\textwidth}
+	\begin{figure}[H]
+    		\centering
+    		\includegraphics[width=\textwidth,keepaspectratio]{fol_syntax}
+	\end{figure}
+\end{minipage}
+
+\subsubsection{Semantics}
+
+\begin{itemize}
+\item Provided by\textred{interpretations} for the basic constructs, usually suggested by meaningful names
+\item \textred{Domain} of the interpretation : set of objects
+\item Constants : the interpretation identifies the object in the real world
+\item Predicate symbols : the interpretation specifies the particular relation in the domain. Can be defined implicitly, or explicitly through the set of tuples of objects that satisfy the relation.
+\item Function symbols : identifies the object referred to by a tuple of objects. Can be defined implicitly or explicitly through tables.
+\end{itemize}
+
+\subsubsection{Interpretation}
+
+\begin{itemize}
+\item A set D (the \textred{domain})
+\item A (total) function that maps constants to D
+\item A (total) function that maps functions symbols to (total) functions : D $\rightarrow$ D
+\item A (total) function that maps predicate symbols to predicates : D $\rightarrow$ Booleans
+\end{itemize}
+
+Usually, one has a specific interpretation in mind when writing sentences. Beware sentences can be interpreted according to any possible interpretation.
+
+\subsubsection{Terms}
+
+A term is a logical expression referring to an object in the interpretation.
+\begin{itemize}
+\item Let $I$ be an interpretation, $t_1, ..., t_n$ be terms and $f$ be a $n$-ary function symbol :
+	\begin{itemize}
+	\item $f(t_1, ..., t_n)$ is a term
+	\item This term refers to the object $F(T_1, ..., T_n)$ in the domain $I$
+		\begin{itemize}
+		\item[$\rightarrow$] where $F$ is the function $D^n \rightarrow D$ associated to $f$ in $I$ and $T_1, ..., T_n$ are the interpretation of the terms $t_1, ..., t_n$ in $I$
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Atomic sentence}
+
+An atomic sentence state a fact (true or false). It is composed of a predicate with possible arguments (terms) and is true or false in an interpretation.
+
+\begin{itemize}
+\item Let $I$ be an interpretation, $t_1, ..., t_n$ be terms and $p$ be a $n$-ary function symbol :
+	\begin{itemize}
+	\item $p(t_1, ..., t_n)$ is an atomic formula
+	\item The formula is true if in $I$ the relation $P(T_1, ..., T_n)$ holds
+		\begin{itemize}
+		\item[$\rightarrow$] where $P$ is the predicate $D^n \rightarrow Boolean$ associated to $P$ in $I$ and $T_1, ..., T_n$ are the interpretation of the terms $t_1, ..., t_n$ in $I$
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Complex sentences}
+
+A complex sentence is built by combining atomic sentences using logical connectives ($neg, \land, \lor, \Rightarrow, \Leftrightarrow$) and parentheses, and is true or false in a given interpretation.
+
+\subsubsection{Quantifiers}
+
+Can be used to express properties of collections of objects ($\forall, \exists$)
+
+\paragraph{Universal quantifiers}
+
+States that a predicate $P$ holds for all objects $x$ in the domain. Given an interpretation $I$ with domain $D$, the sentence is true if and only if all the individual sentences where the variable $x$ is replaced by the individual objects in $D$ are true in the given interpretation. Typically, $\Rightarrow$ is the main connective with $\forall$ (common mistake : using $\land$ as the main connective with $\forall$).
+
+\paragraph{Existential quantifiers}
+
+States that a predicate $P$ holds for some object in the universe. Given an interpretation $I$ with domain $D$, the sentence is true as there is at least one of the individual sentences where the variable $x$ is replaced by the individual objects in $D$ is true in the given interpretation. Typically, $\land$ is the main connective with $\exists$ (common mistake : using $\Rightarrow$ as the main connective with $\exists$).
+
+\paragraph{Properties of quantifiers}
+
+\begin{itemize}
+\item \stackanchor{$\forall x \forall y$}{$\exists x \exists y$} is the same as \stackanchor{$\forall y \forall x$}{$\exists y \exists x$}
+\item $\exists x \forall y$ is \textred{not} the same as $\forall y \exists x$
+\end{itemize}
+
+\paragraph{Connection between quantifiers}
+
+\begin{itemize}
+\item \stackanchor{$\forall x P$}{$\exists x P$} is equivalent as \stackanchor{$\textred{\neg} \exists x \textred{\neg} P$}{$\textred{\neg} \forall x \textred{\neg} P$}
+\item This generalize : \stackanchor{$\neg (P \land Q)$}{$\neg (P \lor Q)$} equivalent to \stackanchor{$\neg P \lor \neg Q$}{$\neg P \land \neg Q$}
+\end{itemize}
+
+\subsubsection{Closed and ground formulas}
+
+A ground term (or formula) is a term (or formula) without any variable.\\
+A closed formula is a formula where each occurrence of a variable $x$ is in the scope of a quantifier $\forall x$ or $\exists x$
+
+\subsubsection{Logical Reasoning}
+
+An interpretation where $\alpha$ is true is called a \textred{model} of $\alpha$\\
+Logical \textred{entailment} between sentence $\alpha$ and $\beta$ : $\alpha \models \beta$ if and only if, in every interpretation in which $\alpha$ is true, $\beta$ is also true.
+
+\subsubsection{Validity and satisfiability}
+
+\begin{itemize}
+\item \textred{Validity} : a sentence that is true in \textred{all} interpretations
+\item \textred{Satisfiability} : a sentence that is true is \textred{some} interpretations
+\item \textred{Inconsistency, unsatisfiability} : a sentence that is \textgreen{false} is \textred{all} interpretations
+\item $\alpha$ is valid iff $\neg \alpha$ is unsatisfiable
+\item $\alpha \models \beta$ iff ($\alpha \neg \beta$) is unsatisfiable
+\end{itemize}
+
+\subsection{Using FOL}
+
+FOL can be used to model natural numbers, sets and subsets, lists.
+
+\subsection{Some complements on FOL}
+
+\begin{itemize}
+\item Completeness theorem : the set of logical consequences is recursively enumerable
+\item Turing : the set of logical consequences is not recursive
+\end{itemize}
+
+\newpage
+\section{Inference in FOL}
+
+\subsection{Propositional vs. FOL interference}
+
+How to transform FOL sentences into a propositional sentence ? Using propositional inference system.
+
+\subsubsection{Universal instantiation}
+
+For any sentence $\alpha$, variable $v$, and ground term $g$ : $\frac{\forall v \ \alpha}{subst({v/g}, \alpha)}$\\
+A universally quantified variable can be replaced with \textgreen{any} instance. Similar to and-elimination since $\forall v \ P(v)$ is "identical" to $P(v_1) \land P(v_2) \land ... \land P(v_n)$
+
+\subsubsection{Existential instantiation}
+
+For any sentence $\alpha$, variable $v$, and \textred{new} constant symbol $k$ : $\frac{\exists v \ \alpha}{subst({v/k}, \alpha)}$\\
+A existentially quantified variable can be replaced with a new symbol.
+
+\subsubsection[Reduction to Propositional Logic]{Reduction to Propositional Logic (Propositionalization}
+
+\begin{itemize}
+\item Reduce FOL sentences into a set of propositional sentences.
+\item Entailment is preserved
+\item The set of propositional sentences is finite if no function symbol, infinite otherwise
+\item Can be reduced to a finite set (for each proof)
+\end{itemize}
+
+\paragraph{Reduction (technical issues)}
+
+\begin{itemize}
+\item \textgreen{Theorem : Herbrand} : If a sentence $\alpha$ is entailed by a FOL KB, it is entailed by a \textred{finite} subset of the propositionalized KB
+	\begin{itemize}
+	\item \textgreen{Application} : For $n = 0$ to $\inf$ do :
+		\begin{itemize}
+		\item Create a propositional KB by instantiating with depth-$n$ terms
+		\item See if $\alpha$ is entailed by this KB
+		\end{itemize}
+	\item \textgreen{Problem} : Works if $\alpha$ is entailed, loops if $\alpha$ is not entailed
+	\end{itemize}
+\item \textgreen{Theorem : Turing / Church} : Entailment for FOL is \textred{semidecidable} (algorithms exist that say yes to every entailed sentence, but no algorithm exists that also says no to every nonentailed sentence).
+\end{itemize}
+
+\subsection{Unification}
+
+How to make 2 terms / atoms identical ? Find values for variables that makes the two terms identical.
+
+Unification process : \textgreen{Unify($p,q$)}
+\begin{itemize}
+\item Take two atomic sentences $p$ and $q$
+\item Return a substitution would make $p$ and $q$ identical
+\item Unify($p,q$) $= \theta$ where Subst($\theta, p$) = Subst($\theta, q$)
+\item $\theta$ is called the unifier of the two sentences, there is possibly more than one unifier.
+\item Unique \textred{Most General Unifier} (up to variable renaming)
+\item Quadratic complexity (size of the sentences)
+\end{itemize}
+
+\newpage
+\subsubsection{Most General Unifier (mgu)}
+
+The substitution that makes the least commitment about the binding variables. It is unique (up to variable renaming).
+
+\paragraph{Standardize apart}
+
+Problem if $2$ sentences share variables. Standardize apart is to renaming the variables of one or both to avoid name clashes.
+
+\paragraph{Generalized Modus Ponens}
+
+Let Subst($\theta, p_i$) $=$ Subst($\theta, p_i'$) for all $I$ :
+\begin{equation*}
+\frac{p_1', p_2', ... p_n', (p_1 \land p_2 \land ... \land p_n \Rightarrow q)}{\text{Subst}(\theta, q)}
+\end{equation*} 
+
+\subsection{Forward chaining}
+
+\subsubsection{First Order definite clauses}
+
+\begin{itemize}
+\item Extension of propositional definite clauses
+\item \textred{Definite clauses} :
+	\begin{itemize}
+	\item A disjunction of literals of which \textgreen{one is positive}
+	\item Often written as : $A1 \land ... \land An \Rightarrow H; H\leftarrow A1, A2, ..., An$
+	\item Not always possible to transform a set of FOL sentences to definite clauses
+	\end{itemize}
+\item Horn clauses : at most one positive literal
+\end{itemize}
+
+\subsubsection{Analysis of FC algorithm}
+
+\begin{itemize}
+\item \textgreen{Soundness} : Does it only derive sentences that are entailed ? Yes, because only (Generalized) Modus Ponens is used and it is sound
+\item Does it answer every query whose answers are entailed by the KB ? Yes if the clauses are definite clauses. May not terminate in general if query is not entailed. This is unavoidable: entailment with definite clauses is semidecidable
+\end{itemize}
+
+\subsection{Backward chaining}
+
+Start with the premises of the goal. Each premise must be supported by KB. Start with first premise and look for support from KB (looking for clauses with a head that matches premise, the head's premise must then be supported by KB).
+
+\subsubsection{BC algorithm}
+
+\begin{itemize}
+\item FOL-BC-Ask(KB, $\alpha$)
+\item Simplistic version of BC
+\item A recursive, depth-first algorithm (suffers from repetition and incompleteness, space is linear)
+\item Application domains : logic programming : Prolog language, and constraint programming
+\end{itemize}
+
+\newpage
+\paragraph{Logic programming : Prolog}
+
+\begin{itemize}
+\item Algorithm = Logic + Control
+\item basis :
+	\begin{itemize}
+	\item Backward chaining with horn clauses + bell \& whistles
+	\item Program = set of choices
+	\end{itemize}
+\item Execution :
+	\begin{itemize}
+	\item DF, left-to-right backward chaining
+	\item Built-in predicates for arithmetic etc.
+	\item Built-in predicates that have side effects
+	\item Closed-world assumption ("negation as failure")
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{And-Or Tree vs. List of goals Tree}
+
+\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\ParallelLText{
+	\textred{And-Or Tree}
+	\begin{itemize}
+	\item Not really suitable in FOL, because of substitutions
+	\item Suitable for describing forward chaining
+	\item Not suitable for backward chaining : difficult to handle substitutions within and nodes
+	\end{itemize}
+}
+\ParallelRText{
+	\textred{List of goals Tree}
+	\begin{itemize}
+	\item Not suitable for forward chaining
+	\item Suitable for backward chaining : substitutions applies on all goals in the list of goals (see algorithm FOL-BC-Ask)
+	\item Resulting substitution = composition of substitutions along the successful branch
+	\end{itemize}
+}
+\ParallelPar
+\end{Parallel}
+
+\begin{minipage}{0.475\textwidth}
+  \centering
+  \includegraphics[width=0.8\linewidth,keepaspectratio]{and-or_tree}
+\end{minipage}
+\begin{minipage}{0.48\textwidth}
+  \centering
+  \includegraphics[width=0.8\linewidth,keepaspectratio]{list_of_goals_tree}
+\end{minipage}
+
+\subsection{Resolution}
+
+\subsubsection{First-Order CNF}
+
+Every sentence of first-order logic can be converted into an inferentially equivalent Conjunctive Normal Form (CNF) sentence. The two sentences are both unsatisfiable or both satisfiable.
+
+\subsubsection{Conversion to CNF}
+
+\begin{itemize}
+\item \textbf{Eliminate implications} : Convert all implications with corresponding disjunctions
+	\begin{itemize}
+	\item[] $p \Rightarrow q$ becomes $\neg p \lor q$
+	\end{itemize}
+\item \textbf{Move $\neg$ inwards} : Use de Morgan’s laws, quantifier equivalences, and double negations
+	\begin{itemize}
+	\item[] $\neg (p \lor q)$ becomes $\neg p \land \neg q$
+	\item[] $\neg (p \land q)$ becomes $\neg p \lor \neg q$
+	\item[] $\neg \forall x, p$ becomes $\exists x \neg p$
+	\item[] $\neg \exists x, p$ becomes $\forall x \neg p$
+	\item[] $\neg \neg p$ becomes $p$
+	\end{itemize}
+\item \textbf{Standardize variables} : Change all duplicate variable names to separate names
+	\begin{itemize}
+	\item[] $(\forall x \ P(x)) \lor (\exists x \ Q(x))$ becomes $(\forall x \ P(x)) \lor (\exists y \ Q(y))$
+	\end{itemize}
+\item \textbf{Move quantifiers left} :
+	\begin{itemize}
+	\item[] $p \lor \forall x \ q$ becomes $\forall x \ p \lor q$
+	\end{itemize}
+\item \textbf{Skolemization} : Replace variables with \textred{brand new constants} (not existing elsewhere in KN) in order to remove all existential qualifiers
+	\begin{itemize}
+	\item[] $\forall x \ Q(x)$ becomes $Q(A)$ where A is unique
+	\item \textred{Skolem Functions} are universally quantified variable sin whose scope the existential quantifier appears.
+	\end{itemize}
+\item Distribute $\land$ over $\lor$ :
+	\begin{itemize}
+	\item[] $(a \land b) \lor c$ becomes $(a \lor c) \land (b \lor c)$
+	\end{itemize}
+\item Flatten nested conjunctions and disjunctions :
+	\begin{itemize}
+	\item[] $(a \lor b) \lor c$ becomes $(a \lor b \lor c)$
+	\item[] $(a \land b) \land c$ becomes $(a \land b \land c)$
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Resolution inference rule}
+
+\begin{itemize}
+\item Simple version :
+	\begin{itemize}
+	\item[] $\frac{A \land B, \neg B \land C}{A \land C}$
+	\end{itemize}
+\item Modus Ponens does not allow us to derive new implications, it only derives atomic conclusions.
+\item Resolution : make it more powerful. Sound and complete inference system for propositional logic.
+\item A lifted version of propositional resolution rule :
+	\begin{itemize}
+	\item Two clauses must be standardized apart (no variables are shared)
+	\item Can be resolved if their literals are complementary
+	\item For $p_i$ and $q_i$ where UNIFY$(p_j, \neg q_k) = \theta$ :
+		\begin{itemize}
+		\item[] \[\frac{{p_1 \lor ... p_j ... \lor p_m, \atop q_1 \lor ... q_k ... \lor q_n}}{\text{SUBST}(\theta \ ,(p_1 \lor ... p_{j-1} \lor p_{j+1} ... \lor p_m \lor q_1 \land ... q_{k-1} \lor q_{k+1} ... \lor q_n))}\]
+		\end{itemize}
+	\end{itemize}
+\item How to prove that a is a logical consequence of KB (in CNF) ? 
+	\begin{itemize}
+	\item Proof by contradiction : KB $\models \ \alpha$ iff (KB $\land \ \neg \alpha$ unsatisfiable
+	\item Transform $\neg \alpha$ into conjunctive normal form
+	\item Show that KB $\land \ \neg \alpha$ is unsatisfiable (apply resolution rule until derivation of the empty clause)
+	\item Possible to get an answer (substitution) that makes the goal to fail
+	\end{itemize}	
+\end{itemize}

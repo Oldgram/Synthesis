@@ -12,16 +12,14 @@
 %\frenchsetup{SuppressWarning} % Comment this line if in English package version of babel is used
 \usepackage{tabularx}
 \usepackage[a4paper,top=2cm,bottom=2cm,left=2.25cm,right=2.25cm]{geometry}
-\usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{xkeyval}
 \usepackage{ifthen}
 \usepackage{url}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{multicol}
-%Chapters
-%\usepackage[Glenn]{fncychap}
 \usepackage{titlesec}
+\usepackage{hyperref}
 \usepackage{lipsum} 
 
 %---tikz---%
@@ -32,10 +30,9 @@
 \pgfplotsset{compat=newest}
 
 %---Form---%
-\setlength{\parindent}{0pt}
 \usepackage{parskip}
+\setlength{\parindent}{0pt}
 \usepackage{listings}
-\usepackage{titlesec}
 \usepackage{xspace}
 \MakeAutoQuote {«}{»}
 %\usepackage[Bjornstrup]{fncychap} % Chapter
@@ -51,7 +48,6 @@
 \usepackage{textcomp}
 \usepackage{eurosym}
 \usepackage{mwe}
-\usepackage{listings}
 \usepackage{etoolbox}
 \usepackage{setspace}
 \usepackage{ccaption}
@@ -59,7 +55,7 @@
 \usepackage{framed}
 \usepackage{xcolor}
 %\usepackage{fourier}
-\usepackage[pages=some]{background}
+%\usepackage[pages=some]{background}
 \usepackage{wrapfig}
 \graphicspath{ {./pictures/} }
 
@@ -208,3 +204,7 @@
     linkcolor=black,
     urlcolor=black
 }
+
+% For debug purposes
+\showboxdepth=5
+\showboxbreadth=5
