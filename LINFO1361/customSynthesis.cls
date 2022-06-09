@@ -40,8 +40,9 @@
 \usepackage{makecell} % For cell managment in tables
 \usepackage{parallel} % For parallel text (multicolumn style)
 \usepackage{pdfcolparallel}
-\usepackage{stackengine} % Fro stacke text (text over text)
+\usepackage{stackengine} % For stacke text (text over text)
 \usepackage{listings} % For syntax highlighting
+\usepackage{shorttoc} % For table of content
 
 %---Picture---%
 \usepackage{graphicx}

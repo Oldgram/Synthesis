@@ -137,7 +137,7 @@ Traversal of some search space :
 \begin{itemize}
 \item Expand a node $n$ by considering the possible \textbf{Actions($s$)}, where $s$ is the state in the node $n$.
 \item Use \textbf{Results($s, a$)} to get the resulting states.
-\item Generate new nodes with these states (called child nodes or successor nodes)
+\item Generate new nodes with these states (called child nodes or successor nodes).
 \item Attach each of these nodes to the current node as its parent.
 \end{itemize}
 
@@ -149,7 +149,7 @@ Traversal of some search space :
 Possibility to infinite set of states in the world, and the associated transitions.
 }
 \ParallelRText{\noindent
-\textred{Search tree}
+\textred{Search tree}\\
 Path between states, reaching towards the goal.\\
 Possibly multiple paths from the initial state to any state.\\
 Unique path back from a node to the root.
@@ -168,13 +168,13 @@ Unique path back from a node to the root.
 
 \subsubsection{State vs. Nodes}
 
-\textred{States} : (Representation of) a physical configuration
+\textred{States} : (Representation of) a physical configuration.
 
 \textred{Nodes} : Data structure constituting part of a search tree.
 
 \subsubsection{Frontier}
 
-\textred{Frontier} : set of generated nodes which have not been goal-testes (visited) and which ancestors have been goal-tested (visited).
+\textred{Frontier} : set of generated nodes which have not been goal-tested (visited) and which ancestors have been goal-tested (visited).
 
 \begin{itemize}
 \item Set on unexpanded nodes
@@ -191,7 +191,7 @@ Introduction of a look-up table containing all the visited nodes.
 
 \textred{Criteria}
 \begin{itemize}
-\item \textgreen{Completeness} : if finds a solution if one exists
+\item \textgreen{Completeness} : it finds a solution if one exists
 \item \textgreen{Time complexity} : usually in terms of the number of nodes generated/expanded
 \item \textgreen{Space complexity} : maximum number of nodes in memory
 \item \textgreen{Optimality} : it finds a least cost solution ?
@@ -216,7 +216,7 @@ Time and space complexity are measured in terms of :
 \paragraph{Properties}
 \begin{minipage}{0.59\textwidth}
 	\begin{itemize}
-	\item Complete
+	\item Complete if b is finite
 	\item Time complexity : $\bigO (b^d)$
 	\item Space complexity : $\bigO (b^d)$
 	\item Optimal if cost = 1 per step (not optimal in general)
@@ -241,7 +241,7 @@ Time and space complexity are measured in terms of :
 \paragraph{Properties}
 \begin{itemize}
 \item Complete if step cost strictly positive ($\geq \varepsilon$)
-\item Time and space complexity : $\bigO (b^{C^* / \varepsilon})$, where $C^*$ is the cost of the optimal solution
+\item Time and space complexity : $\bigO (b^{1+[C^* / \varepsilon]})$, where $C^*$ is the cost of the optimal solution
 \item Optimal : nodes are expanded in increasing order of g(n)
 \end{itemize}
 
@@ -344,12 +344,12 @@ A heuristic function estimates the cost of the cheapest path from node to a goal
 \item Complete
 \item Time complexity : $\bigO (b^d)$
 \item Space complexity : $\bigO (b^d)$ (keeps all generated nodes in memory
-\item Optimal and optimally efficient ($h(n)$ consistent)
+\item Optimal and optimally efficient (if $h(n)$ consistent (Graph search) / if $h(n)$ is admissible (Tree search))
 \end{itemize}
 
 \paragraph{A* is Optimal : Proof}
 
-A* (using \textgreen{Tree Search} is optimal if h(n) is admissible.
+A* (using \textgreen{Tree Search}) is optimal if h(n) is admissible.
 
 \textred{Proof} :
 \begin{itemize}
@@ -1630,11 +1630,11 @@ Every sentence of first-order logic can be converted into an inferentially equiv
 	\item[] $\forall x \ Q(x)$ becomes $Q(A)$ where A is unique
 	\item \textred{Skolem Functions} are universally quantified variable sin whose scope the existential quantifier appears.
 	\end{itemize}
-\item Distribute $\land$ over $\lor$ :
+\item \textbf{Distribute $\land$ over $\lor$} :
 	\begin{itemize}
 	\item[] $(a \land b) \lor c$ becomes $(a \lor c) \land (b \lor c)$
 	\end{itemize}
-\item Flatten nested conjunctions and disjunctions :
+\item \textbf{Flatten nested conjunctions and disjunctions} :
 	\begin{itemize}
 	\item[] $(a \lor b) \lor c$ becomes $(a \lor b \lor c)$
 	\item[] $(a \land b) \land c$ becomes $(a \land b \land c)$
