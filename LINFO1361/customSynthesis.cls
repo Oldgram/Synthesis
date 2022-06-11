@@ -20,11 +20,11 @@
 \usepackage{multicol}
 \usepackage{titlesec}
 \usepackage{hyperref}
-\usepackage{lipsum} 
+\usepackage{lipsum}
 
 %---tikz---%
 \usepackage{tikz}
-\usetikzlibrary{mindmap}
+\usetikzlibrary{babel}
 \usepackage{chemfig}
 \usepackage{pgfplots}
 \pgfplotsset{compat=newest}
@@ -43,6 +43,10 @@
 \usepackage{stackengine} % For stacke text (text over text)
 \usepackage{listings} % For syntax highlighting
 \usepackage{shorttoc} % For table of content
+\usepackage{fancyhdr} % For header and footer customization
+\usepackage{lastpage}
+\usepackage[strict]{changepage}
+\usepackage{framed}
 
 %---Picture---%
 \usepackage{graphicx}
@@ -88,7 +92,7 @@
   {}{}
 
 \renewcommand\tableofcontents{%
-    \begin{multicols}{2}[\section*{\contentsname
+    \begin{multicols}{2}[\chapter*{ \contentsname
         \@mkboth{%
            \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}]%
     \@starttoc{toc}%
@@ -96,26 +100,14 @@
     }
 \makeatother
 
-%---For quotes/definitions---%
-% From : https://jevon.org/wiki/Fancy_Quotation_Boxes_in_Latex
-\usepackage[strict]{changepage}
-\usepackage{framed}
-\definecolor{formalshade}{rgb}{0.95,0.95,1}
-
-\newenvironment{formal}{%
-  \def\FrameCommand{%
-    \hspace{1pt}%
-    {\color{blue}\vrule width 2pt}%
-    {\color{formalshade}\vrule width 4pt}%
-    \colorbox{formalshade}%
-  }%
-  \MakeFramed{\advance\hsize-\width\FrameRestore}%
-  \noindent\hspace{-4.55pt}% disable indenting first paragraph
-  \begin{adjustwidth}{}{7pt}%
-  \vspace{2pt}\vspace{2pt}%
+%---Custom TOC title---%
+\addto\captionsenglish{%
+  \renewcommand{\contentsname}%
+    {\centering Contents\\{\centering \color{clearBlue}\rule{0.6\textwidth}{1pt}}\\}%
 }
-{%
-  \vspace{2pt}\end{adjustwidth}\endMakeFramed%
+\addto\captionsfrench{%
+  \renewcommand{\contentsname}%
+    {\centering Table des matières\\{\centering \color{clearBlue}\rule{0.6\textwidth}{1pt}}\\}
 }
 
 %---Section styles---%
@@ -161,13 +153,44 @@
 \titlespacing*{\subsection}{0pt}{*3.25}{*1.5}%
 \titlespacing{\chapter}{0pt}{2pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
 
-%--Boxed environement--%
+%---Page numbering---%
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage \hspace{1pt} \textblue{|} \pageref{LastPage}}
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\fancyfoot[C]{\thepage \hspace{1pt} \textblue{|} \pageref{LastPage}}
+	\renewcommand{\headrulewidth}{0pt}
+}
+
+%---Boxed environement---%
 \newenvironment{frshaded*}{%
 	\def\FrameCommand{\fboxrule=\FrameRule\fboxsep=\FrameSep \fcolorbox{framecolor}{shadecolor}}%
 	\MakeFramed {\advance\hsize-\width \FrameRestore}}%
 {\endMakeFramed}
 
-%--Syntax Highlighting--%
+%---For quotes/definitions---%
+% From : https://jevon.org/wiki/Fancy_Quotation_Boxes_in_Latex
+\definecolor{formalshade}{rgb}{0.95,0.95,1}
+
+\newenvironment{formal}{%
+  \def\FrameCommand{%
+    \hspace{1pt}%
+    {\color{blue}\vrule width 2pt}%
+    {\color{formalshade}\vrule width 4pt}%
+    \colorbox{formalshade}%
+  }%
+  \MakeFramed{\advance\hsize-\width\FrameRestore}%
+  \noindent\hspace{-4.55pt}% disable indenting first paragraph
+  \begin{adjustwidth}{}{7pt}%
+  \vspace{2pt}\vspace{2pt}%
+}
+{%
+  \vspace{2pt}\end{adjustwidth}\endMakeFramed%
+}
+
+%---Syntax Highlighting---%
 \lstset{ %
   backgroundcolor=\color{white},   % choose the background color
   basicstyle=\footnotesize,        % size of fonts used for the code
