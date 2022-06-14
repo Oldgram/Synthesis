@@ -37,7 +37,7 @@ This is a example of \stackanchor{text}{over} text using \verb|\stackanchor{top}
 
 using \verb|\begin{Parallel} ... \end{Parallel}| from the parallel package :
 
-\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
+\begin{Parallel}[v]{0.45\textwidth}{0.45\textwidth}
 \ParallelLText{
 \lipsum[1][1]
 }
@@ -55,9 +55,9 @@ This is done using \verb|\begin{formal} ... \end{formal}|
 
 \subsection*{Syntax highlighting}
 
-Using \verb|\begin{lstlisting}[language=language] ... \end{lstlisting}|. Example for java:\\
+Using \verb|\begin{minted}{language} ... \end{minted}|. Example for java:
 
-\begin{lstlisting}[language=java]
+\begin{minted}[linenos]{java}
 public static int cherche(String a, String b){
     int occ = -1;
     for (int i = 0; i <= a.length()-b.length(); i++){
@@ -68,7 +68,7 @@ public static int cherche(String a, String b){
     }
     return occ;
 }
-\end{lstlisting}
+\end{minted}
 
 \section*{Figures}
 
@@ -84,14 +84,14 @@ public static int cherche(String a, String b){
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.3\textwidth,keepaspectratio]{placeholder}\hfill
-	\includegraphics[width=0.3\textwidth,keepaspectratio]{placeholder}\hfill
-	\includegraphics[width=0.3\textwidth,keepaspectratio]{placeholder}
+    \includegraphics[width=0.298\textwidth,keepaspectratio]{placeholder}\hfill
+	\includegraphics[width=0.298\textwidth,keepaspectratio]{placeholder}\hfill
+	\includegraphics[width=0.298\textwidth,keepaspectratio]{placeholder}
 \end{figure}
 
 \subsection*{With text on the side}
 
-\begin{minipage}{0.5\textwidth}
+\begin{minipage}{0.48\textwidth}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.5\textwidth,keepaspectratio]{placeholder}
@@ -112,6 +112,6 @@ public static int cherche(String a, String b){
 
 \subsection*{Custom colors}
 
-\textcolor{clearBlue}{clearBlue}
+\textcolor{clearBlue}{clearBlue}, \textcolor{darkBlue}{darkBlue}, \textcolor{darkGreen}{darkGreen}, \textcolor{deepRed}{deepRed}, \textcolor{deepBlue}{deepBlue}, \textcolor{deepGreen}{deepGreen}, \textcolor{lightGray}{lightGray}, \textcolor{pink}{pink}, \textcolor{shadecolor}{shadecolor}, \textcolor{framecolor}{framecolor}
 
 \end{document}

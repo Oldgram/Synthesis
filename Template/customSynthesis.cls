@@ -4,6 +4,8 @@
 %---Structure---%
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{minted} % For syntax highlighting, must be loaded before csquotes
+\usemintedstyle{pastie}
 %Language
 \usepackage[babel,french=guillemets]{csquotes}
 %\usepackage[greek,french]{babel} % For French
@@ -41,7 +43,6 @@
 \usepackage{parallel} % For parallel text (multicolumn style)
 \usepackage{pdfcolparallel}
 \usepackage{stackengine} % For stacke text (text over text)
-\usepackage{listings} % For syntax highlighting
 \usepackage{shorttoc} % For table of content
 \usepackage{fancyhdr} % For header and footer customization
 \usepackage{lastpage}
@@ -81,6 +82,11 @@
 \definecolor{darkBlue}{rgb}{0.0, 0.0, 1.0}
 \definecolor{darkGreen}{rgb}{0.0, 0.4, 0.0}
 \definecolor{deepRed}{rgb}{0.68, 0.05, 0.0}
+\definecolor{deepBlue}{rgb}{0,0,0.5}
+\definecolor{deepRed}{rgb}{0.6,0,0}
+\definecolor{deepGreen}{rgb}{0,0.5,0}
+\definecolor{lightGray}{gray}{0.9}
+\definecolor{pink}{RGB}{232,62,140}
 \colorlet{shadecolor}{cyan!30!white}
 \colorlet{framecolor}{blue!50!black}
 
@@ -188,30 +194,6 @@
 }
 {%
   \vspace{2pt}\end{adjustwidth}\endMakeFramed%
-}
-
-%---Syntax Highlighting---%
-\lstset{ %
-  backgroundcolor=\color{white},   % choose the background color
-  basicstyle=\footnotesize,        % size of fonts used for the code
-  breaklines=true,                 % automatic line breaking only at whitespace
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{vert},       % comment style
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  keywordstyle=\color{blue},       % keyword style
-  stringstyle=\color{mauve},       % string literal style
-  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth, % centers code
-  numbers=left                     % lines number
-}
-
-\lstdefinelanguage{Dafny}{
-  keywords={insert, Node},
-  keywordstyle=\color{blue}\bfseries,
-  ndkeywords={method, datatype, returns, if, else, var, match, case},
-  ndkeywordstyle=\color{mauve}\bfseries,
-  identifierstyle=\color{black},
-  sensitive=false,
-  comment=[l]{//}
 }
 
 %---Custom commands---%
