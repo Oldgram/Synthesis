@@ -1,0 +1,117 @@
+%& -job-name=cheatsheet
+
+\documentclass{customSynthesis}
+\begin{document}
+
+\title{Cheatsheet}
+
+\section*{Document sectioning}
+
+\begin{tabular}{r|l}
+\hline 
+depth & label \\ 
+\hline 
+-1 &  \verb|\part{}| \\ 
+\hline 
+0 & \verb|\chapter{}| \\ 
+\hline 
+1 & \verb|\section{}| \\ 
+\hline 
+2 & \verb|\subsection{}| \\ 
+\hline 
+3 & \verb|\subsubsection{}| \\ 
+\hline 
+4 & \verb|\paragraph{}| \\ 
+\hline 
+5 & \verb|\subparagraph{}| \\ 
+\hline 
+\end{tabular}
+
+\section*{Style}
+
+\subsection*{Tow-lined text (text over text)}
+
+This is a example of \stackanchor{text}{over} text using \verb|\stackanchor{top}{bottom}|
+
+\subsection*{Parallel text}
+
+using \verb|\begin{Parallel} ... \end{Parallel}| from the parallel package :
+
+\begin{Parallel}[v]{0.45\textwidth}{0.45\textwidth}
+\ParallelLText{
+\lipsum[1][1]
+}
+\ParallelRText{
+\lipsum[1][2]
+}
+\ParallelPar
+\end{Parallel}
+
+\subsection*{Quote}
+
+\begin{formal}
+This is done using \verb|\begin{formal} ... \end{formal}|
+\end{formal}
+
+\subsection*{Syntax highlighting}
+
+Using \verb|\begin{minted}{language} ... \end{minted}|. Example for java:
+
+\begin{minted}[linenos]{java}
+public static int cherche(String a, String b){
+    int occ = -1;
+    for (int i = 0; i <= a.length()-b.length(); i++){
+        if (a.startsWith(b, i)){
+            occ = i;
+            break;
+        }
+    }
+    return occ;
+}
+\end{minted}
+
+\section*{Figures}
+
+\subsection*{Basic}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth,keepaspectratio]{placeholder}
+    \caption{Basic centered figure}
+\end{figure}
+
+\subsection*{Side-by-side}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.298\textwidth,keepaspectratio]{placeholder}\hfill
+	\includegraphics[width=0.298\textwidth,keepaspectratio]{placeholder}\hfill
+	\includegraphics[width=0.298\textwidth,keepaspectratio]{placeholder}
+\end{figure}
+
+\subsection*{With text on the side}
+
+\begin{minipage}{0.48\textwidth}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth,keepaspectratio]{placeholder}
+	\end{figure}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+	This goes to the right.
+\end{minipage}
+
+\subsection*{Other}
+
+\subsection*{Custom commands}
+
+\verb|\bigO| : \bigO\\
+\verb|\textgreen{}| : \textgreen{Green text}\\
+\verb|\textblue{}| : \textblue{Blue text}\\
+\verb|\textred{}| : \textred{Red text}
+
+\subsection*{Custom colors}
+
+\textcolor{clearBlue}{clearBlue}, \textcolor{darkBlue}{darkBlue}, \textcolor{darkGreen}{darkGreen}, \textcolor{deepRed}{deepRed}, \textcolor{deepBlue}{deepBlue}, \textcolor{deepGreen}{deepGreen}, \textcolor{lightGray}{lightGray}, \textcolor{pink}{pink}, \textcolor{shadecolor}{shadecolor}, \textcolor{framecolor}{framecolor}
+
+\end{document}
