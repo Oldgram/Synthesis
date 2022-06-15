@@ -426,12 +426,279 @@ A BGP route will rank each route that it as learned following its own ranking al
 
 \subsection[UDP]{User Datagram Protocol (UDP)}
 
-
+The User Datagram Protocol is used when delay must be minimized or losses can be recovered by the application itself (or real-time application like interactive videos). It is an unreliable connectionless transport service, running on top of an unreliable connectionless network service, which uses ports to allow communicating with multiple applications (errors are detected using the checksum).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth,keepaspectratio]{udp_header}
+    \caption{UDP header format}
+\end{figure}
 
 \subsection[TCP]{Transmission Control Protocol (TCP)}
 
+The Transmission control protocol is a bidirectional bytestream of a \textred{connection-oriented} transport service running on top of an unreliable connectionless network service.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth,keepaspectratio]{tcp_header}
+    \caption{TCP header format}
+\end{figure}
 
+\subsubsection{Connection establishment}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth,keepaspectratio]{three_way_handshake}\hfill	\includegraphics[width=0.6\textwidth,keepaspectratio]{tcp-estab}
+	\caption{Three-way handshake}
+\end{figure}
+
+The Three-way handshake uses a sequence number, an acknowledgement number, and SYN/ACK/RST flags.
+The different messages types in TCP are :
+\begin{itemize}
+\item Synchronize (SYN) : Used to initiate and establish a connection. It also helps you to synchronize sequence numbers between devices
+\item Acknowledgement (ACK) : Helps to confirm to the other side that it has received the SYN
+\item Synchronize+Acknowledgement (SYN+ACK) : SYN message from local device and ACK of the earlier packet
+\item Reset (RST) : Used to signal a refused connection
+\item FIN : Used to signal a connection release (end of transmission)
+\end{itemize}
+
+\subsubsection{Congestion control}
+
+Network congestion describes the reduced quality of service that occurs when a network node is carrying more data that it can handle.
+
+TCP controls congestion by acting on the window size since a connection can't send data faster than $\frac{window}{rtt}$ where $window$ is the maximum between the host's sending window and the window advertised by the receiver, and $rtt$ is the round-trip-time (delay between the transmission of a segment and the reception of an ack).
+
+In general, the maximum throughput that can be achieved by a TCP connection depends on its maximum window size and the rtt if there are no losses. If there are losses, it depends on the MSS, the rtt and the loss ratio. This gives the following relation :
+\begin{equation*}
+Throughput < min(\frac{window}{rtt}, \frac{k * MSS}{rtt * \sqrt{p}})
+\end{equation*}
+Where :
+\begin{itemize}
+\item $k =$ a constant
+\item $MSS =$ Maximum Segment Size (most hosts use the same $MSS = 1460B$)
+\item $p =$ loss ratio
+\end{itemize}
+
+As we can see, TCP connections with smaller $rtt$ and/or a larger $MSS$ can achieve a higher throughput than other TCP connections (unfairness).
+
+\newpage
+The TCP congestion control scheme can be implemented using the following algorithm (also called \textit{AIMD congestion control}) :
+\begin{minted}[frame=single,framesep=5pt,rulecolor=gray]{python}
+# Initialization
+cwnd = MSS  # congestion window in bytes
+ssthresh= swin # in bytes
+
+# Ack arrival
+if tcp.ack > snd.una:  # new ack, no congestion
+    if dupacks == 0:  # not currently recovering from loss
+        if cwnd < ssthresh:
+            # slow-start : quickly increase cwnd
+            # double cwnd every rtt
+            cwnd = cwnd + MSS
+        else:
+            # congestion avoidance : slowly increase cwnd
+            # increase cwnd by one mss every rtt
+            cwnd = cwnd + MSS * (MSS / cwnd)
+    else:  # recovering from loss
+        cwnd = ssthresh  # deflate cwnd RFC5681
+        dupacks = 0
+else:  # duplicate or old ack
+    if tcp.ack == snd.una:  # duplicate acknowledgment
+        dupacks += 1
+        if dupacks == 1 or dupacks == 2:
+            send_next_unacked_segment  # RFC3042
+        if dupacks == 3:
+            retransmitsegment(snd.una)
+            ssthresh = max(cwnd/2, 2*MSS)
+            cwnd = ssthresh
+        if dupacks > 3:  # RFC5681
+            cwnd = cwnd + MSS  # inflate cwnd
+    else:
+        # ack for old segment, ignored
+        pass
+
+Expiration of the retransmission timer:
+    send(snd.una)  # retransmit first lost segment
+    sshtresh = max(cwnd/2, 2*MSS)
+    cwnd = MSS
+\end{minted}
+
+\newpage
 \section{Application Layer}
 
+\subsection{DNS}
 
+The Domain Name System (DNS) protocol runs above the datagram and bytestream service. The header of DNS messages is divided into 5 parts. The first tree are mandatory (the other two are optional) and are :
+\begin{itemize}
+\item ID : each request is given an ID to verify that it is the correct DNS request (example : the request $foo$ will be given the $ID_{foo}$ and the request $bar$ will be given the $ID_{bar}$ and will not conflict when the response is send)
+\item Flag Recursive : Used to know if the DNS server will resolve the entire IP at once (the resolver recuses through the DNS hierarchy to retrieve its answer)
+\item Flag Authority : Used to known wherever the response comes from a server cache or not
+\end{itemize}
+
+The command \textred{$dig$} can give retrieve the IP of e server (3 types of record : $A$ (IPv4), $AAAA$ (IPv6), and $MX$ (mail server). Example : If you want to retrieve the IP of a mail server :
+\begin{minted}[frame=single,framesep=5pt,rulecolor=gray]{bash}
+dig -t MX student.uclouvain.be +short
+# student-uclouvain-be.mail.protected.outlook.com
+COM=$(dig +short -t NS com | head -n 1)
+OUT=$(dig +short @$COM -t NS outlook.com | head -n 1)
+PRO=$(dig +short @$OUT -t NS protected.outlook.com | head -n 1)
+MAI=$(dig +short @$PRO -t NS mail.protected.outlook.com | head -n 1)
+dig +short @$PRO student-uclouvain-be.mail.protected.outlook.com | head -n 1
+\end{minted}
+
+\subsection{Mails}
+
+An email system is composed of a :
+\begin{itemize}
+\item A message format
+\item Protocols exchange between host and server
+\item A client software to create/read mails
+\item A software to allow the server to efficiently exchange mails.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\scalebox{0.5}{
+\begin{tikzpicture}
+	\pgfdeclarelayer{nodelayer}
+	\pgfdeclarelayer{edgelayer}
+	\pgfsetlayers{edgelayer, nodelayer, main}
+	\begin{pgfonlayer}{nodelayer}
+		\node (0) at (-13, 0) {};
+		\node (1) at (-10, 0) {};
+		\node (2) at (-6, 0) {};
+		\node (3) at (-2, 0) {};
+		\node (4) at (2, 0) {};
+		\node (5) at (6, 0) {};
+		\node (6) at (10, 0) {};
+		\node (7) at (13, 0) {};
+		\node (8) at (-6, 1) {};
+		\node (9) at (-2, 1) {};
+		\node (10) at (-2, -1) {};
+		\node (11) at (-6, -1) {};
+		\node (12) at (2, 1) {};
+		\node (13) at (6, 1) {};
+		\node (14) at (6, -1) {};
+		\node (15) at (2, -1) {};
+		\node (16) at (-11.5, 0) {\Large Alice@a.net };
+		\node (17) at (-4, 0.5) {\Large a.net's };
+		\node (18) at (4, 0.5) {\Large b.net's };
+		\node (19) at (11.5, 0) {\Large Bob@b.net };
+		\node (20) at (-8, 0.5) {\Large \textred{SMTP}};
+		\node (21) at (0, 0.5) {\Large \textred{SMTP} };
+		\node (22) at (8, 0.5) {\Large \textblue{POP/IMAP}};
+		\node (23) at (-4, -0.5) {\Large SMTP server };
+		\node (24) at (4, -0.5) {\Large SMTP server };
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [very thin] (1.center)
+			 to [in=-90, out=-90, looseness=1.75] (0.center)
+			 to [bend left=90, looseness=1.75] cycle;
+		\draw [<->] (1.center) to (2.center);
+		\draw [<->] (3.center) to (4.center);
+		\draw [<->] (5.center) to (6.center);
+		\draw [very thin] (7.center)
+			 to [in=-90, out=-90, looseness=1.75] (6.center)
+			 to [in=90, out=90, looseness=1.75] cycle;
+		\draw [very thin] (14.center)
+			 to (15.center)
+			 to (12.center)
+			 to (13.center)
+			 to cycle;
+		\draw [very thin] (8.center)
+			 to (9.center)
+			 to (10.center)
+			 to (11.center)
+			 to cycle;
+	\end{pgfonlayer}
+\end{tikzpicture}
+}
+\caption{Simplified mail architecture}
+\end{figure}
+
+Here, Alice sends a mail using $SMTP$ to her mail server. Bob will retrieve its mail either using $POP$ (removes it from the server) or using $IMAP$ (create a copy). These 3 protocols uses TCP.
+
+\subsubsection{Simple Mail Transfer Protocol (SMTP)}
+
+SMTP allows client to send emails and does not require authentication to be used. Each SMTP message send must contain: the (mail) address $from$, the (mail) address $to$ and a date.
+
+\subsubsection{Post Office Protocol (POP) and Internet Message Access Protocol (IMAP)}
+
+POP and IMAP allows client to retrieve their emails from a server. Both POP and IMAP require authentication to be used.
+
+\begin{enumerate}
+\item Establish a connection with the mail server
+\item Authenticate the user
+\item Downloads the mails from the server
+\end{enumerate}
+
+\subsubsection{Multipurpose Internet Mail Extensions (MIME)}
+
+MIME was designed to allow email to carry non-ASCII characters and binary files without breaking the email servers that were deployed at that time. In order to do so, new header fields were added to support MIME (MIME-version, Content-type, and Content-Transfer-Encoding).
+
+\subsection{HyperText Transfer Protocol (HTTP)}
+
+To replace the File Transfer Protocol (FTP), the \textit{World Wide Web} was created using hupertext to link files together. The three components of the World Wild Web are :
+\begin{enumerate}
+\item \textred{Uniform Resource Identifier (URI)} that uniquely identifies a resource on the WWW. It is divided into three parts : '\textit{\textcolor{deepGreen}{protocol://}\textcolor{deepBlue}{user@server:port}\textcolor{orange}{/resource}}'
+	\begin{enumerate}
+	\item[\textcolor{deepGreen}{(a)}] A protocol for the application layer (http://, mailto:, ftp://)
+	\item[\textcolor{deepBlue}{(b)}] Authority which is the IP address or DNS server where the file is located
+	\item[\textcolor{orange}{(c)}] A path to the file in UNIX format
+	\end{enumerate}
+\item HTML : A standard document format (divided into two parts : header and body) containing hypertext link
+\item HTTP : A standard protocol with efficient access to document on the server, made of request and responses. It contains :
+	\begin{enumerate}
+	\item A method (GET, HEAD, POST), a URI and a version of the HTTP
+	\item A header (specifies optional parameters)
+	\item An optional MIME document 
+	\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Comparisons}
+
+HTTP evolved during its different versions :
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{r|l|l}
+	\hline 
+	 & HTTP 1.0 & HTTP 1.1 \\ 
+	\hline 
+	TCP Connection & One per data & Persistent support (keep alive) \\ 
+	\hline 
+	Caching & If-Modified-Since & Based on an entity tag \\ 
+	\hline 
+	Host Header & No & Yes \\ 
+	\hline 
+	\end{tabular}
+	\caption{TCP in HTTP 1.0 VS HTTP 1.1}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{r|l|l}
+	\hline 
+	 & HTTP 1.1 & HTTP 2.0 \\ 
+	\hline 
+	Encoding & ASCII & Binary \\ 
+	\hline 
+	Optimization method & Pipelining & Multiplexing \\ 
+	\hline 
+	Compression support & No & Yes \\ 
+	\hline 
+	Push support & No & Yes \\ 
+	\hline 
+	\end{tabular}
+	\caption{TCP in HTTP 1.1 VS HTTP 2.0}
+\end{table}
+
+\subsection{Secure Shell (SSH)}
+
+The Secure Shell runs directly above the TCP protocol and allows for remote logins. Each user possess a \textred{public and a private key}. When a message is send via SSH, it is send using the public key of the receiver that will be able to decrypt it using its private key.
+
+Contrary to TLS, SSH does not require any certificate. As the algorithm takes into account the fact that the client's cache contains the public key of the server. This means that, in the case of a MITM (Man-In-The-Middle) attack, the protocol will see that the keys do not match and warn the user (which will decide to continue or not).
+
+For a connection, there is simply an exchange where the client indicate its SSH version and where the server answers with its. Then, the client will communicate the encryption algorithm it knows and the server will answer with the one it will use.
+
+\subsection{Transport Layer Security (TLS)}
+
+The TLS family of protocols works basically the same way as SSH but instead of using private keys, it will use \textred{certificates}. This is due to the fact that, when navigation over a large number or pages, the client cannot store every public key it encounters. Instead of exchanging keys, the client/server will exchange digital certificates.
