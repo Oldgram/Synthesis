@@ -1,0 +1,1441 @@
+\chapter{Graph Theory}
+
+\section{Basic concepts}
+
+\subsection{Graph}
+
+\begin{itemize}
+\item A graph $G = (N, E)$ with $N$ a set of nodes and $E$ a set of edges, swhere an edge is a pair of two nodes.
+\item Example : $N = {a, b, c}, E = {{a, b}, {b, c}}$
+\end{itemize}
+
+\subsection{Directed Graph}
+
+\begin{itemize}
+\item Each edge has a direction, and is represented as a tuple with a \textit{first} and a \textit{second}
+\item Example : $E = {(a, b), (b, c)}$
+\end{itemize}
+
+\subsection{Undirected Graph}
+
+\begin{itemize}
+\item Edges have no direction, they are represented as a set
+\item Example : $E = {{a, b}, {b, c}}$
+\end{itemize}
+
+\section{Paths and connectivity}
+
+\subsection{Path}
+
+A path in a graph is a sequence of nodes such that each successive pair in the sequence is an edge of the graph.
+
+\subsection{Simple path}
+
+A simple path is a path where each node occurs at most once.
+
+\subsection{Cycle}
+
+A cycle is a path with 3 or more edges such that the first and last nodes are the same and otherwise all node are distinct.
+
+\subsection{Connected Graph}
+
+A graph is connected if there exists a path between every pair of nodes.
+
+\subsection{Component of a graph}
+
+A component is a subset of nodes that satisfies two properties :
+\begin{enumerate}
+\item The subset is \textit{connected}.
+\item The subset is \textit{maximal} : there is no superset that is connected.
+\end{enumerate}
+
+\subsubsection{Strongly connected component}
+
+A component is strongly connected if it satisfies two properties :
+\begin{enumerate}
+\item Each node in the subset has a path to each other node in the subset.
+\item The subset is \textit{maximal} : it is not part of a larger subset with the property that each node can reach the other.
+\end{enumerate}
+
+\subsection{Analyzing a graph}
+
+\begin{itemize}
+\item A graph can be divided into its components.
+\item For each component, we can study its internal structure. For example, removing a node (with its edges) may split it in more components.
+\end{itemize}
+
+\subsection{Giant components}
+
+Large social networks often have a giant component, which is a component that contains a significant fraction of the graph's nodes.
+
+\subsection{Bipartite graph}
+
+A bipartite graph is a graph where the nodes can be separated into two sets such that each edge connects a node from one set to the other.
+
+\subsection{Clique or complete graph}
+
+There exist an edge joining every pair of nodes.
+
+\subsubsection{Labeled complete graph}
+
+A complete graph where every edge is labeled.
+
+\section{Distance in a graph}
+
+\subsection{Length}
+
+The length of a path is the number of edges it contains.
+
+\subsection{Distance between two nodes}
+
+Length of the shortest path between these two nodes.
+
+\subsection{Breadth-first-search}
+
+For finding distances between nodes.
+
+\chapter{How to combine graph theory and sociology}
+
+\section{Social networks}
+
+A graph where the nodes denote human beings and the edges denote a connection between two human beings.
+
+\subsubsection{Triadic closures}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{triadic_closure}
+\end{figure}
+
+if two people in a social network have a common friend, then the likelihood that they will become friends in the future is increased :
+
+\begin{itemize}
+\item B and C have more opportunities to meet.
+\item B and C both thrust A so they have a basis for trusting each other.
+\item B and C have common interests with A so they may have common interests with each other.
+\item A has an incentive to bring B and C together since if they are not friends, it stresses A.
+\end{itemize}
+
+\subsubsection{Strong triadic closure}
+
+If A and B are close friends as well as A and C, then it is especially likely that B and C will become connected.
+
+\subsection{Clustering coefficient}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{clust_coef}
+\end{figure}
+
+The \textit{clustering coefficient} $CC(A)$ of node A in a graph is :
+\begin{itemize}
+\item $CC(A) =$ probability that two randomly selected friends of A are friends with each other.
+\item $CC(A) = \frac{X}{Y}$
+	\begin{itemize}
+	\item $X =$ the number of pairs of A's friends that are connected.
+	\item $Y =$ the maximum number of pairs of A's friends that are connected.
+	\end{itemize}
+\item Triadic closures causes the clustering coefficient to increase
+\end{itemize}
+
+\subsection{Bridges}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{bridge}
+\end{figure}
+
+The edge joining A and B is a \textit{bridge} if removing this edge causes A and B to be in different components.
+
+\subsubsection{Local bridges}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{local_bridge}
+\end{figure}
+
+\begin{itemize}
+\item The edge joining A and B is a \textit{local bridge} if A and B have no friends in common, so deleting the edge will increase the distance between A and B to a value \textit{strictly greater than 2}.
+\item Local bridges play roughly the same role as bridges, but in a less extreme way : they connect a node to another node that would otherwise be far away.
+\end{itemize}
+
+\subsection{Neighborhood overlap}
+
+The neighborhood overlap generalizes local bridges :
+$\frac{X}{Y}$ where
+\begin{itemize}
+\item $X =$ number of nodes who are neighbors of \textit{both} A and B.
+\item $Y =$ number of nodes who are neighbors of \textit{at least one} of A and B.
+\end{itemize}
+
+\chapter{Networks in their surrounding context}
+
+\section{Longitudinal studies}
+
+The network must be followed over time.
+
+\section{Homophily}
+
+They are two basic mechanisms that cause friends to resemble each other : selection and social influence (both are sociological concepts)
+\begin{itemize}
+\item \textit{Selection} : people select friends with similar characteristics (an internal mechanism).
+	\begin{itemize}
+	\item individuals drive the formation of new links.
+	\end{itemize}
+\item \textit{Social influence} : people modify their behaviors to be closer to their friends (an external mechanism), also called "peer pressure".
+	\begin{itemize}
+	\item Existing links drive the formation of new links
+	\end{itemize}
+\end{itemize}
+
+\subsection{Affiliation network}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{affiliation_network}
+\end{figure}
+
+An affiliation network is a bipartite graph that shows which individuals are affiliated with which activities.
+\begin{itemize}
+\item The first set is the individuals.
+\item The second set is the foci.
+\end{itemize}
+
+\subsubsection{Three forms of closures in a social-affiliation network}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{closures_types}
+\end{figure}
+
+\subsection{Measuring homophily}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{homophilie_calc}
+\end{figure}
+
+\chapter{Positive and negative relationships}
+
+\section{Structural balance}
+
+\subsection{Balanced and unbalanced triangles}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{balanced_unbalanced}
+\end{figure}
+
+\subsection{Balance for networks}
+
+\subsubsection{Local definition}
+
+A network is balanced if all the triangles in it are balanced
+
+\subsubsection{Global definition}
+
+If a labeled complete graph is balanced, then either all pairs of nodes are friends, or else the nodes can be divided into two groups such that nodes within a group are friends and nodes between groups are enemies.
+
+\subsection{Weak structural balance}
+
+\subsubsection{Local definition}
+
+A network is balanced if all the triangles in it are balanced or they are $(---)$.
+
+\subsubsection{Global definition}
+
+If a labeled complete graph is weakly balanced, then its nodes can be divided into groups such that any two nodes belonging to the same group are friends and any two nodes belonging to different groups are enemies.
+
+\subsubsection{Degrees of structural balance}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{degree_structural_balance}
+\end{figure}
+
+\chapter{Introduction to game theory}
+
+Game theory studies the interaction of participants.
+
+\section{Game with two rational player}
+
+\subsection{Game}
+
+\begin{itemize}
+\item There is a set of participants, called the players.
+\item Each player has a set of options for how to behave : we will refer to these options as the player's strategies.
+\item For each choice of strategies (one by each player), each player receives a payoff. The payoff depends on the strategies selected by all players. Payoffs are generally numbers, and each player prefers larger payoffs to smaller ones.
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+\begin{enumerate}
+\item All that a player care about is summarized in the payoff.
+\item Each player knows everything about the game.
+\item Each player chooses a strategy to maximize their own payoff, given a belief about the strategy used by the other player.
+\end{enumerate}
+
+\subsubsection{On shot game}
+
+Two players that play only once and where the players simultaneously and independently choose their actions.
+
+\subsubsection{Dynamic games}
+
+Games that are played sequentially over time.
+
+\subsubsection{Forms}
+
+\paragraph{Normal form}
+
+In normal form, each player commits ahead of time to a complete plan for playing the whole game.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{normal_form}
+\end{figure}
+
+\newpage
+\paragraph{Extensive form}
+
+In extensive form, each player makes an optimal decision at each intermediate step.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{extensive_form}
+\end{figure}
+
+\subsection{Strategies}
+
+\subsubsection{Strictly dominant strategy}
+
+When a player has a strategy strictly better than all others, regardless of what the other player does (not always possible).
+
+\begin{table}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{strictly_dominant_strategy}
+\end{table}
+
+\subsubsection{Mixed strategies}
+
+A random choice between two pure strategies is called a mixed strategy.
+
+\begin{table}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{mixed_strategies}
+\end{table}
+
+\subsubsection{Best response}
+
+\begin{table}[H]
+    \centering
+    \includegraphics[width=0.25\textwidth]{best_response}
+\end{table}
+
+\begin{itemize}
+\item S for player 1 is best response to T for Player 2 if :
+	\begin{itemize}
+	\item For all other strategies, $S'$ of Player 1 : $P1(S, T) \geq P1(S', T)$
+	\end{itemize}
+\item S for player 1 is strictly best response to T for Player 2 if :
+	\begin{itemize}
+	\item For all other strategies, $S'$ of Player 1 : $P1(S, T) > P1(S', T)$
+	\end{itemize}
+\end{itemize}
+
+\newpage
+\subsubsection{Nash equilibrium}
+
+\begin{itemize}
+\item Each player's strategy is a best response to the other.
+\item Corresponds to free market.
+\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \includegraphics[width=0.28\textwidth]{nash_equilibrium}\\
+    $P(C2, C1)$ is a Nash equilibrium if $a < c$ and $h < d$
+\end{table}
+
+\paragraph{Coordination / anti-coordination games}
+
+Games with multiple Nash equilibria.
+
+\paragraph{Principle of indifference}
+
+If Player 1 believes that Player 2 will play H more than $\frac{1}{2}$ of the time, then Player should play T (and conversely).
+
+Choice of $q = \frac{1}{2}$ by Player 2 makes Player 1 \textcolor{orange}{indifferent} to H or T.
+
+Each player should randomize to make the other player indifferent.
+
+\subsubsection{Pareto optimality}
+
+\begin{itemize}
+\item A choice of strategies (one by each player) is Pareto optimal if there is no other choice in which all players receive payoffs at least as high, and at least one player receives a strictly higher payoff.
+\item Corresponds to regulation.
+\end{itemize}
+
+\begin{table}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{nash_pareto}\\
+    $(88, 88)$ is a Nash equilibrium, whereas the 3 others options are Pareto optimal.
+\end{table}
+
+\subsubsection{Social optimality}
+
+\begin{itemize}
+\item A choice of strategies (one by each player) is \textcolor{orange}{socially optimal} if it maximizes the sum of the players' payoff.
+\item It is also Pareto optimal.
+\end{itemize}
+
+\section{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{game_theory_sum}
+\end{figure}
+
+\chapter{Car traffic networks}
+
+\section{Braess' Paradox}
+
+In a network representing a certain traffic (here, a car traffic network), adding a new edge (a new strategy) can result in a strictly worse Nash equilibria than the previous one.
+In short, there are many situations where adding more choices leads to worse situations.
+
+Example :
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{braess_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\textwidth]{braess_2}
+\end{figure}
+
+\chapter{Auctions}
+
+\section{When are auctions appropriate ?}
+
+When the value of the objet is :
+\begin{itemize}
+\item \textcolor{orange}{known} : an auction is \textcolor{orange}{inappropriate}.
+\item \textcolor{orange}{unknown} : an auction is \textcolor{orange}{appropriate}.
+\end{itemize}
+
+\subsection{Two kind of unknown values}
+
+\subsubsection{Independent, private value}
+
+\begin{itemize}
+\item Each buyer is interested for its own personal use
+\item The values can be different because the buyers have different tastes
+\end{itemize}
+
+\subsubsection{Common value}
+
+\begin{itemize}
+\item Assume each buyer plans to resell the item if bought, then the item has an unknown but common value regardless of who buys it.
+\item \textcolor{orange}{Winner's course} : if there are many bidders, the winning bidder will very likely overestimate the common value and lose money on the resell of the object.
+	\begin{itemize}
+	\item[$\rightarrow$] To counter it, we should bid lower that our private value of the good.
+	\end{itemize}
+\end{itemize}
+
+\section{Type of auctions}
+
+\subsection{Ascending-bid auctions}
+
+\begin{itemize}
+\item English auctions.
+\item Realtime.
+\item Seller gradually raises the price until only one bidder remains.
+\item Equivalent to second-price auctions.
+\end{itemize}
+
+\subsection{Descending-bid auctions}
+
+\begin{itemize}
+\item Dutch auctions.
+\item Realtime.
+\item Seller gradually lowers the price until the first bidder accepts.
+\item Equivalent to first-price auctions.
+\end{itemize}
+
+\subsection{First-price sealed-bid auctions}
+
+\begin{itemize}
+\item Simultaneous bids.
+\item The highest bidder wins and pays the value of their id.
+\item Payoff to bidder $i$ with value $v_i$ and bid $b_i$ is defined as follows :
+	\begin{itemize}
+	\item if $b_i$ is not the winning bid, then the payoff to $i$ is $0$.
+	\item if $b_i$ is the winning bid, then the payoff to $i$ is $(v_i - b_i)$.
+	\end{itemize}
+\end{itemize}
+
+\subsection{Second-price sealed-bid auctions}
+
+\begin{itemize}
+\item Vickrey auctions.
+\item Simultaneous bids.
+\item The highest bidder wins and pays the vale of the second-highest bid.
+\item Bidding your \textcolor{orange}{true value} is a \textcolor{orange}{dominant strategy}.
+\item Payoff to bidder $i$ with value $v_i$ and bid $b_i$ is defined as follows :
+	\begin{itemize}
+	\item if $b_i$ is not the winning bid, then the payoff to $i$ is $0$.
+	\item if $b_i$ is the winning bid, and some other $b_j$ is the second-place bid, then the payoff to $i$ is $(v_i - b_j)$.
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.82\textwidth]{second_price_proof}
+\end{figure}
+
+\chapter{Markets}
+
+A market is :
+\begin{itemize}
+\item any place where two or more parties can meet to exchange goods or services, usually for money but sometimes directly through barter.
+\item a coordinating mechanism that uses prices to convey information among the parties to regulate production and distribution.
+\end{itemize}
+
+\section{Matching markets}
+
+A matching market is a market that matches each buyer to a desired item.
+
+\subsection{Perfect matching}
+
+If there are an equal number of nodes on each side of a bipartite graph, then a perfect matching is an assignment between sides such that :
+\begin{enumerate}
+\item Each node is connected by an edge.
+\item No two left nodes are assigned to the same right nodes.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{perfect_matching}
+\end{figure}
+
+\subsection{Constricted sets}
+
+Given any set $S$ of nodes on the right side, we define the neighbor set $N(S)$ as the collection of all corresponding left nodes. Set $S$ is constricted if $|N(S)| < |S|$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{constricted_set}
+\end{figure}
+
+\subsection{Matching theorem}
+
+\begin{formal}
+If a bipartite graph with equal numbers of left and right nodes has no perfect matching, then it must contain a constricted set.
+\end{formal}
+
+\newpage
+\subsection{Matching markets with prices}
+
+\subsubsection{Prices and market clearing}
+
+\paragraph{Market clearing}
+
+\begin{itemize}
+\item \textcolor{orange}{Market clearing} means that the \textcolor{orange}{supply of an item is equal to the demand}, so that there is no leftover of either.
+\item We say that \textcolor{orange}{a set of prices is market clearing if the resulting preferred-seller graph has a perfect matching}.
+\item In a bipartite matching market, there exists a set of market-clearing prices for any set of buyer valuations.
+\item \textcolor{orange}{Market-clearing prices are always socially optimal} :
+	\begin{itemize}
+	\item For any set of market-clearing prices in a bipartite matching market, a perfect matching in the preferred-seller graph has the maximum total payoff for sellers and buyers, for any assignment of sellers to buyers.
+	\end{itemize}
+\end{itemize}
+
+\paragraph{Constructing market clearing prices}
+
+We construct a procedure that gradually increase prices and we show that this will always lead to market clearing.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{market_clearing_round}
+\end{figure}
+
+\subsection{Auctions and markets are related}
+
+The bipartite matching market generalize an ascending-bid auction :
+\begin{itemize}
+\item The ascending-bid auction has $n$ buyers and $1$ seller. The seller keeps increasing prices until one buyer wins the auction.
+\item The bipartite matching market has $n$ buyers and $n$ sellers. The sellers keep increasing the prices until each buyer has found one seller.
+\end{itemize}
+
+\subsubsection{Valuations}
+
+Each person gives a numerical value to each item.
+
+\subsubsection{Quality}
+
+The sum of all persons' valuations.
+
+\subsubsection{Optimal assignment}
+
+It is an assignment of highest possible quality.
+
+\subsection{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{matching_market_sum}
+\end{figure}
+
+\section{Markets with intermediaries}
+
+\subsection{Order book}
+
+Is a list of orders that buyers and sellers have submitted.
+
+\begin{itemize}
+\item \textcolor{orange}{Ask} : lowest sell offer.
+\item \textcolor{orange}{Bid} : highest buy offer.
+\end{itemize}
+
+\subsection{Buyers, Sellers and Traders}
+
+\subsubsection{Three fundamental principles}
+
+\begin{enumerate}
+\item Individual buyers and sellers trade through intermediaries.
+\item Buyers and sellers may have access to different intermediaries.
+\item Buyers and sellers may trade a different prices.
+\end{enumerate}
+
+\subsubsection{Prices depend on the positions in the network}
+
+If a buyer can :
+\begin{itemize}
+\item only access one trader, then the trader increases his payoff.
+\item access several traders, then the buyer increases his payoff.
+\end{itemize}
+
+\subsubsection{Prices and the flow of goods}
+
+\begin{enumerate}
+\item First step :
+	\begin{itemize}
+	\item Each trader $t$ offers a bid price $b_{ti}$ to each seller $i$ he his connected to.
+		\begin{itemize}
+		\item[$\rightarrow$] This is where the strategic reasoning is done.
+		\end{itemize}
+	\item Each trader $t$ offers an ask price $a_{tj}$ to each buyer $j$ he is connected to.
+	\end{itemize}
+\item Second step :
+	\begin{itemize}
+	\item Each seller and buyer chooses at most one trader to deal with.
+		\begin{itemize}
+		\item[$\rightarrow$] The one with the best offer.
+		\end{itemize}
+	\item Each seller sells a copy (or not).
+	\item Each buyer buys a copy (or not).
+	\end{itemize}
+\end{enumerate}
+
+\newpage
+\textcolor{orange}{At most} one copy of the good moves along any edge in the network.
+
+\begin{itemize}
+\item Many goods can pass through one trader.
+\item A trader sells exactly what he receives.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{flow_of_goods}
+\end{figure}
+
+Sometimes prices are \textcolor{orange}{pushed to the limit} so there is \textcolor{orange}{no payoff}.
+
+\subsubsection{Indifference}
+
+\begin{itemize}
+\item Prices are pushed to the limit of an individual's willingness to trade.
+\item We allow trades with zero payoff with ties broken as needed.
+\end{itemize}
+
+\subsubsection{Strategies}
+
+\begin{itemize}
+\item All traders simultaneously choose ask and bid prices.
+\item A seller or buyer's strategy is a choice of neighboring trader (or not).
+\end{itemize}
+
+\subsubsection{Payoff}
+
+\begin{itemize}
+\item A \textcolor{orange}{trader's payoff} is his total profit : sum of all ask prices of accepted offers to buyers minus sum f bid prices of accepted offers to seller.
+\item For \textcolor{orange}{seller} $i$, payoff from selecting trader $t$ is $b_{ti}$, while payoff from selecting no trader is $0$ (note we only consider when $v_i = 0$).
+\item For \textcolor{orange}{buyer} $j$, payoff from selecting trader $t$ is $v_j - a_{tj}$ while payoff from selecting no trader is $0$. in the former case, buyer receives the goods but pays $a_{yj}$.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{flow_of_goods_payoff}
+\end{figure}
+
+\subsection{Equilibrium in trading networks}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{equilibria_networks}
+\end{figure}
+
+\subsubsection{Monopoly}
+
+\begin{itemize}
+\item Buyers and sellers are subject to \textcolor{orange}{monopoly} when they access \textcolor{orange}{only a single trader}.
+\item The \textcolor{orange}{only equilibrium} is for the trader to \textcolor{orange}{set bid to $0$ to the seller and ask $1$ to the buyer}.
+\end{itemize}
+
+\subsubsection{Perfect competition}
+
+\begin{itemize}
+\item Buyers and sellers are subject to \textcolor{orange}{perfect competition when they access more than one trader}.
+\item Equilibrium for $T2$ occurs at \textcolor{orange}{common bid and ask of x}.
+\end{itemize}
+
+\subsubsection{Second-price auction}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{second_price_auction}
+\end{figure}
+
+\newpage
+\subsubsection{Ripple effect}
+
+The network is partially under the control of the participants.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{ripple_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{ripple_2}
+\end{figure}
+
+\subsection{Social welfare in trading networks}
+
+\begin{itemize}
+\item The \textcolor{orange}{social welfare} is simply the \textcolor{orange}{sum of $(v_j - v_i)$} over all moved goods.
+\item There \textcolor{orange}{exist values for the variable that maximize social welfare} and picks an equilibrium.
+\item In every trading network, \textcolor{orange}{there is always at least one equilibrium}.
+\item \textcolor{orange}{Social welfare increases as connectivity increases.}
+\end{itemize}
+
+\subsection{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{trading_networks_sum}
+\end{figure}
+
+\section{Bargaining and power in networks}
+
+\subsection{Power in paths}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{power_path}
+\end{figure}
+
+\subsection{A mathematical framework for negotiation}
+
+\subsubsection{Nash bargaining solution}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{nash_bargaining}
+\end{figure}
+
+\begin{itemize}
+\item A gets $x + (s/2)$ and B gets $y + (s/2)$ where $s = 1 - x - y$.
+\item Nash bargaining solution :
+	\begin{enumerate}
+	\item A gets $(x + 1 - y)/2$
+	\item B gets $(y + 1 - x)/2$
+	\end{enumerate}
+\end{itemize}
+
+\subsubsection{Ultimatum game}
+
+\begin{enumerate}
+\item A is given a dollar and is told to propose a division with B, that is, A proposes how much to keep from himself and how much to give to B.
+\item B is given the option to approve or reject the division.
+\item if B approves, both get the proposed amount. If B rejects, both get zero.
+\end{enumerate}
+
+\paragraph{Game theory}
+
+Game theory says that B should accept if the amount $> 0$.
+
+\paragraph{Human way of playing}
+
+\begin{itemize}
+\item If the amount offered is to unbalanced, B will feel cheated and will refuse A's offer.
+\item We say there is an \textcolor{orange}{Emotional payoff}.
+\end{itemize}
+
+\subsubsection{Stable outcomes}
+
+\begin{itemize}
+\item An outcome of a network is stable if and only if it contains no instabilities.
+\item Stability is too weak in networks with small power difference
+\end{itemize}
+
+\paragraph{Outcome of a network exchange on a graph}
+
+\begin{enumerate}
+\item A matching on the set of nodes. This corresponds to the one-exchange rule, and some nodes may be left out.
+\item A number associated with each node, its value, indicating how much the node gets from the exchange. If two nodes are matched, the sum of values should be $1$. If a node is not in a matching, its value should be $0$.
+\end{enumerate}
+
+\paragraph{Instability}
+
+Given an outcome consisting of a matching and set of values, an instability in this outcome is an edge not in the matching, joining two nodes $X$ and $Y$, such that $(X$’s value$) + (Y$’s value$) < 1$.
+
+\subsubsection{Theory of balanced outcomes}
+
+\begin{formal}
+An outcome (consisting of a matching plus node values) is balanced, if for each edge in the matching, the money split represents the Nash bargaining solution for the two nodes involved, given the best outside options for each node provided by the values in the rest of the network.
+\end{formal}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{balanced_outcomes}
+\end{figure}
+
+Outcome is balanced when all agreements are Nash bargaining solutions; balanced outcomes exist whenever stable outcomes exist.
+
+\subsection{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{negotiation_network}
+\end{figure}
+
+\chapter{World Wide Web}
+
+\section{Structure of the web}
+
+\subsection{Hypertext}
+
+Each node is a page that contains links to other pages.
+
+\subsection{Network distribution}
+
+Pages are geographically distributed as internet nodes.
+
+\subsection{Bow-tie structure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{bow_tie_web}
+\end{figure}
+
+\textcolor{orange}{SCC}: Strongly connected component
+
+\section{Web 2.0}
+
+\subsection{Increased abstraction level}
+
+\begin{enumerate}
+\item Collaborative creation and maintenance of shared content, instead of individuals creating\\pages (Wikipedia).
+\item Creation of services that manage data, instead of sets of pages (Gmail).
+\item Connections between people instead of between pages (Facebook).
+\end{enumerate}
+
+\subsection{Social phenomena}
+
+\subsubsection{Software that gets better the more people use it}
+
+Online services are more useful and more appealing as more people use them. A marketplace is more useful as more people put objects for sale and more buy objects. Recommendation systems and trust systems are more useful as more people use them.
+
+\subsubsection{The wisdom of crowds}
+
+Collaborative authorship on Wikipedia, group evaluation of news content on Digg, breaking news on Twitter. This process can also fail, because of herding and instability.
+
+\subsubsection{The "Long Tail"}
+
+Combining a small amount of very popular content with a huge amount of less popular content with “niche appeal”. The less popular content is often bigger than the popular content.
+
+\section{Link analysis and Web search}
+
+\subsection{The problem of search}
+
+\begin{itemize}
+\item \textcolor{orange}{Inexpressiveness} : subtle ideas cannot be expressed using keyword combinations.
+\item \textcolor{orange}{Synonymy} : multiple words for the same concept, "scallions" vs "green onions".
+\item \textcolor{orange}{Polysemy} : the same word has multiple meanings, "jaguar" gives cars instead of animals.
+\item \textcolor{orange}{Abundance problem} : too much relevant information.
+\end{itemize}
+
+\subsection{Hubs and authorities}
+
+\begin{itemize}
+\item \textcolor{orange}{Authority} : page we are looking for, a high-quality answer to the query.
+\item \textcolor{orange}{Hub} : page that has a high-quality list to the pages we are looking for.
+\end{itemize}
+
+\subsubsection{Algorithm to compute scores}
+
+\begin{itemize}
+\item Start with all hub and authority scores equal to 1.
+\item Repeat $k$ times :
+	\begin{itemize}
+	\item For each page $p$, update auth($p$) to be the sum of all hubs pointing to it.
+	\item For each page $p$, update hub($p$) to be the sum of all authority pages it points to.
+	\item Normalize the authority scores by dividing by sum o all authorities (and also for hubs).
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Limiting values}
+
+\begin{itemize}
+\item Limiting values are \textcolor{orange}{independent of the initial values} of hub ad authority scores.
+\item The \textcolor{orange}{normalized values converge to limits}.
+\end{itemize}
+
+\subsection{PageRank}
+
+\begin{itemize}
+\item Uses only \textcolor{orange}{one value per page} : its \textcolor{orange}{importance}.
+\item Intuitively the \textcolor{orange}{PageRank} value is a kind of "fluid" that circulates through the network, where nodes are containers and links are pages.
+	\begin{itemize}
+	\item[$\rightarrow$] The amount of fluid is \textcolor{orange}{constant}, so \textcolor{orange}{normalization is automatic}.
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Basic algorithm}
+
+\paragraph{Initialization}
+
+We assume that the network has n nodes.
+\begin{itemize}
+\item[$\rightarrow$] $\forall p : pr(p) := \frac{1}{n}$
+\end{itemize}
+
+\paragraph{Iteration}
+
+\begin{enumerate}
+\item Compute the amount of fluid on outgoing links of all pages $p$.
+	\begin{itemize}
+	\item[$\rightarrow$] $\forall p : pr_{\text{link}}(p, p') := \frac{pr(p)}{m}$ (page $p$ has $m$ outgoing links, each to $p'$)
+	\end{itemize}
+\item Sum all fluid for incoming links of page $p$.
+	\begin{itemize}
+	\item[$\rightarrow$] $\forall p : pr(p) := \sum_{p'\text{ incoming links}} pr_{\text{link}}(p, p')$
+	\end{itemize}
+\end{enumerate}
+
+\paragraph{Problem with the basic definition}
+
+Some nodes can collect all the PageRank values.
+
+\paragraph{Fixing the problem}
+
+\begin{enumerate}
+\item Apply the basic update rule.
+\item Do the following scaling : $\forall p : pr(p) := s * pr(p) + \frac{1 - s}{n}$
+	\begin{itemize}
+	\item This uses scaling factor $s$ strictly between $0$ and $1$ (often $0.8$ or $0.9$). The PageRank fraction $(1-s)$ “evaporates” from each node and “rains” uniformly on all nodes.
+	\item This completes the cycle between all nodes.
+	\end{itemize}
+\end{enumerate}
+
+\subsubsection{Random walk definition}
+
+\begin{itemize}
+\item Consider a person randomly browsing the Web :
+	\begin{itemize}
+	\item They start by picking a page at random (each page equal probability).
+	\item They follow links for $k$ steps and in each step they follow a random link.
+		\begin{itemize}
+		\item[$\rightarrow$] This is called a random walk on the network.
+		\end{itemize}
+	\item We can prove that the probability of being on a page $X$ after $k$ steps is precisely the PageRank of $X$ after $k$ iterations of the basic update rule.
+	\end{itemize}
+\item The scaled update rule is formulated as follow :
+	\begin{itemize}
+	\item At each step, the walker follows a random link with probability $s$, and "jumps" to a random page with probability $(1-s)$.
+	\item The walker mostly follows the link and sometimes jumps.
+	\end{itemize}
+\end{itemize}
+
+\section{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{web_sum}
+\end{figure}
+
+\section{Random Walks, Matrices, and Page Rank}
+
+\subsection{Random Walks on Graphs}
+
+\subsubsection{Random Walks}
+
+Let $G(V, E)$ be a connected graph. Consider random walk on $G$ :
+\begin{itemize}
+\item We start at node $v_0$ and at the $t$-th step, we are at node $v_t$
+\item We move to a neighbor of $v_t$ with a probability of $\frac{1}{d(v_t)}$.
+\item The sequence of random walks is called the Markov chain.
+\end{itemize}
+
+\subsubsection{Convergence}
+
+For any \textcolor{orange}{connected non-bipartite} bidirectional graph, and any starting point, the random walk converges to a \textcolor{orange}{unique} stationary distribution.
+
+\subsection{Stationary Distribution}
+
+Random walk converges to the stationary distribution :
+$\pi(v) = \frac{d(v)}{2m}$, where :
+\begin{itemize}
+\item $d(v) =$ degree of $v$, i.e. the number of neighbors of $v$.
+\item $m = |E|$, i.e. the number of edges is $G$.
+\end{itemize}
+
+\section{Matrix Representations}
+
+\subsection{Definitions}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{matrix_representation}
+\end{figure}
+
+\subsection{Adjacency Matrix}
+
+$A$ is $n*n$ adjacency matrix of $G=(V,E)$ where $A_{ij} = 1$ if there is a link between node $i$ and node $j$ ($0$ otherwise).
+
+\subsubsection{Matrix manipulations}
+
+\begin{itemize}
+\item $A$ give us all 1-hop paths.
+\item $A^2$ gives us the number of 2-hops paths.
+	\begin{itemize}
+	\item $A^k$ gives us the umber of $k$-hops paths.
+	\end{itemize}
+\item Let $v = (1\ 0\ 0\ 0\ 0)$ represent a message from the first node
+	\begin{itemize}
+	\item $vA^k$ indicates how many walks of length $k$ from node $1$ end up in node $i$.
+	\end{itemize}
+\end{itemize}
+
+\section{Google PageRank}
+
+\subsection{PageRank "Voting" formulation}
+
+\begin{itemize}
+\item Each page has a budget of "votes" and distributes them evenly to all the outgoing links.
+\item The importance of node $j$ is the sum of the votes on its in-links.
+\end{itemize}
+
+\subsection{Google PageRank}
+
+\begin{itemize}
+\item Principal eigenvector on the transition matrix of the web graph.
+\item Computed with Power iteration.
+\item Issues in directional graph : \textcolor{orange}{Dead end} (nodes with no out-degree) and \textcolor{orange}{spider traps} (loop inside a component).
+\end{itemize}
+
+\newpage
+\subsubsection{How do we fix PageRank}
+
+\begin{itemize}
+\item Make the graph \textcolor{orange}{strongly connected} and \textcolor{orange}{aperiodic}
+\item Make "tiny" links from each node to every other node, and keep the \textcolor{orange}{core} of the initial graph.
+\item Google random walker will :
+	\begin{itemize}
+	\item follow the "real" link with prob \textcolor{orange}{$\beta$}
+	\item jump to a random connected page with prob \textcolor{orange}{$1-\beta$}
+		\begin{itemize}
+		\item[$\rightarrow$] Random walk will escape any \textcolor{orange}{spider traps} after 5-10 steps ($\beta$ is in the range of $0.8$ to $0.9$), and will always teleport out of a \textcolor{orange}{dead end} after the first step ($1-\beta=1$).
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Problems with PageRank ?}
+
+\begin{itemize}
+\item Measures "generic" popularity of a page, might miss topic-specific authorities.
+	\begin{itemize}
+	\item[$\rightarrow$] Solved with \textcolor{orange}{Topic Specific} PageRank.
+	\end{itemize}
+\item Susceptible to link spam (artificial link topologies create to boost page rank).
+	\begin{itemize}
+	\item[$\rightarrow$] Solved with \textcolor{orange}{TrustRank}.
+	\end{itemize}
+\item Uses a single measure of importance.
+\end{itemize}
+
+\section{Beyond PageRank}
+
+\subsection{Topic Specific PageRank}
+
+\begin{itemize}
+\item Bias the random walk by giving more influence to the webpages that are close to a particular topic
+\item Teleport to "relevant pages" (\textcolor{orange}{teleport set}, obtained from the "previous generation" search engines) instead of random ones.
+\end{itemize}
+
+\subsection{SimRank}
+
+\begin{itemize}
+\item Also known as PageRank with restarts
+\item Random walks from a fixed node on $k$-partite graphs with $k$ types of nodes.
+\end{itemize}
+
+\subsection{PageRank summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{pagerank_sum}
+\end{figure}
+
+\section{Web spamming and how to combat it}
+
+\subsection{Web spamming}
+
+Deliberate action to boost a webpage position in ranking. Used by those with commercial interest to try to \textcolor{orange}{exploit search engines} to bring people to their own site (regardless of the relevance).\\
+\textcolor{orange}{Spam} : techniques for achieving high relevance/importance for a web page.
+
+\newpage
+\subsection{Term-spam}
+
+Putting a specific word 1000 times on your page and/or copy a highly relevant page to yours and make it "invisible"
+
+\subsubsection{Google's solution to Term-spam}
+Believe what people say about you rather than what you say about yourself, and use PageRank as a tool to measure the relevance of Web pages.
+
+
+\subsection{Spam Farming}
+
+Concentrating PageRank on a single page by creating link structures (\textcolor{orange}{link farms}) that boost Page rank of a particular page.
+
+Webpages from spammers' point of view :
+\begin{itemize}
+\item \textcolor{blue}{Inaccessible} pages.
+\item \textcolor{green}{Accessible} pages (blogs, comments, reviews where spammers can post).
+\item \textcolor{red}{Owned} pages (pages/domains controlled by spammers).
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{link_farm}
+\end{figure}
+
+\begin{itemize}
+\item \textcolor{green}{$x$} : PageRank contributed by accessible pages.
+\item \textcolor{orange}{$y$} : PageRank of target page $t$.
+	\begin{itemize}
+	\item[$\rightarrow$] $\textcolor{orange}{y} = \frac{\textcolor{green}{x}}{\textcolor{red}{1-\beta^2}} + c \frac{M}{N}$ where $c = \frac{\beta}{1 + \beta}$
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{How to combat LinkSpam ?}
+
+\begin{itemize}
+\item \textcolor{orange}{Identifying and Blacklisting of spam farms} $\rightarrow$ Not good, arms race of hiding and detecting spam farms.
+\item \textcolor{orange}{TrustRank} : teleport to trusted pages only.
+\item \textcolor{orange}{Teleport set = trusted pages}, similar to Topic-Specific PageRank, each page gets a trust value between 0 and 1.
+\end{itemize}
+
+\newpage
+\subsection{Spam Mass}
+
+Goal : estimate the fraction of a page's PageRank that comes from spam pages.
+
+Solutions :
+\begin{enumerate}
+\item \textcolor{orange}{Mark as spam} all pages \textcolor{orange}{bellow the trust threshold}.
+	\begin{itemize}
+	\item[$\rightarrow$] Legitimate pages but with naturally low page rank (e.g. new pages) will be ignored as we look at the \textcolor{orange}{absolute value} of the page rank.
+	\end{itemize}
+\item With $r_p$ the PageRank of page $p$ and $r^+_p$ the PageRank of $p$ with teleport into trusted pages only :
+	\begin{itemize}
+	\item[$\rightarrow$] The fraction of a page's PageRank that comes from spam pages : $r^-_p = r_p - r^+_p$
+	\item[$\Rightarrow$] \textcolor{orange}{Spam mass} of $p = \frac{r^-_p}{r_p}$
+	\end{itemize}
+\end{enumerate}
+
+\chapter{Information cascades}
+
+\paragraph{Following the crowd}
+
+People connected in a network will influence each other, this results in herding or information cascade.
+
+\paragraph{Definition of an information cascade}
+
+An information cascade has the potential to occur when people make decisions sequentially, with \textcolor{orange}{later people watching the actions of earlier people} and inferring what the earlier people know (occurs when people abandon their own information in favor of inferences based on other people's actions, it is not a mindless imitation).
+
+There are two kinds of cascades :
+\begin{enumerate}
+\item \textcolor{orange}{Information cascade}
+	\begin{itemize}
+	\item[$\rightarrow$] It is inference that makes the cascade.
+	\end{itemize}
+\item \textcolor{orange}{direct-benefit cascade}
+	\begin{itemize}
+	\item[$\rightarrow$] It is benefit to you that makes the cascade.
+	\end{itemize}
+\end{enumerate}
+
+\section{A simple herding experiment}
+
+Simple experiment with :
+\begin{itemize}
+\item A \textcolor{orange}{decision} to be made.
+\item People make the decision \textcolor{orange}{sequentially} and each \textcolor{orange}{observes choices made earlier}.
+\item Each person has some \textcolor{orange}{private information} to help them decide.
+\item Each person makes inferences about other's private information from their actions.
+\end{itemize}
+
+We use Bayes' Rule to justify the reasoning used in the herding experiment.
+
+\section{Bayes' Rule}
+
+\subsection{General conclusions}
+
+\begin{enumerate}
+\item It is very easy for a cascade to occur.
+\item A cascade can lead to suboptimal outcomes.
+\item Cascades can be fragile.
+\end{enumerate}
+
+\subsection{Conditional probability and Bayes' Rule}
+
+"What is the probability of $X$, given that I know $Y$ and the previous person asserted $Z$ ?"
+\begin{itemize}
+\item We compute the \textcolor{orange}{probabilities of events}
+	\begin{itemize}
+	\item An event is something that may occur, but only once. Given event A, it has a probability of occurring that we denote $Pr[A]$.
+	\item Whether or not an event occurs depends on many random previous occurrences. We consider a sample space where each point in the space consists of a particular realization for each of these outcomes.
+	\end{itemize}.
+\item From there, we can compute the probability of $Pr[A|B]$ in terms of $Pr[B|A]$ :
+	\begin{equation}
+	Pr[A|B] = Pr[A] * \frac{Pr[B|A]}{Pr[B]}
+	\end{equation}
+\end{itemize}
+
+\section{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{information_cascade_sum}
+\end{figure}
+
+\chapter{Direct-Benefit Cascades (Network Effects)}
+
+Sometimes there is an explicit benefit to aligning your behavior with that of over, in economics they are called \textcolor{orange}{positive externalities}.\\
+An \textcolor{orange}{externality} is a situation where the welfare of an individual depends on the actions of other individuals, without mutually agreed-upon compensations.
+
+\section{The Economy without Network Effects}
+
+\subsection{Studying network effects}
+
+\begin{itemize}
+\item All consumers are given names as real numbers from 0 to 1.
+\item Each consumer has a reservation price, which is the maximum amount he is willing to pay for one unit of the product.
+	\begin{itemize}
+	\item Let $r(x)$ denote the reservation price of consumer $x$.
+	\item Reservation prices are \textcolor{orange}{arranged in decreasing order} : if $r(x') > r(x)$, then $x' < x$.
+	\end{itemize}
+\item Suppose that the \textcolor{orange}{market price} for a unit of the product is $p$ (graphic 1).
+	\begin{itemize}
+	\item If the price were r(0) or more, nobody would buy, conversely if the price were r(1) or less, everyone would buy
+	\item[$\rightarrow$] $r(1) < p < r(0)$.
+	\end{itemize}
+\item The equilibrium between price and demand is socially optimum (graphic 2).
+	\begin{itemize}
+	\item With this, we can compute the social welfare (which for all consumers from $0$ to $x$ is the area between the curve $y=r(x)$ and the line $y=p*$.
+	\end{itemize}
+\item When the \textcolor{orange}{production cost is $p*$ per unit}, the market price is $p*$ as it cannot be below $p*$ because of the production cost, nor above $p*$ because of competition (graphic 3).
+	\begin{itemize}
+	\item[$\rightarrow$] \textcolor{orange}{The equilibrium of the product is $x*$}, such as $r(x*) = p*$.
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.325\textwidth]{price-demand_relationship}\hfill
+	\includegraphics[width=0.325\textwidth]{social_welfare_equilibrium}\hfill
+	\includegraphics[width=0.325\textwidth]{quantity_equilibrium}
+\end{figure}
+
+\section{The Economy with Network Effects}
+
+Withe network effects, a potential consumer takes into account their own reservation price as well as the total number of users. This gives :
+\begin{itemize}
+\item $r(x)$ : the intrinsic reservation price for consumer $x$.
+\item $f(z)$ : the benefit to each consumer when fraction $z$ has bought the product.
+	\begin{itemize}
+	\item[$\rightarrow$] The actual reservation price of consumer $x$ is $r(x)f(z)$, \textcolor{orange}{he buys if $r(x)f(z) \geq p*$}.
+	\end{itemize}
+\end{itemize}
+
+\newpage
+\subsection{Comparing the two models}
+
+Equilibrium price $p* =$
+\begin{itemize}
+\item $r(x*)$ in the model without network effects.
+\item $r(z)f(z)$ in the model with network effects.
+\end{itemize}
+
+\subsection{Equilibria with network effects}
+
+We assume that all consumers expect that the fraction of the population buying the product is $z$, and they know what is the fraction actually buying.
+\begin{itemize}
+\item[$\rightarrow$] This is a \textcolor{orange}{self-fulfilling expectations equilibrium} as the fraction who actually purchase the product will be $z$.
+\item If everybody expects $z = 0$ to buy, then $r(x)f(0) = 0$ (and nobody will buy).
+\end{itemize}
+
+For $0<z<1$ :
+\begin{itemize}
+\item The set of purchasers is exactly the consumers from $0$ to $z$, and the price is the price of consumer $z$ whose reservation price is $r(z)f(z)$.
+\item The equilibrium price is $p* = r(z)f(z)$.
+\end{itemize}
+
+\paragraph{Example}
+
+For $r(x) = 1-x$ and $f(z) = z$, $r(z)f(z) = z(1-z)$. This means :
+\begin{itemize}
+\item If $p* > 1/4$, there are no equilibria other then for $z=0$.
+\item If $0 < p* < 1/4$, there are two other equilibria : $z'$ and $z''$
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{network_effects_example}
+\end{figure}
+
+\subsection{Stability, instability, and tipping points}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{stablility_instability_tipping}
+\end{figure}
+
+\subsection{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{economy_network_effects_sum}
+\end{figure}
+
+\chapter{Power Laws and Rich-Get-Richer Phenomena}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{power_law_rich_sum}
+\end{figure}
+
+\chapter[Cascading Behavior in Networks]{Cascading Behavior in Networks}
+
+\section{Diffusion in networks}
+
+The \textcolor{orange}{innovation diffuses in two waves} :
+\begin{enumerate}
+\item The first wave of \textcolor{orange}{person-to-person influence is informational}.
+\item The second wave of \textcolor{orange}{person-to-person influence is direct-benefit}.
+\end{enumerate}
+Homophily can act as a barrier to diffusion (homogeneous communities) as innovations tend to arrive from "outside" the system.
+
+\section{Modeling Diffusion through a Network}
+
+\subsection{Defining a formal model}
+
+\begin{itemize}
+\item A person's decisions are based on the decisions of their neighbors.
+\item A person has social network neighbors
+	\begin{itemize}
+	\item[$\rightarrow$] The benefits of adopting a new behavior increase as more neighbors adopt it.
+	\item[$\rightarrow$] Simple self-interest dictates to adopt a new behavior as soon as a sufficiently high proportion of your neighbors adopted it.
+	\end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{diffusion_formal_model}
+\end{figure}
+
+\subsection{Cascading model}
+
+\begin{itemize}
+\item All nodes initially use B as their behavior.
+\item A small set of initial adopters decide to use A.
+\item The remaining nodes evaluate their payoffs according to the coordination game.
+\item Some neighbors might decide to switch to $A$, and so forth.
+\end{itemize}
+
+\paragraph{Example}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{cascading_diffusion_example}
+\end{figure}
+
+\subsection{Complete cascade at threshold $q$}
+
+They are two possibilities :
+\begin{enumerate}
+\item The cascades runs for a while but then stops without flipping all nodes.
+\item There is a complete cascade, where all nodes flip.
+\end{enumerate}
+
+Consider a set of initial adopters with behavior A and all remaining nodes have behavior B. Nodes repeatedly evaluate the decision whether to switch from B to A using a threshold of q. If the resulting cascade of adoptions of A eventually causes all nodes to switch from B to A, then we say that the set of initial adopters \textcolor{orange}{causes a complete cascade at threshold q}.
+
+\subsection{"Viral marketing"}
+
+\begin{itemize}
+\item Tightly-knit communities can hinder the spread of an innovation.
+\item Techniques exists to push adoption beyond the barriers (raise quality to drop $q$, convince a small number of key people to switch).
+\end{itemize}
+
+\section{Cascades and Clusters}
+
+\subsection{Defining a cluster}
+
+A \textcolor{orange}{cluster of density $p$} is a set of nodes such that each node in the set has at least a fraction $p$ of its neighbors in the set.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{cluster_example}
+\end{figure}
+
+\subsection{Cluster-cascade theorem}
+
+Consider a set of initial adopters of behavior A with a threshold of $q$ for nodes in the remaining network to adopt behavior A. Then,
+\begin{enumerate}
+\item If the remaining network contains a cluster of density greater than $(1-q)$, the set of initial adopters will not cause a complete cascade.
+\item Whenever a set of initial adopters does not cause a complete cascade with threshold $q$, then the remaining network must contain a cluster of density greater than $(1-q)$.
+\end{enumerate}
+A \textcolor{orange}{complete cascade is blocked \textit{if and only if} the remaining network contains a cluster of density greater than $(1-q)$}.
+
+\subsection{Summary}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{cluster_cascade_sum}
+\end{figure}
+
+\chapter{Convergence Toolkit}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{convergence_toolkit_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{convergence_toolkit_2}
+\end{figure}

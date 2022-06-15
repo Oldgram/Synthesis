@@ -1,0 +1,462 @@
+\chapter{Concepts}
+
+\section{Fonction}
+
+Soit $f : A \rightarrow B$ :
+\begin{itemize}
+\item \textred{Domaine} de $f$ : dom($f$) $= \{a \in A \ | \ f(a) \neq \bot\}$
+\item \textred{Image} de $f$ = im($f$) $= \{b \in B \ | \ \exists a \in A : b = f(a)\}$
+\item $f$ est fonction \textred{totale} ssi dom($f$) $= \ A \ (\nexists a \in A : f(a) = \bot)$ 
+\item $f$ est fonction \textred{partielle} ssi dom($f$) $\subseteq \ A$ ($f$ totale est partielle mais $f$ partielle n'est pas forcément totale)
+\item $f$ est \textred{surjective} ssi im($f$) $= B$ (tout $y$ a au moins un $x$)
+\item $f$ est \textred{injective} ssi $\forall a, a' \in A : a \neq a' \rightarrow f(a) \neq f(a')$ (tout x a un y différent)
+\item $f$ est \textred{bijective} ssi $f$ est totale, injective et surjective (tout y a un et un seul x)
+\end{itemize}
+\section{Enumérable}
+
+Un ensemble est énumérable s'il est soit fini ou s'il ale même cardinal que $\mathbb{N}$\footnote{L'ensemble $\mathbb{N}$ est l'ensemble des entiers positifs $\mathbb{N} = \{0, 1, 2, 3, \ldots\}$} (si on peut le mettre en bijection avec $\mathbb{N}$). En informatique, un programme est une chaîne finie de caractères $\rightarrow$ énumérable.
+
+\subsection{Diagonalisation de Cantor}
+
+Soit $E = \{x \in \mathbb{R} \ | \ 0 < x \leq 1\}$. \textred{$E$ est non énumérable}\footnote{Il n'existe pas de bijection entre $E$ et $\mathbb{N}$ c.à.d. qu'il y a beaucoup plus de réels entre 0 et 1 qu'il n'y a d'entiers positifs}
+
+\textred{Preuve} :
+\begin{enumerate}
+\item Supposons $E$ énumérable. Il existe donc une énumération des éléments de $E : x_0, ..., x_k, ...$
+\begin{figure}[H]
+    	\centering
+    	\begin{tabular}{c|cccccc}
+	 & 1 digit & 2 digit & 3 digit & $\cdots$ & $k+1$ digit & $\cdots$ \\ 
+	\hline 
+	$x_0$ & $x_{00}$ & $x_{01}$ & $x_{02}$ & $\cdots$ & $x_{0k}$ & $\cdots$ \\ 
+	$x_1$ & $x_{10}$ & $x_{11}$ & $x_{12}$ & $\cdots$ & $x_{1k}$ & $\cdots$ \\ 
+	$x_2$ & $x_{20}$ & $x_{21}$ & $x_{22}$ & $\cdots$ & $x_{2k}$ & $\cdots$ \\ 
+	$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\cdots$ \\ 
+	$x_k$ & $x_{k0}$ & $x_{k1}$ & $x_{k2}$ & $\cdots$ & $x_{kk}$ & $\cdots$ \\ 
+	$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ \\ 
+	\end{tabular}
+	\caption{Construire une table t.q. le nombre $x_k = 0,x_{k0} x_{k1} x_{k2} \ldots x_{kk} \ldots$}
+\end{figure}
+\item Prendre la diagonale ($d = 0,x_{00} x_{11} x_{22} \ldots x_{kk} \ldots$)
+\item Modifier la diagonale t.q.
+\begin{equation*}
+	x'_{ii}=
+	\begin{cases}
+      	5 & \text{si}\ x_{ii} \neq 5 \\
+      	6 & \text{sinon}
+    \end{cases}
+\end{equation*}
+Ce qui donne $d' =  0,x_{00} x_{11} x_{22} \ldots x_{kk} \ldots \ (d' \in E)$
+\item Contradiction : Comme $E$ est énumérable, et que $d' \in E$, alors $d'$ doit être dans l'énumération. Or, si $d' = x_p$, on a :
+\begin{align*}
+	d' &= 0,x_{p0} x_{p1} x_{p2} \ldots x_{pp} \ldots\\
+	   &= 0,x'_{p0} x'_{p1} x'_{p2} \ldots x'_{pp}
+\end{align*}
+\item Conclusion : $E$ n'est pas énumérable
+\end{enumerate}
+
+\chapter{Résultats fondamentaux}
+
+\section{Fonction calculable}
+
+Une fonction $f : \mathbb{N} \rightarrow \mathbb{N}$\footnote{Se lit : "une fonction de $\mathbb{N}$ dans $\mathbb{N}$". L'ensemble $\mathbb{N} \rightarrow \mathbb{N}$ est non énumérable (l'ensemble des problèmes a un plus grand cardinal que l'ensemble des programmes), voir \ref{sec:ensembleF}} est calculable ssi il existe un programme qui, recevant comme données n'importe quel nombre naturel $x$, fourni comme résultat $f(x)$ s'il est défini, sinon $\bot$ (s'il ne se termine pas ou erreur).
+
+\subsection{Ensemble récursif}
+
+On dit que l'ensemble $A$ est récursif ssi il existe un programme qui prend en input $x$ et qui renvoi (c.à.d un ensemble récursif est un ensemble pour lequel on est capable de dire si un élément y appartient) :
+
+$\begin{cases}
+	1 & \text{si}\ x \in A\\
+	0 & \text{si}\ x \notin A
+\end{cases}$
+
+Le programme calcule donc une fonction totale. Exemple : $\{x \in \mathbb{N} \ | \ x \text{ pair}\}$.
+
+\subsection{Ensemble récursivement énumérable}
+
+On dit que l'ensemble $A$ est récursivement énumérable ssi il existe un programme qui prend en input $x$ et qui renvoi (tôt ou tard) :
+
+$\begin{cases}
+	1 & \text{si}\ x \in A\\
+	\text{Un autre résultat, ou ne se termine pas}& \text{si}\ x \notin A
+\end{cases}$
+
+\subsection{Propriétés}
+
+\begin{itemize}
+\item $A$ récursif $\Rightarrow$ $A$ récursivement énumérable
+\item $A$ récursif $\Leftrightarrow$ $\bar{A}$\footnote{$\bar{A}$ est le complément de $A$} récursif
+\item $A$ récursivement énumérable et $\bar{A}$ récursivement énumérable $\Leftrightarrow$ $A$ récursif
+\item $A$ fini ou $\bar{A}$ fini $\Rightarrow$ $A$ et $\bar{A}$ récursif
+\end{itemize}
+
+\subsection{Numérotation}
+
+Soit $P$ l'ensemble des programmes syntaxiquement corrects.
+\begin{itemize}
+\item $P$ est énumérable récursif
+\item $P = P_0, P_1, \ldots$ (sans répétition)
+\item $P_k$ est le programme numéro $k$ dans $P$
+\item $\varphi_k$ est la fonction numéro $k$ calculée par le programme $P_k$ ($\varphi : \mathbb{N} \rightarrow \mathbb{N}$)
+\end{itemize}
+
+\newpage
+\section{Calculabilité}
+
+\subsection{Problème de l'arrêt}
+
+Soit la fonction $halt : P \times \mathbb{N} \rightarrow \mathbb{N}$ t.q. $halt(n,x) =
+\begin{cases}
+	1 & \text{si}\ \varphi_n(x) \neq \bot\\
+	0 & \text{sinon}
+\end{cases}$
+
+\textred{$halt$ n'est pas calculable.}
+
+\subsubsection{Preuve}
+
+Supposons $halt$ calculable.
+
+\begin{enumerate}
+\item Construire de la table
+	\begin{figure}[H]
+    		\centering
+    		\begin{tabular}{c|cccccc}
+		 & 0 & 1 & 2 & $\cdots$ & $k$ & $\cdots$ \\ 
+		\hline 
+		$P_0$ & $halt(0,0)$ & $halt(0,1)$ & $halt(0,2)$ & $\cdots$ & $halt(0,k)$ & $\cdots$ \\ 
+		$P_1$ & $halt(1,0)$ & $halt(1,1)$ & $halt(1,2)$ & $\cdots$ & $halt(1,k)$ & $\cdots$ \\ 
+		$P_2$ & $halt(2,0)$ & $halt(2,1)$ & $halt(2,2)$ & $\cdots$ & $halt(2,k)$ & $\cdots$ \\ 
+		$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\cdots$ \\ 
+		$P_k$ & $halt(k,0)$ & $halt(k,1)$ & $halt(k,2)$ & $\cdots$ & $halt(k,k)$ & $\cdots$ \\ 
+		$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ \\ 
+		\end{tabular}
+		\caption{Table des valeurs de la fonction $halt$}
+	\end{figure}
+\item Prendre la diagonale : $d(n) = halt(n,n)$
+\item Modifier la diagonale :
+	\begin{equation*}
+		d'(n)=
+		\begin{cases}
+      		1 & \text{si}\ halt(n, n) = 0\\
+      		\bot & \text{si}\ halt(n,n) = 1
+      	\end{cases}
+    \end{equation*}
+    Si $halt$ est calculable, alors $d'$ est calculable. Soit $P_d$ le programme qui calcule cette fonction.
+\item Contradiction :
+	\begin{equation*}
+		d'(d)=
+		\begin{cases}
+      		1 & \rightarrow halt(d,d) = 0 \rightarrow P_d \text{ ne se termine pas \textred{OR} }d'(d) = 1\\
+      		\bot & \rightarrow halt(d,d) = 1 \rightarrow P_d \text{ ne termine \textred{OR} }d'(d) = \bot
+      	\end{cases}
+    \end{equation*}
+\item Conclusion : $d'$ n'est pas calculable, donc $halt$ n'est pas calculable.
+\end{enumerate}
+
+\newpage
+\subsection{Hoare-Allison}
+
+Soit un langage $Q$ qui a des programmes $Q_k$ et qui ne calcule que des fonctions totales :
+\begin{itemize}
+\item La fonction $\varphi'_k$ est calculée par le programme $Q_k$
+\item L'interpréteur $interpret(n,x)$ de ce langage $Q$ est calculable
+\item La fonction $halt(n,x)$ pour ce langage $Q$ est calculable (fonction constante qui vaut 1)
+\item \textred{$interpret(n, x)$ n'est pas calculable \textit{dans $Q$}}
+\end{itemize}
+
+\subsubsection{Preuve}
+
+Supposons $interpret$ calculable dans $Q$.
+
+\begin{enumerate}
+\item Construire de la table
+	\begin{figure}[H]
+    		\centering
+    		\begin{tabular}{c|cccccc}
+		 & 0 & $\cdots$ & $k$ & $\cdots$ \\ 
+		\hline 
+		$Q_0$ & $interpret(0,0)$ & $\cdots$ & $interpret(0,k)$ & $\cdots$ \\
+		$\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\cdots$ \\ 
+		$Q_k$ & $interpret(k,0)$ & $\cdots$ & $interpret(k,k)$ & $\cdots$ \\ 
+		$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ \\ 
+		\end{tabular}
+		\caption{Table des valeurs de la fonction $interpret$}
+	\end{figure}
+\item Prendre la diagonale : $d(n) = interpret(n,n)$
+\item Modifier la diagonale : $d'(n)= interpret(n,n) + 1$ (calculable dans $Q$ si $interpret$ calculable dans $Q$)
+\item Contradiction : $d'(d)= interpret(n,n) + 1 \text{ \textred{OR} } d'(d) = \varphi'(d) = interpret(d,d)$
+\item Conclusion : l’interpréteur de $Q$ n'est pas calculable dans $Q$
+\end{enumerate}
+
+\subsection{Rice}
+
+Deux formulations :
+\begin{enumerate}
+\item Soit $A \subseteq \mathbb{N}$, si $A$ récursif, $A \neq \varnothing$ et $A \neq \mathbb{N}$ alors $\exists i \in A$ et $\exists j \in \bar{A}$ t.q. $\varphi_i = \varphi_j$
+\item Si $\forall i \in A$ et $\forall j \in \bar{A} \ : \ \varphi_i \neq \varphi_j$ alors $A$ non récursif ou $A = \varnothing$ ou $A = \mathbb{N}$
+\end{enumerate}
+$\rightarrow$ Aucun programme ne peut dire si une fonction respecte des spécifications
+
+\textred{Si A $\neq \varnothing$ et $A \neq \mathbb{N},\ \forall i \in A, \forall j \in \bar{A} \ : \ \varphi_i \neq \varphi_j$. Alors A non récursif.}
+
+\subsubsection{Preuve}
+
+\begin{enumerate}
+\item On suppose $A$ récursif.\\
+	On pose $P_k(x) \equiv$ while(True) $($c.à.d. $\varphi_k = \bot)$.\\
+	Si $k \in \bar{A}$, comme $A \neq \varnothing \Rightarrow \exists m \in A$ et $\varphi_k \neq \varphi_m$
+\item Construire $halt$ :
+	\begin{equation*}
+		 halt(n,x) \equiv
+		 \begin{cases}
+		 \text{Construire le programme (sans l'exécuter) } P(z) \equiv P_n(x); P_m(z)\\
+		 d = \text{ numéro du programme }P(z)\\
+		 \text{if } d \in A \text{ then } print(1) \ \textgreen{\text{Si }P_n \text{ se termine, } \varphi_d = \varphi_m \rightarrow d \in A}\\
+		 \text{else } print(0) \ \textgreen{\text{Si }P_n \text{ ne se termine pas, } \varphi_d = \varphi_k \rightarrow d \in \bar{A}}\\
+		 \end{cases}
+	\end{equation*}
+\item $halt$ n'est pas calculable, donc $A$ est non récursif
+\end{enumerate}
+
+\subsection{Paramétrisation}
+
+Si un programme $P(a,b)$ existe, alors il existe un programme $P'_b(a)$ (où b est fixé) t.q. $P'_b(a) \equiv Exec \ P(a,b)$
+
+\subsubsection{Forme S-1-1}
+
+Il existe une fonction totale calculable $S^1_1 : \mathbb{N}^2 \rightarrow \mathbb{N}$ t.q. $\forall k : \varphi_k(x_1, x_2) = \varphi_{S^1_1(k,x_2)}(x_1)$
+
+\subsubsection{Forme S-m-n}
+
+$\forall m,n \geq 0, \exists$ une fonction totale calculable $S^m_n : \mathbb{N}^{m+1} \rightarrow \mathbb{N}$ t.q. $\forall k : \varphi_k(x_1, \ldots, x_n, x_{n+1}, \ldots, x_{n+m}) = \varphi_{S^1_1(k,x_{n+1}, \ldots, x_{n+m})}(x_1, \ldots, x_n)$
+
+%\newpage
+\subsection{Point fixe}
+
+Soit $f$ une fonction totale calculable. Il existe $k$ t.q. $\varphi_k = \varphi_f(k)$.
+
+\subsubsection{Preuve}
+
+Soit $f$ une fonction totale calculable. Il existe $k$ t.q. $\varphi_k = \varphi_f(k)$.
+
+On pose :
+\begin{equation}\label{eq:pf1}
+h(u,x) =
+\begin{cases}
+	\varphi_{\varphi_u(u)}(c) & \text{si}\ \varphi_u(u) \neq \bot\\
+	\bot & \text{sinon}
+\end{cases}
+\end{equation}
+\begin{itemize}
+\item[] Où $h(u,x)$ est calculable
+\end{itemize}
+\begin{equation}\label{eq:pf2}
+h(u,x) = \varphi_{S(u)}(x)
+\end{equation}
+\begin{itemize}
+\item[] Par application de $S-1-1$
+\end{itemize}
+\begin{equation}\label{eq:pf3}
+g(x) = f(S(x))
+\end{equation}
+\begin{itemize}
+\item[] Où $g$ est totale calculable (car $f$ et $S$ le sont),
+\item[] et $f$ est donné par $k' : \varphi_{k'}(x) = g(x) = f(S(x))$.
+\end{itemize}
+
+On a que $k'$ est une constante par l'équation \ref{eq:pf2} :
+\begin{equation*}
+h(k',x) = \varphi_{S(k')}(x)
+\end{equation*}
+
+Par l'équation \ref{eq:pf1} et comme $g = \varphi_{k'}$ :
+\begin{equation*}
+h(k',x) = \varphi_{k'(k')}(x)
+\end{equation*}
+
+Par l'équation \ref{eq:pf3}, on a que $\varphi_{k'} = g(x) = f(S(x))$, donc :
+\begin{equation*}
+h(k',x) = \varphi_{f(S(x))}(x)
+\end{equation*}
+
+Si on pose que $S(k') = k$, on obtient :
+\begin{equation*}
+\varphi_k(x) = \varphi_{f(k)}(x)
+\end{equation*}
+
+\chapter{Modèles}
+
+\section{ND-Java}
+
+C’est un sous-ensemble de Java (“Non-Deterministic Java”)
+On y ajoute fonction $choose(n)$ renvoyant un entier aléatoire entre 0 et $n$. Cette \textblue{fonction est non-déterministe} car à un même input elle ne renvoie pas toujours le même output.
+
+\section{ND-Récursif}
+
+$A$ est ND-Récursif si $\exists$ un programme ND-Java t.q. s'il reçoit un input $\in \mathbb{N}$ :
+\begin{itemize}
+\item $x \in A$ alors $\exists$ une exécution qui retourne 1
+\item $x \notin A$ alors pour toute exécution le résultat est 0
+\end{itemize}
+
+\subsection{ND-Récursif énumérable}
+
+Comme ND-Récursif sauf que le cas $x \notin A$ ne se fini pas forcément.
+
+\subsection{Propriétés}
+
+\begin{itemize}
+\item Récursif $\Rightarrow$ ND-Récursif
+\item Récursif énumérable $\Rightarrow$ ND-Récursif énumérable
+\end{itemize}
+
+\chapter{Réductions}
+
+\section{Réduction algorithmique (calculabilité)}
+
+Un ensemble $A$ est \textred{algorithmiquement réductible} à un ensemble $B \ (A \leq_a B)$ si en supposant $B$ récursif, $A$ est récursif.
+
+Exemple :
+
+Soit $P = \{n \ | \ \varphi_n$ renvoi un nombre pair $\}$
+
+$HALT \ \leq_a P$ (si $P$ énumérable, $HALT$ énumérable)
+
+\subsection{Propriétés}
+
+\begin{itemize}
+\item Si $A \leq_a B$ et $B$ récursif, alors $A$ récursif
+\item Si $A \leq_a B$ et $A$ non récursif, alors $B$ non récursif
+\item $A \leq_a \bar{A}$
+\item $A \leq_a B \Leftrightarrow \bar{A} \leq_a B$
+\item Si $A$ récursif, alors pour tout $B$, $A \leq_a B$
+\item Si $A \leq_a B$ et $B$ récursivement énumérable, alors $A$ pas nécessairement énumérable
+\end{itemize}
+
+\section{Réduction fonctionnelle (complexité)}
+
+Un ensemble $A$ est \textred{fonctionnellement réductible} à un ensemble $B \ (A \leq_r B)$ ssi il existe une fonction totale calculable $f$ t.q. :
+\begin{equation*}
+a \in A \Leftrightarrow f(a) \in B
+\end{equation*}
+
+\section{Réduction polynomiale}
+
+Un ensemble $A$ est \textred{polynomialement réductible} à un ensemble $B \ (A \leq_p B)$ ssi il existe une fonction totale calculable $f$ de complexité temporelle polynomiale t.q. :
+\begin{equation*}
+a \in A \Leftrightarrow f(a) \in B
+\end{equation*}
+
+Si $A \leq_p B$ et $B \in P$ alors $A \in P$.
+
+\section{Classes de complexité}
+
+\begin{itemize}
+\item $DTIME(f)$ : Ensemble récursif décidé par un programme en complexité temporelle $\bigO(f)$
+\item $DSPACE(f)$ : Ensemble récursif décidé par un programme en complexité spatiale $\bigO(f)$
+\item $NTIME(f)$ : Ensemble ND-récursif décidé par un programme en complexité temporelle $\bigO(f)$ (sur toutes les branches)
+\item $NSPACE(f)$ : Ensemble ND-récursif décidé par un programme en complexité spatiale $\bigO(f)$ (sur toutes les branches)
+\item Classe $P$ (Polynomiale): $P = \underset{i \geq 0}{\bigcup} DTIME(n^i)$
+\item Classe $NP$ (Non-Polynomiale): $P = \underset{i \geq 0}{\bigcup} NTIME(n^i)$
+\end{itemize}
+
+\section{Relations entre classes de complexité}
+
+\subsection{Déterministe VS non déterministe}
+
+\begin{itemize}
+\item Si $A \in NTIME(f)$ alors $A \in DTIME(c^f)$
+\item Si $A \in NSPACE(f)$ alors $A \in DSPACE(f^2)$
+\item $NPACE(f) = DSPACE(f)$
+\end{itemize}
+
+\subsection{Time VS Space}
+
+\begin{itemize}
+\item Si $A \in NTIME(f) alors A \in NSPACE(f)$
+\item Si $A \in DTIME(f) alors A \in DSPACE(f)$
+\item Si $A \in NSPACE(f) alors A \in NTIME(c^f)$
+\item Si $A \in DSPACE(f) alors A \in DTIME(c^f)$
+\end{itemize}
+
+\section{Formalismes de calculabilité}
+
+Soit $D$ un nouveau formalisme de calculabilité :
+
+\subsection{Caractéristiques de formalisme}
+
+\begin{itemize}
+\item $SD$ (Soudness des Descriptions) : toute fonction $D$-calculable est calculable
+\item $CD$ (Complétude des Définitions) : toute fonction calculable est $D$-calculable
+\item $SA$ (Soudness Algorithmique) : l'interpréteur de $D$ est calculable
+\item $CA$ (Complétude Algorithmique) : si $p \in L$ ($L$ est par exemple Java), que $p' \in D$ et que $p \equiv p'$ (calculent la même fonction), alors équivalence des formalismes
+\item $U$ (Description Universelle) : l'interpréteur de $D$ est $D$-calculable
+\item $S$ ($S-m-n$ Affaiblie) : $\forall d \in S \ \exists S : d(x,y) = [S(x)](y)$
+\end{itemize}
+
+\subsection{Propriétés}
+
+\begin{itemize}
+\item $SA \Rightarrow SD$
+\item $CA \Rightarrow CD$
+\item $SD$ et $U \Rightarrow SA$
+\item $CD$ et $S \Rightarrow CA$
+\item $SA$ et $CD \Rightarrow U$
+\item $CA$ et $SD \Rightarrow S$
+\item $S$ et $U \Rightarrow S-m-n$
+\item $SA$ et $CA \Leftrightarrow SD$ et $CD$ et $U$ et $S$
+\item $SA$ et $CD$ et $S \Leftrightarrow CA$ et $SD$ et $U$
+\end{itemize}
+
+\chapter{Preuves supplémentaires}
+
+\section{L'ensemble des fonctions totales n'est pas énumérable}\label{sec:ensembleF}
+
+Soit $F$ l'ensemble des fonctions totales telles que $f : \mathbb{N} \rightarrow \mathbb{N}$.
+
+$F$ est non énumérable.
+
+\subsubsection*{Preuve}
+
+Supposons $F$ énumérable. Il existe donc une énumération des éléments de $F : f_0(0), f_1(0), \ldots$.
+
+\begin{enumerate}
+\item Construire de la table
+	\begin{figure}[H]
+    		\centering
+    		\begin{tabular}{c|cccccc}
+		 & 1 & 1 & 2 & $\cdots$ & $k$ & $\cdots$ \\ 
+		\hline 
+		$f_0$ & $f_0(0)$ & $f_0(1)$ & $f_0(2)$ & $\cdots$ & $f_0(k)$ & $\cdots$ \\ 
+		$f_1$ & $f_1(0)$ & $f_1(1)$ & $f_1(2)$ & $\cdots$ & $f_1(k)$ & $\cdots$ \\ 
+		$f_2$ & $f_2(0)$ & $f_2(1)$ & $f_2(2)$ & $\cdots$ & $f_2(k)$ & $\cdots$ \\ 
+		$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & $\vdots$ & $\cdots$ \\ 
+		$f_k$ & $f_k(0)$ & $f_k(1)$ & $f_k(2)$ & $\cdots$ & $f_k(k)$ & $\cdots$ \\ 
+		$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ \\ 
+		\end{tabular}
+		\caption{Table des résultats de la fonction $f$}
+	\end{figure}
+\item Prendre la diagonale $d$ qui est aussi une fonction de $\mathbb{N} \rightarrow \mathbb{N} \ (d \in F)$
+\item Modifier la diagonale pour obtenir $d'$ t.q. :
+	\begin{equation*}
+		f'_i(j)=
+		\begin{cases}
+      		5 & \text{si}\ f_i(j) \neq 5\\
+      		6 & \text{sinon}\
+      	\end{cases}
+    \end{equation*}
+    
+    Où $f_i(j)$ est le résultat de la fonction $f$ avec le numéro $i$ pour la donnée $j$.
+\item Contradiction :
+
+	Comme $F$ est énumérable et que $d' \in F$, alors $d'$ doit être dans l'énumération. Or si $d'$ a le numéro $p$ on a :
+	\begin{align*}
+		d' &= f_p(0),f_p(1),f_p(2),\ldots,f_p(p),\ldots\\
+		   &= f'_p(0),f'_p(1),f'_p(2),\ldots,f'_p(p),\ldots\\
+    \end{align*}
+    Si $f_p(0)$ vaut 5, on a $(f_p(0) = 5) \neq (f'_p(0) = 6)$.
+\item Conclusion :
+
+	$F$ n'est pas énumérable.
+\end{enumerate}
