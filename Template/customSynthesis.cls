@@ -90,6 +90,15 @@
 \colorlet{shadecolor}{cyan!30!white}
 \colorlet{framecolor}{blue!50!black}
 
+%---Rename output pdf---%
+%\ifx\conditionmacro\undefined
+%  \immediate\write18{%
+%    pdflatex --jobname="\myjobname"
+%    "\gdef\string\conditionmacro{1}\string\input\space\jobname"
+%  }%
+%  \expandafter\stop
+%\fi
+
 %---Multicolumn TOC---%
 \makeatletter
 \patchcmd{\l@section}
