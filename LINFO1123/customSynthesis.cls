@@ -8,10 +8,10 @@
 \usemintedstyle{pastie}
 %Language
 \usepackage[babel,french=guillemets]{csquotes}
-%\usepackage[greek,french]{babel} % For French
-\usepackage[greek,english]{babel} % For English
+\usepackage[greek,french]{babel} % For French
+%\usepackage[greek,english]{babel} % For English
 %silence the annoying warning
-%\frenchsetup{SuppressWarning} % Comment this line if in English package version of babel is used
+\frenchsetup{SuppressWarning} % Comment this line if in English package version of babel is used
 \usepackage{tabularx}
 \usepackage[a4paper,top=2cm,bottom=2cm,left=2.25cm,right=2.25cm]{geometry}
 \usepackage{enumitem}

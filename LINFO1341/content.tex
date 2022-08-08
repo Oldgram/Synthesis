@@ -208,6 +208,12 @@ They are different types of transport layers, the most widely used are :
 \item \textred{UDP} (User Datagram Protocol) : provides an unreliable connection-less transport service.
 \end{itemize}
 
+%\subsection{Building a Network}
+
+%\subsubsection{Data plane}
+
+%\subsubsection{Control plane}
+
 \section{Application}
 
 The application layer includes all the mechanisms and data structure that are necessary for the applications.
@@ -411,16 +417,18 @@ When routers boot in a LAN, they elect a \textblue{Designated Router} (DR) so as
 \subsubsection[BGP]{Border Gateway Protocol (BGP)}
 
 In the Border Gateway Protocol, when en BGP router advertises a route towards a prefix, it announces the IP prefix and the interdomain path used to reach this prefix. As in BGP, every domain is identified by a unique \textred{Autonomous System} (AS) number, the interdomain path contains the AS numbers of the transit domains that are used to reach the associated prefix.
-
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\textwidth,keepaspectratio]{bgp_example}
+	\includegraphics[width=0.5\textwidth,keepaspectratio]{bgp_example}
 	\caption{Exchange of BGP routes}
 \end{figure}
-
 Example with the above BGP route : Thanks to the AS-Path, $AS5$ knows that if it sends a packet towards \textit{2001:db8:cafe::/48}, the packet first passes through $AS2$, then through $AS4$ before reaching its destination inside $AS1$.
 
-A BGP route will rank each route that it as learned following its own ranking algorithm (i.e. each router will maximize its benefits) and will advertise the best one (is the above example, $AS2$ advertises the route it learned from $AS4$ rather than the other it learned from $AS1$).
+There are two types of relations between domains :
+\begin{itemize}
+\item customer$\rightarrow$provider : the customer pays for his domain to be distributed on the Internet (in return, the provider shares all all routes it knows.)
+\item Shared cost : this happens when domains have similar sizes. Domain only advertises its internal routes/prefixes and the routes it learned from its customers (not other shared-cost routes)
+\end{itemize}
 
 \section{Transport Layer}
 
@@ -533,7 +541,7 @@ The Domain Name System (DNS) protocol runs above the datagram and bytestream ser
 \item Flag Authority : Used to known wherever the response comes from a server cache or not
 \end{itemize}
 
-The command \textred{$dig$} can give retrieve the IP of e server (3 types of record : $A$ (IPv4), $AAAA$ (IPv6), and $MX$ (mail server). Example : If you want to retrieve the IP of a mail server :
+The command \textred{$dig$} can give retrieve the IP of a server (3 types of record : $A$ (IPv4), $AAAA$ (IPv6), and $MX$ (mail server). Example : If you want to retrieve the IP of a mail server :
 \begin{minted}[frame=single,framesep=5pt,rulecolor=gray]{bash}
 dig -t MX student.uclouvain.be +short
 # student-uclouvain-be.mail.protected.outlook.com
@@ -702,3 +710,128 @@ For a connection, there is simply an exchange where the client indicate its SSH 
 \subsection{Transport Layer Security (TLS)}
 
 The TLS family of protocols works basically the same way as SSH but instead of using private keys, it will use \textred{certificates}. This is due to the fact that, when navigation over a large number or pages, the client cannot store every public key it encounters. Instead of exchanging keys, the client/server will exchange digital certificates.
+
+\chapter{Tips}
+
+\section{Window size}
+
+\subsection{Maximum window size with go-back-n and selective repeat}
+A reliable protocol that uses $n$ bits to encode its sequence number can send up to $2^n$ successive frames. however, to ensure a reliable delivery of the frames, \textit{go-back-n} and \textit{selective repeat} cannot use a sending window of $2^n$ frames.
+
+For \textblue{\textit{go-back-n}}, if a sender sends $2^n$ frames they are received in-sequence by the destination but all the returned ack are lost. This will cause the sender to retransmit all frames, which will all be accepted by the receiver and delivered a second time to the user. This can be avoided if the \textblue{maximum size of the sending window is $2^n-1$ frames}.
+
+For \textblue{\textit{selective repeat}}, a similar problem occurs with the difference that the receiver accepts out-of-sequence frames. This means that a sending window of $2^n-1$ is not sufficient to ensure a reliable delivery. To avoid this problem, a selective repeat \textblue{sender cannot use a window that is larger than $\frac{2^n}{2}$ frames}.
+
+\section{HTTP}
+
+\subsection{Role of Header's fields and what if they are deleted ?}
+\begin{itemize}
+\item Host : Specifies the URI address and the server port receiving the request. Even if the port is optional, deleting this port would result in errors (to be precise : 400 Bad Request)
+\item Referrer : Indicate the site where the visitor came from. Deleting this could help in reducing tracing but will not avoid it as the visitor could still be traced by his login, his navigator and his cookies.
+\item If-Modified-Since : This allows for a conditional request : we only download a resource if it has changed since the last time we visited it. Deleting this field would result in performance losses as the resources would be reloaded even if there is no need to.
+\end{itemize}
+
+%\section{TCP}
+%\subsection{Data transfer diagram}
+%On the following diagram, the client send a packet of 100 bytes which the server responds by sending 6000 bytes of data. The server an initial window of 2000 bytes.
+%\begin{itemize}
+%\item Ack send by the client
+%\item Data segments send by the client
+%\item Evolution of $$cwn$ and $ssthreshold$ if the 5th segment is lost
+%\end{itemize}
+
+\section{IPv6 Routing}
+\begin{figure}[H]
+\centering
+\scalebox{0.5}{
+\begin{tikzpicture}
+	\pgfdeclarelayer{nodelayer}
+	\pgfdeclarelayer{edgelayer}
+	\pgfsetlayers{edgelayer, nodelayer, main}
+	\begin{pgfonlayer}{nodelayer}
+		\node (1) at (4, 0.5) {};
+		\node (2) at (4, -0.5) {};
+		\node (3) at (5, 0.5) {};
+		\node (4) at (5, -0.5) {};
+		\node (5) at (0.5, 2.5) {};
+		\node (6) at (-0.5, 2.5) {};
+		\node (7) at (-0.5, 3.5) {};
+		\node (8) at (0.5, 3.5) {};
+		\node (9) at (0.5, -2.5) {};
+		\node (10) at (0.5, -3.5) {};
+		\node (11) at (-0.5, -3.5) {};
+		\node (12) at (-0.5, -2.5) {};
+		\node (13) at (-4, 0.5) {};
+		\node (14) at (-5, 0.5) {};
+		\node (15) at (-4, -0.5) {};
+		\node (16) at (-5, -0.5) {};
+		\node (17) at (-9, 0.5) {};
+		\node (18) at (-10, 0.5) {};
+		\node (19) at (-10, -0.5) {};
+		\node (20) at (-9, -0.5) {};
+		\node (21) at (9, 0.5) {};
+		\node (22) at (10, 0.5) {};
+		\node (23) at (10, -0.5) {};
+		\node (24) at (9, -0.5) {};
+		\node (25) at (-9, 0) {};
+		\node (26) at (-5, 0) {};
+		\node (27) at (5, 0) {};
+		\node (28) at (9, 0) {};
+		\node (29) at (-9.5, 0) {\Large A};
+		\node (30) at (0, 3) {\Large R2};
+		\node (31) at (-4.5, 0) {\Large R1};
+		\node (32) at (4.5, 0) {\Large R4};
+		\node (33) at (0, -3) {\Large R3};
+		\node (34) at (9.5, 0) {\Large B};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [very thin, fill={rgb,255: red,188; green,188; blue,188}] (6.center)
+			 to (7.center)
+			 to (8.center)
+			 to (5.center)
+			 to cycle;
+		\draw [very thin, fill={rgb,255: red,188; green,188; blue,188}] (3.center)
+			 to (4.center)
+			 to (2.center)
+			 to (1.center)
+			 to cycle;
+		\draw [very thin, fill={rgb,255: red,188; green,188; blue,188}] (23.center)
+			 to (24.center)
+			 to (21.center)
+			 to (22.center)
+			 to cycle;
+		\draw [very thin, fill={rgb,255: red,188; green,188; blue,188}] (13.center)
+			 to (15.center)
+			 to (16.center)
+			 to (14.center)
+			 to cycle;
+		\draw [very thin, fill={rgb,255: red,188; green,188; blue,188}] (12.center)
+			 to (9.center)
+			 to (10.center)
+			 to (11.center)
+			 to cycle;
+		\draw [very thin, fill={rgb,255: red,188; green,188; blue,188}] (19.center)
+			 to (18.center)
+			 to (17.center)
+			 to (20.center)
+			 to cycle;
+		\draw (5.center) to (1.center);
+		\draw (27.center) to (28.center);
+		\draw (6.center) to (13.center);
+		\draw (15.center) to (12.center);
+		\draw (9.center) to (2.center);
+		\draw (26.center) to (25.center);
+	\end{pgfonlayer}
+\end{tikzpicture}}
+\end{figure}
+On the above network, each router has only one route by default ($A$ to $R1$, $R1$ to $R2$, $R2$ to $R4$, $R3$ to $R4$, and $R4$ to $R2$).
+
+We can see that there is a cycle between $R2$ and $R4$, and $B$ cannot send any packet. If we were to keep only one default route, it would be impossible for the traceroute to work as $R4$ can only send to $R2$, $R3$ or $B$ while it has to be capable of sending to $B$ when receiving from $R2$ and to $R3$ when from $B$. To fix this, we need $R3$ to route to $R1$ and $R1$ to have two routes : $R1$ to $A$ when receiving from $R3$, and $R1$ to $R2$ when receiving from $A$.
+
+\section{Link State}
+
+In a Link State protocol, when :
+\begin{itemize}
+\item A link between two routers is broken, both routers will see that they no longer receive anything from this link. They will update their rooting table and send a new LSP without this link to indicate to the other routers that it no longer exist.
+\item A router is out of order, all its links will be broken. The other routers will only remove the LSP they received from the broken router when it expires.
+\end{itemize}
