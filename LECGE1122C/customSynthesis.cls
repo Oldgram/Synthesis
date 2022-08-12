@@ -60,7 +60,7 @@
 \usepackage{colortbl}
 \usepackage{framed}
 \usepackage{xcolor}
-%\usepackage{fourier}
+\usepackage{fourier}
 %\usepackage[pages=some]{background}
 \usepackage{wrapfig}
 \graphicspath{ {./pictures/} }

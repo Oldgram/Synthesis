@@ -105,7 +105,10 @@ Toujours consommés dans des proportions fixes.
 
 \subsubsection{Biens indésirables}
 
-Prenons un point $(x_1, x_2)$, un certain nombre de poivrons et d’anchois. Si nous donnons au consommateur quelques anchois supplémentaires, comment devons-nous modifier la quantité de poivrons pour maintenir le consommateur sur la même CI ? Nous devons lui en donner quelques-uns en plus en échange des anchois supplémentaires. La pente est positive.
+Prenons un point $(x_1, x_2)$, un certain nombre de poivrons et d’anchois.
+
+Si nous donnons au consommateur quelques anchois supplémentaires, comment devons-nous modifier la quantité de poivrons pour maintenir le consommateur sur la même CI ? Nous devons lui en donner quelques-uns en plus en échange des anchois supplémentaires. La pente est positive.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\textwidth,keepaspectratio]{biens_indesirables}
@@ -167,7 +170,7 @@ Ici, les CI sont strictement monotones et strictement convexes. Il est toujours 
 
 Variation d'utilité de l'individu lorsqu'il reçoit un peu plus du bien $i$
 \begin{equation*}
-Um_i = \frac{\Delta u}{\Delta x_i} = \frac{\delta u}{\delta x_i}
+Um_i = \frac{\Delta u}{\Delta x_i} = \frac{\partial u}{\partial x_i}
 \end{equation*}
 
 On peut utiliser la fonction d'utilité pour mesurer le TmS :
@@ -467,11 +470,354 @@ Ici, on suppose que l'agent économique connaît tous les états du monde possib
 \subsection{Loteries}
 
 \begin{itemize}
-\item Manière de modéliser les actions : choix de loteries
-\item loterie : distribution de probabilités sur un ensemble de résultats possibles
-\item Loterie certaine : $\mathcal{L} = (1|x_1)$
+\item \textblue{Manière de modéliser les actions} : choix de loteries
+\item \textblue{Loterie} : distribution de probabilités sur un ensemble de résultats possibles :\\
+$\mathcal{L} = (\pi_1, \pi_2, ..., \pi_n|x_1, x_2, ..., x_n)$ où $\displaystyle\sum_{i=1}^{n} \pi_i = 1$
+\item \textblue{Loterie certaine} : $\mathcal{L} = (1|x_1)$
 \end{itemize}
 
+\subsection{Préférences sur les loteries}
+
+\begin{enumerate}
+\item \textblue{Complétude} : Toute paire de loteries peut être comparée.
+\item \textblue{Transitivité} : Si une loterie quelconque est au moins aussi désirable qu'une autre et cette autre au moins aussi désirable qu'une troisième, alors la première est au moins aussi désirable que la troisième.
+\item \textblue{Continuité} : Aucun "petit" changement dans les probabilités n'inverse le classement entre deux loteries.
+\item \textblue{Indépendance} : Si on "mélange" chaque loterie avec une troisième, alors le classement des loteries résultant ne dépend pas du choix de cette troisième loterie.
+\end{enumerate}
+
+\subsection{Utilité espérée (vNM)}
+
+Quand l'hypothèse d'indépendance est satisfaite, on peut représenter les préférences par une fonction d'utilité particulière : la fonction d'utilité espérée ou de \textblue{von Neumann-Morgenstern}.
+
 \begin{equation*}
-\displaystyle\sum_{i=1}^{n} \pi_i = 1
+U(\mathcal{L} = E(u(\mathcal{L})) = \displaystyle\sum_{i=1}^{n} \pi_i u(x_i)
 \end{equation*}
+\begin{equation*}
+E(\mathcal{L} = \displaystyle\sum_{i=1}^{n} \pi_i x_i
+\end{equation*}
+
+Cette fois, la fonction d'utilité est un concept cardinal : elle permet des comparaisons de différents niveaux d'utilité. On peut maintenant dire que tel individu préfère 2x plus $L$ à $L'$.
+
+La fonction vNM exprime le fait que la manière dont le décideur valorise la richesse dans un état du monde ne dépend pas de la manière dont il valorise la richesse dans un autre état du monde. L'individu doit choisir la meilleure loterie en fonction de ses préférences.
+
+\subsection{Limites : paradoxe d'Allais}
+
+Supposons qu'il existe trois prix : 0, 500 000€ et 2 500 000€.
+\begin{itemize}
+\item Considérons 4 loteries portant sur ces prix dont les probabilités sont :
+	\begin{align*}
+	L_1 = (0, 1, 0); &L_1' = (0.1, 0, 0.9)\\
+	L_2 = (0.9, 0.1, 0); &L_2' = (0.91, 0, 0.09)
+	\end{align*}
+\item L'individu est soumis à un choix entre $L_1$ et $L_1'$ puis entre $L_2$ et $L_2'$
+\end{itemize}
+
+\begin{minipage}{0.65\textwidth}
+	La plupart préfèrent $L_1$ à $L_1'$ et $L_2'$ à $L_2$. Or, ceci est incohérent.\\
+	En effet, $L_1 \succ L_1' \Leftrightarrow L_2 \succ L_2'$
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\textwidth,keepaspectratio]{paradoxe_allais}
+	\end{figure}
+\end{minipage}
+
+Et :
+\begin{align*}
+L_1 &\succ L_1'\\
+&\Leftrightarrow\\
+E(U(L_1)) &> E(U(L_1'))\\
+&\Leftrightarrow\\
+u(500) &> 0.1u(0) + 0.9u(2500)\\
+&\Leftrightarrow\\
+0.1u(500) &> 0.01u(0) + 0.09u(2500)\\
+&\Leftrightarrow\\
+0.1u(500)+0.9u(0) &> 0.91u(0) + 0.09u(2500)\\
+&\Leftrightarrow\\
+E(U(L_2)) &> E(U(L_2'))\\
+&\Leftrightarrow\\
+L_2 &\succ L_2'
+\end{align*}
+
+\section{Aversion au risque}
+
+\begin{itemize}
+\item \textblue{Averse au risque} : Une personne manifeste de l'aversion au risque si pour tout loterie, elle trouve la loterie qui conduit certainement l'espérance de cette loterie au moins aussi désirable que la loterie elle-même. L'individu est prêt à perdre en espérance de gain pour réduire le risque auquel il est soumis.
+\item \textblue{Goût pour le risque} : Si la personne préfère faiblement la loterie incertaine (>< averse).
+\item \textblue{Neutre au risque} : Si la personne est indifférente entre les 2.
+\item \textblue{Pari équitable} : Pari pour lequel l'espérance de gain est nul (si > 0 : plus qu'équitable).
+\end{itemize}
+\warning \textred{Les individus ne maximisent pas l'espérance de gain mais bien l'utilité espérée}. Le choix entre les loteries dépend de l'aversion au risque de l'agent.
+
+Pour un individu qui manifeste de l'aversion au risque, l'utilité de la valeur attendue de la richesse, $u(10)$ = (montant initial en poche), est supérieure à son utilité attendue, $0.5u(5) + 0.5u(15)$.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth,keepaspectratio]{aversion_risque}
+\end{figure}
+
+Pour un individu qui manifeste du goût pour le risque, l'utilité attendue de sa richesse, $0.5u(5) + 0.5u(15)$, est supérieure à l'utilité de sa valeur attendue, $u(10)$.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth,keepaspectratio]{gout_risque}
+\end{figure}
+
+\textit{"Winning makes you less happy than loosing makes you sad."}
+\begin{itemize}
+\item[$\Rightarrow$] \textblue{Aversion au risque} : fonction d'utilité \textred{strictement concave}
+\item[$\Rightarrow$] \textblue{Goût pour le risque} : fonction d'utilité \textred{strictement convexe}
+\item[$\Rightarrow$] \textblue{Neutre au risque} : fonction d'utilité \textred{linéaire}
+\end{itemize}
+
+\section{Choix de production}
+
+\subsection{Technologie}
+
+Contexte :
+\begin{enumerate}
+\item Une entreprise = un agent
+\item Concurrence parfaite, entreprise = price taker
+\item Obejctif : maximiser le profit et minimiser le coût
+\end{enumerate}
+
+Hypothèses à respecter :
+\begin{enumerate}
+\item \textblue{Possibilité d'inactivité} : $(0,0) \in Y$
+\item \textblue{Libre disposition} : le gaspillage est toujours possible
+\item \textblue{No free lunch} : impossible de produire sans input
+\item \textblue{Inputs limités $\rightarrow$ output limités}
+\end{enumerate}
+
+\subsubsection{Courbes d'isoquantes}
+
+La technologie peut être représentée par des courbes d'isoquantes. Une courbe d'isoquante est définie pour un niveau de production donné, et est le lieu des combinaisons d'inputs efficaces permettant de produire un certain niveau d'output. Elles ressembles aux Ci mais leur niveau d'utilité est déterminé par la technologie.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth,keepaspectratio]{isoquantes}
+\end{figure}
+
+\subsection{Fonction de production}
+
+\textblue{Plan de production} : Décrit l'ensemble des inputs (facteurs de production) et d'output (produits).
+
+\textblue{Ensemble de production} : $Y$ est l'ensemble des plans de production techniquement réalisables.
+
+\textblue{Fonction de production} : Frontière de l'ensemble de production, elle associe à chaque combinaison $x$ d'inputs données, l'output maximum $y$ qu'il est possible d'obtenir à partir de cette combinaison. C'est-à-dire : $(y_1, ..., y_m) \leq f(x_1, ..., x_n)$.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth,keepaspectratio]{fonction_production}
+\end{figure}
+
+\subsubsection{Exemples de fonctions de production}
+
+
+\begin{minipage}{0.33\textwidth}
+	\begin{figure}[H]
+		\centering
+		Substituts parfaits
+		\includegraphics[width=1\textwidth,keepaspectratio]{fonction_prod_substitut}
+		\legend{$f(x_1,x_2) = ax_1 + bx_2$}
+	\end{figure}
+\end{minipage}
+\begin{minipage}{0.33\textwidth}
+	\begin{figure}[H]
+		\centering
+		Compléments parfaits
+		\includegraphics[width=1\textwidth,keepaspectratio]{fonction_prod_complement}
+		\legend{$f(x_1,x_2) = min\{x_1, x_2\}$}
+	\end{figure}
+\end{minipage}
+\begin{minipage}{0.33\textwidth}
+	\begin{figure}[H]
+		\centering
+		Cobb-Douglas
+		\includegraphics[width=1\textwidth,keepaspectratio]{fonction_prod_cobb_douglas}
+		\legend{$f(x_1,x_2) = Ax^c_1 + x^d_2$}
+	\end{figure}
+\end{minipage}
+
+\subsubsection{Hypothèses sur la fonction de production}
+
+\begin{enumerate}
+\item \textblue{Monotone} : Si on augmente la quantité d'au moins un des $x$, la quantité produite sera $>$ à celle produite initialement.
+\item \textblue{Convexe} : S'il est possible de produire une certaine quantité d'$y$ de deux façons différentes, leur moyenne pondérée permet de produire une quantité $>$ de cet output.
+\end{enumerate}
+
+\subsubsection{Rendement d'échelle}
+
+\begin{enumerate}
+\item \textblue{Par rapport à la fonction de production} :\\
+Pour $t > 1$ :
+	\begin{itemize}
+	\item Croissants : $f(tx_1, tx_2) > tf(x_1, x_2)$
+	\item Décroissants : $f(tx_1, tx_2) < tf(x_1, x_2)$
+	\item Constants : $f(tx_1, tx_2) = tf(x_1, x_2)$
+	\end{itemize}
+\item \textblue{Par rapport au produit moyen} :\\
+Le produit moyen est : $PM(x) = \frac{f(x)}{x}$
+	\begin{itemize}
+	\item Croissants : $PM$ croissant
+	\item Décroissants : $PM$ décroissant
+	\item Constants : $PM$ constant
+	\end{itemize}
+\item \textblue{Par rapport au degré d'homogénéité} :\\
+Fonction homogène de degré $k$ si $\forall(x_1, ..., x_n) et \forall t>0, f(tx_1, ..., tx_n) = t^k f(tx_1, ..., tx_n)$
+	\begin{itemize}
+	\item Croissants : $k > 1$
+	\item Décroissants : $k < 1$
+	\item Constants : $k = 0$
+	\end{itemize}
+\end{enumerate}
+
+\begin{minipage}{0.33\textwidth}
+	\begin{figure}[H]
+		\centering
+		Rendements d'échelle croissants
+		~
+		\includegraphics[width=1\textwidth,keepaspectratio]{rendement_croissant}
+	\end{figure}
+\end{minipage}
+\begin{minipage}{0.33\textwidth}
+	\begin{figure}[H]
+		\centering
+		Rendements d'échelle décroissants
+		~
+		\includegraphics[width=1\textwidth,keepaspectratio]{rendement_decroissant}
+	\end{figure}
+\end{minipage}
+\begin{minipage}{0.33\textwidth}
+	\begin{figure}[H]
+		\centering
+		Rendement d'échelle constants
+		~
+		\includegraphics[width=1\textwidth,keepaspectratio]{rendement_constant}
+	\end{figure}
+\end{minipage}
+
+\subsubsection{Taux marginal de substitution technique (TmST)}
+
+Égal à la pente d'une courbe d'isoquante. il mesure comment, si la firme augmente à la marge la quantité du facteur 1, elle doit modifier la quantité du facteur 2 pour que la quantité d'output reste constante.
+
+\begin{equation*}
+TmST = - \frac{Pm_1}{Pm_2} = \text{ rapport des produits marginaux.}
+\end{equation*}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth,keepaspectratio]{tmst}
+\end{figure}
+
+\textblue{Produit marginal} : variation d'outputs par rapport à une variation unitaire du facteur $i$.
+\begin{equation*}
+y = f(x_1, ..., x_n) \leftrightarrow Pm_i = \frac{\partial y}{\partial x_i}
+\end{equation*}
+
+\subsection{Maximisation du profit}
+
+\begin{enumerate}
+\item Profit : Différences entre les recettes et les dépenses (les coûts) d'une entreprise $\rightarrow \pi = py - wx$
+\item Recette : $py = p_1y_1, ..., p_my_m$ où $p_i$ est le prix unitaire de l'output $y_i$.
+\item Dépense : $wx = w_1x_1, ..., w_n p_n$ où $w_i$ est le coût unitaire de l'input $x_i$.
+\end{enumerate}
+
+On représente le $\pi$ avec des \textred{droites s'isoprofit}. Elles regroupent l'ensemble des combinaisons d'inputs et d'outputs qui génèrent un niveau donné de profit $\{(x, y) | py - wx = \pi_0\}$.
+
+Pour maximiser le profit, l'entreprise choisira l'ensemble de production réalisable tel que :
+\begin{equation*}
+\max_{x, y \in Y} \sum_{i = 1}^m p_i y_i - \sum_{j=1}^n w_j x_j \text{ s.c. } (y_1, .., y_m) \leq f(x_1, x_n)
+\end{equation*}
+Comme la contrainte est liante, on peut remplacer $f(x)$ dans la formule de maximisation.
+
+\subsubsection{Maximisation à court terme}
+On fixe la variable $x_2 \rightarrow \tilde{x}_2$, ce qui donne :
+
+\begin{equation*}
+\max_{x_1} p f(x_1,\tilde{x}_2) - w_1x_1 - w_2\tilde{x}_2
+\end{equation*}
+
+La condition du choix maximale est égal à $pPm_1(x_1^*, \tilde{x}_2) = w_1$, donc la valeur du produit marginal du facteur $1$ est son prix.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.35\textwidth,keepaspectratio]{maximisation_profit}
+\end{figure}
+
+\subsubsection{Maximisation à long terme}
+
+\begin{equation*}
+\max_{x_1} p f(x_1,x_2) - w_1x_1 - w_2x_2
+\end{equation*}
+Condition du choix optimal :
+\begin{align*}
+pPm_1(x_1^*, x_2^*) &= w_1\\
+pPm_2(x_1^*, x_2^*) &= w_2
+\end{align*}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth,keepaspectratio]{maximisation_profit_long}
+\end{figure}
+\begin{itemize}
+\item[$\rightarrow$] Similaire à la maximisation à court terme
+\item[$\Rightarrow$] Égalité entre la pente des droites d'isoprofit et celle de la frontière de production.
+\end{itemize}
+
+\subsection{Minimisation du coût}
+
+Pour décomposer le problème de maximisation :
+\begin{enumerate}
+\item Minimisation du coût pour produire un $y_0$ donné
+\item Détermination du $y$ pour un profit maximum
+\end{enumerate}
+
+\subsubsection{Étape 1}
+\begin{equation*}
+\max_{x_1, x_2} w_1 x_1 + w_2 x_2 \text{ s.c. } f(x_1, x_2) = y_0
+\end{equation*}
+
+On obtient la \textred{demande conditionnelle de facteurs} :
+
+\begin{equation*}
+(x_1^*, x_2^*) = (z_1(w_1,w_2,y_0),z_2(w_1,w_2,y_0))
+\end{equation*}
+
+\textblue{Fonction de coût} : fonction associant à chaque prix des inputs les coûts minimaux de production d'un niveau donné d'outputs $y_0$. C'est une droite de pente $= -\frac{w_1}{w_2}$.
+\begin{equation*}
+c(w_1, w_2, y_0) = w_1x^*_1 + w_2x^*_2
+\end{equation*}
+
+\textblue{Le coût moyen} : mesure du coût minimal de production par unité d'output
+\begin{equation*}
+CM(w,y) = \frac{c(w_1, w_2, y_0)}{y}
+\end{equation*}
+
+\textblue{Le coût marginal} : mesure le taux de variation d'un coût minimal de production en fonction de la variation de la quantité d'output.
+\begin{equation*}
+Cm(w,y) = \frac{\partial c(w_1, w_2, y_0)}{\partial y}
+\end{equation*}
+
+\subsubsection{Étape 2}
+
+\begin{equation*}
+\max_y py - w_1x^*_1 + w_2x^*_2 \Longleftrightarrow \max_y py - w_1z_1(w_1,w_2,y_0) + w_2 z_2 (w_1, w_2, y_0)
+\end{equation*}
+
+On représente ce problème avec des \textred{droites d'isocoût}. Elles regroupent toutes les combinaisons d'inputs qui génèrent un niveau donné de coûts $c_0 \{(x_1, x_2)|w_1x_1 + w_2x_2 = c_0\}$.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth,keepaspectratio]{minimisation_cout}
+\end{figure}
+
+\begin{itemize}
+\item Trouver la droite d'isocoût la plus basse étant donné un niveau de production (courbe d'isoquante).
+\item Si la fonction de production a des rendements décroissants (isoquante strictement convexe), la solution se trouve à la tangente entre la droite d'isocoût et l'isoquante.
+\item $TmST = -\frac{w_1}{w_2} =$ combinaison d'inputs optimale.\\
+\textit{Le choix optimal de la firme est tel que la productivité marginale de chaque output égalise son prix.}
+\end{itemize}
+
+\textblue{Rendements d'échelle} : détermine comment le coût moyen de production change avec un certain niveau d'output.
+\begin{itemize}
+\item Croissants : $c(ty_1, ty_2) < tc(y_1, y_2) \rightarrow$ le coût moyen diminue
+\item Décroissants : $c(ty_1, ty_2) > tc(y_1, y_2) \rightarrow$ le coût moyen augmente
+\item Constants : $c(ty_1, ty_2) = tc(y_1, y_2) \rightarrow$ le coût moyen ne change pas
+\end{itemize}
