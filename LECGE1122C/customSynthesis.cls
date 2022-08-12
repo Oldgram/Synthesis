@@ -8,10 +8,10 @@
 \usemintedstyle{pastie}
 %Language
 \usepackage[babel,french=guillemets]{csquotes}
-%\usepackage[greek,french]{babel} % For French
-\usepackage[greek,english]{babel} % For English
+\usepackage[greek,french]{babel} % For French
+%\usepackage[greek,english]{babel} % For English
 %silence the annoying warning
-%\frenchsetup{SuppressWarning} % Comment this line if in English package version of babel is used
+\frenchsetup{SuppressWarning} % Comment this line if in English package version of babel is used
 \usepackage{tabularx}
 \usepackage[a4paper,top=2cm,bottom=2cm,left=2.25cm,right=2.25cm]{geometry}
 \usepackage{enumitem}
@@ -89,6 +89,15 @@
 \definecolor{pink}{RGB}{232,62,140}
 \colorlet{shadecolor}{cyan!30!white}
 \colorlet{framecolor}{blue!50!black}
+
+%---Rename output pdf---%
+%\ifx\conditionmacro\undefined
+%  \immediate\write18{%
+%    pdflatex --jobname="\myjobname"
+%    "\gdef\string\conditionmacro{1}\string\input\space\jobname"
+%  }%
+%  \expandafter\stop
+%\fi
 
 %---Multicolumn TOC---%
 \makeatletter
