@@ -71,6 +71,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{mathrsfs}
+\usepackage[mathcal]{eucal}
 \usetikzlibrary{arrows,matrix,positioning}
 \usetikzlibrary{3d,calc}
 \usepackage[makeroom]{cancel}
@@ -210,6 +211,7 @@
 \newcommand{\textred}[1]{\textcolor{deepRed}{#1}}
 \newcommand{\textblue}[1]{\textcolor{darkBlue}{#1}}
 \newcommand{\textgreen}[1]{\textcolor{darkGreen}{#1}}
+\DeclareMathOperator{\Lagr}{\mathcal{L}}
 
 %---Other---%
 \hypersetup{

@@ -45,6 +45,7 @@ Déplacement parallèle vers le haut si $m \nearrow$, vers le bas si $m \searrow
 \subsubsection{Variation des prix}
 Si $p_1$ diminue, la pente diminue et inversement.
 
+\newpage
 \section{Préférences}
 
 \textbf{Panier de biens} : ensemble composé d'un ou de plusieurs produits, représentés par un vecteur $X = (x_1, x_2)$ indiquant la quantité de chacun de ces biens et services.
@@ -346,6 +347,7 @@ Elles ne sont pas homothétiques. Le revenu augmente mais la quantité de bien 1
 	\includegraphics[width=0.5\textwidth,keepaspectratio]{preference_quasi_lineaire_expansion}
 \end{figure}
 
+\newpage
 \subsection{Modification des prix}
 
 Si on décide de fixer $p_2$ et $m$, et de modifier $p_1$ :
@@ -367,6 +369,7 @@ La demande $\searrow$ quand son prix $\searrow$
 	\includegraphics[width=0.5\textwidth,keepaspectratio]{diminution_bien_giffen}
 \end{figure}
 
+\newpage
 \subsection{Chemin d'expansion du prix et courbe de demande}
 
 Le prix et la quantité d'un bien varient en sens opposés : la courbe de demande a généralement une pente négative sauf pour un bien de Giffen ou la pente est positive (cas très rare).
@@ -404,7 +407,6 @@ But : étudier la variation d'un bien sur le choix du consommateur.
 \item \textblue{Effet de revenu} : variation de la demande due à une \textred{modification du pouvoir d'achat}.
 \end{itemize}
 
-\newpage
 \subsection{Méthode de Slutsky}
 
 \begin{enumerate}
@@ -434,6 +436,7 @@ Une diminution du revenu entraîne une diminution de la demande.
 	\includegraphics[width=0.4\textwidth,keepaspectratio]{slutsky_bien_normal}
 \end{figure}
 
+\newpage
 \subsubsection{Biens inférieurs}
 Une diminution du revenu entraîne une augmentation de la demande. les effets de substitution et de revenu s'opposent car l'effet de revenu est dans la direction opposées.
 \begin{figure}[H]
@@ -471,9 +474,12 @@ Ici, on suppose que l'agent économique connaît tous les états du monde possib
 
 \begin{itemize}
 \item \textblue{Manière de modéliser les actions} : choix de loteries
-\item \textblue{Loterie} : distribution de probabilités sur un ensemble de résultats possibles :\\
-$\mathcal{L} = (\pi_1, \pi_2, ..., \pi_n|x_1, x_2, ..., x_n)$ où $\displaystyle\sum_{i=1}^{n} \pi_i = 1$
-\item \textblue{Loterie certaine} : $\mathcal{L} = (1|x_1)$
+\item \textblue{Loterie} : distribution de probabilités sur un ensemble de résultats possibles :
+\begin{equation*}
+\Lagr = (\pi_1, \pi_2, ..., \pi_n|x_1, x_2, ..., x_n) \text{ où } \displaystyle\sum_{i=1}^{n} \pi_i = 1
+\end{equation*}
+
+\item \textblue{Loterie certaine} : $\Lagr = (1|x_1)$
 \end{itemize}
 
 \subsection{Préférences sur les loteries}
@@ -490,16 +496,17 @@ $\mathcal{L} = (\pi_1, \pi_2, ..., \pi_n|x_1, x_2, ..., x_n)$ où $\displaystyle
 Quand l'hypothèse d'indépendance est satisfaite, on peut représenter les préférences par une fonction d'utilité particulière : la fonction d'utilité espérée ou de \textblue{von Neumann-Morgenstern}.
 
 \begin{equation*}
-U(\mathcal{L} = E(u(\mathcal{L})) = \displaystyle\sum_{i=1}^{n} \pi_i u(x_i)
+U(\Lagr) = E(u(\Lagr)) = \sum_{i=1}^{n} \pi_i u(x_i)
 \end{equation*}
 \begin{equation*}
-E(\mathcal{L} = \displaystyle\sum_{i=1}^{n} \pi_i x_i
+E(\Lagr) = \sum_{i=1}^{n} \pi_i x_i
 \end{equation*}
 
 Cette fois, la fonction d'utilité est un concept cardinal : elle permet des comparaisons de différents niveaux d'utilité. On peut maintenant dire que tel individu préfère 2x plus $L$ à $L'$.
 
 La fonction vNM exprime le fait que la manière dont le décideur valorise la richesse dans un état du monde ne dépend pas de la manière dont il valorise la richesse dans un autre état du monde. L'individu doit choisir la meilleure loterie en fonction de ses préférences.
 
+\newpage
 \subsection{Limites : paradoxe d'Allais}
 
 Supposons qu'il existe trois prix : 0, 500 000€ et 2 500 000€.
@@ -596,6 +603,7 @@ La technologie peut être représentée par des courbes d'isoquantes. Une courbe
 	\includegraphics[width=0.4\textwidth,keepaspectratio]{isoquantes}
 \end{figure}
 
+\newpage
 \subsection{Fonction de production}
 
 \textblue{Plan de production} : Décrit l'ensemble des inputs (facteurs de production) et d'output (produits).
@@ -606,7 +614,7 @@ La technologie peut être représentée par des courbes d'isoquantes. Une courbe
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\textwidth,keepaspectratio]{fonction_production}
+	\includegraphics[width=0.3\textwidth,keepaspectratio]{fonction_production}
 \end{figure}
 
 \subsubsection{Exemples de fonctions de production}
@@ -736,6 +744,7 @@ On fixe la variable $x_2 \rightarrow \tilde{x}_2$, ce qui donne :
 \max_{x_1} p f(x_1,\tilde{x}_2) - w_1x_1 - w_2\tilde{x}_2
 \end{equation*}
 
+\newpage
 La condition du choix maximale est égal à $pPm_1(x_1^*, \tilde{x}_2) = w_1$, donc la valeur du produit marginal du facteur $1$ est son prix.
 \begin{figure}[H]
 	\centering
@@ -821,3 +830,482 @@ On représente ce problème avec des \textred{droites d'isocoût}. Elles regroup
 \item Décroissants : $c(ty_1, ty_2) > tc(y_1, y_2) \rightarrow$ le coût moyen augmente
 \item Constants : $c(ty_1, ty_2) = tc(y_1, y_2) \rightarrow$ le coût moyen ne change pas
 \end{itemize}
+
+\chapter{Partie 2}
+
+\section{Équilibre général}
+
+\textblue{L'équilibre général est l'étude de la fixation simultanée de tous les prix sur tous les marchés.} C'est-à-dire comment les conditions de demande et d'offre interagissent sur plusieurs marchés pour déterminer les prix de plusieurs biens.
+\begin{itemize}
+\item Échange pur (on considère qu'il n'y a pas de production)
+\item Deux agents (A,B)
+\item Deux biens (1,2)
+\item Dotations (quantité disponible) : $W = (W_A, W_B) = ((w_A^1, w_A^2), (w_B^1,w_B^2))$
+\item Les préférences / choix final : $X_A = (x_A^1, x_A^2)$ et $X_B = (x_B^1,x_B^2)$
+\item Allocation (paire de paniers de consommation) : $X = (X_A, X_B) = ((x_A^1, x_A^2), (x_B^1,x_B^2))$
+\item \textblue{Allocation réalisable} : quantité de chaque bien (allocation finale) = quantité disponible (allocation initiale)
+\begin{align*}
+x_A^1 + x_B^1 &= w_A^1 + w_B^1\\
+x_A^2 + x_B^2 &= w_A^2 + w_B^2
+\end{align*}
+\end{itemize}
+
+\subsection{Échange}
+
+Outil de représentation : la \textblue{boite d'Edgeworth}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth,keepaspectratio]{boite_edgeworth}
+\end{figure}
+
+On passe de W à X : A renonce à $|x_A^1 - w_A^1|$ et reçoit $|x_A^2 + w_A^2|$ (et inversement pour B). L'intersection entre les deux zones est l'unique zone qui satisfait plus A et B que leurs dotations respectives
+
+\subsection{Efficacité au sens de Pareto}
+
+Une allocation est efficace au sens de Pareto s'il n'en existe pas d'autre que tous les agents préfèrent.
+C'est-à-dire :
+\begin{enumerate}
+\item Il est impossible d'augmenter la satisfaction d'un agent sans diminuer celle d'un autre
+\item Il n'y a pas de gaspillage de satisfaction
+\item Tous les gains d'échange ont été exploités
+\item Il n'est plus possible d'effectuer des échanges mutuellement avantageux
+\end{enumerate}
+
+Les CI doivent être tangentes pour toute allocation efficace au sens de Pareto.
+\newpage
+La zone où A a un niveau de satisfaction supérieur à celui de sa dotation = tous les paniers situés au-dessus de la CI passant par M. Il en est de même pour B mais de son point de vue.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth,keepaspectratio]{allocation_pareto}
+\end{figure}
+
+\subsubsection{Ensemble de Pareto (courbe des contrats)}
+
+Ensemble de tous les points efficaces au sens de Pareto dans une boîte d'Edgeworth.
+\begin{itemize}
+\item[$\rightarrow$] Tous les contrats finaux se trouvent dans cet ensemble
+\item[$\rightarrow$] L'ensemble comprend toujours $O_A$ et $O_B$
+\end{itemize}
+
+\subsection{Échange marchand}
+
+Les agents se comportent de manière concurrentielle : \textit{price takers}
+
+\begin{itemize}
+\item Le \textblue{vecteur de prix} : $(p_1,p_2)$
+\item La \textblue{demande brute} : quantité totale du bien que l'agent désire $(x_A^1, x_A^2)$ et $X_B = (x_B^1,x_B^2)$
+\item La \textblue{contrainte budgétaire} :
+\begin{align*}
+p_1 x_A^1 + p_2 x_A^2 &= p_1 w_A^1 + p_2 w_A^2\\
+p_1 x_B^1 + p_2 x_B^2 &= p_1 w_B^1 + p_2 w_B^2
+\end{align*}
+\item La \textblue{demande nette/excédentaire} : $e_A^1 = x_A^1 - w_A^1$
+\item \textblue{Marché à l'équilibre} (équilibre concurrentiel = équilibre de Walras) : ssi $e_A^1 = -e_B^1$ et $e_A^2 = -e_B^2$
+\begin{itemize}
+\item[$\rightarrow$] les choix de tous les consommateurs sont compatibles
+\end{itemize}
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.48\textwidth,keepaspectratio]{demandes_bruts_nettes}\hfill
+	\includegraphics[width=0.48\textwidth,keepaspectratio]{equilibre_edgeworth}
+\end{figure}
+
+\subsection{Existence de l'équilibre}
+
+Un équilibre existe sous deux conditions :
+\begin{enumerate}
+\item Les préférences des deux agents doivent être convexes
+\item Chaque consommateur est très petit dans la population
+\end{enumerate}
+Grâce à ces conditions, la fonction de demande agrégée est continue $\rightarrow$ une petite variation de prix ne devrait pas entraîner un grand saut dans la quantité demandée.
+
+\textblue{Si la fonction est continue alors un équilibre existe.}
+
+\subsection{Efficacité de l'équilibre}
+
+\subsubsection{Premier théorème de l'économie du bien-être}
+
+\begin{formal}
+Tout équilibre, s'il existe, est efficace au sens de Pareto
+\end{formal}
+
+$\rightarrow$ Un marché concurrentiel exploite tous les gains découlant de l'échange.
+
+Selon la théorie des prix, les prix dirigent l'économie vers une allocation efficace. À l'équilibre compétitif, les TmS de tous les agents sont égaux et égaux au rapport des prix.
+
+\subsubsection{Deuxième théorème du bien-être}
+
+Inverser la causalité par rapport au théorème précédent : toute allocation efficace au sens de Pareto peut-elle être obtenue comme un équilibre compétitif (= être décentralisée) ? Oui, ssi les préférences sont convexes.
+\begin{formal}
+Si les préférences sont convexes, toute allocation efficace au sens de Pareto peut être décentralisée/constitue un équilibre pour un certain ensemble de prix.
+\end{formal}
+
+\section{Théorie de la justice}
+
+\subsection{Absence d'envie - 1ère conception d'un société juste}
+
+\subsubsection{Allocation "égalitaire"/juste/sans envie}
+Allocation où les biens sont divisés de façon égale entre les agents. Il faut que $X_A \succeq_A X_B$ et que $X_B \succeq_B X_A$.
+
+Exemple : $X_A = \frac{W}{2}$ et $X_b = \frac{W}{2} \rightarrow$ n'est pas efficace mais "égalitaire".
+
+$\Rightarrow$ Les agents peuvent avoir des préférences différentes, ils vont donc procéder à des échanges.
+\begin{formal}
+Si on divise les droits de propriétés sur les ressources de manière égale entre tous les agents et qu'on laisse faire les marchés compétitifs, alors l'allocation d'équilibre sera sans envie.
+\end{formal}
+$\Rightarrow$ Si l'allocation initiale est divisée en parts égales, l'allocation finale doit être équitable.
+
+Pour déterminer si une allocation est "égalitaire" ou pas, il suffit de regarder l'allocation que nous aurions si les deux agents intervertissaient leur paniers. Si cette allocation "inverse" est située en dessous des CI passant par l'allocation initiale, celle-ci est une allocation "égalitaire" ("en dessous" signifie en dessous du pont de vue de l'agent concerné; de notre point de vue, l'allocation "inverse" doit être située entre les deux CI).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth,keepaspectratio]{allocation_sans_envie}
+\end{figure}
+
+\newpage
+\subsubsection{Allocation équitable}
+
+Allocation égalitaire et efficace au sens de Pareto.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth,keepaspectratio]{allocation_equitable}
+\end{figure}
+
+\subsubsection{La conception de la justice économique comme absence d'envie}
+
+\begin{itemize}
+\item Les marchés compétitifs sont compatibles avec la justice.
+\item Les conditions de la justice portent sur les droits de propriété sur les ressources (chacun une part égale).
+\item Si on ajoute les firmes, on obtient le même résultat (si les droits de propriétés des firmes sont répartis de manière égale).
+\end{itemize}
+
+\subsection{Solidarité en ressources - 2ème conception d'une société juste}
+
+\subsubsection{Solidarité en ressources}
+
+But : garantir que tout le monde bénéficie de la croissance sans céder de l'efficacité.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth,keepaspectratio]{solidarite_ressources}
+\end{figure}
+
+Suite à une croissance, il y a bien plus de bien 1 à allouer. Le prix du bien 1 va donc chuter. L'agent A va préférer $X_A$ à $X'_A$ car le prix du bien qu'il "vend" a baissé et celui qu'il achète a augmenter.
+
+La croissance modifie la rareté relative des biens et cela se reflète dans les prix. Même si sa dotation augmente, l'agent A aime le bien qui est devenu le plus cher (bien 2). Il se trouve donc moins bien : $X_A \succeq_A X'_A$
+
+$\Rightarrow$ Il est impossible de garantir la solidarité en ressource, il faut donc redistribuer.
+
+\subsection{Conclusion}
+
+Absence d'envie et solidarité en ressources sont 2 principes de justice incompatibles lorsqu'on joint l'efficacité. $\rightarrow$ Choisir entre les deux est un \textblue{choix éthique}.
+
+\section{Tarification par un monopoleur}
+
+Le vendeur est un monopoleur (= il a tous les pouvoir), l'information a donc beaucoup de valeur car elle permet à certains agents de \textblue{s'approprier une partie du surplus} qu'ils ne parviendraient pas ) avoir si l'information était complète. De plus, la manière dont l'information est distribuée influence l\textblue{a manière dont le surplus est distribué}.
+
+Mais l'asymétrie d'information peut également impliquer une \textblue{perte de surplus total} (= diminution de l'activité économique).
+
+\subsection{Modèle}
+
+\begin{itemize}
+\item \textblue{Bien 1} : produit par le monopoleur
+\item \textblue{Bien 2} : monnaie (bien normalisé à $1$, en €)
+\item \textblue{Monopoleur} :
+	\begin{itemize}
+	\item Produit à un coût marginal constant de $c$
+	\item Propose une tarification $F$
+	\item Cherche à maximiser son profit
+	\end{itemize}
+\item \textblue{Consommateur} :
+	\begin{itemize}
+	\item Le bien 1 qu'il consomme en quantité $x_1$
+	\item Ce que lui coûte la transaction : $m$ (en €)
+	\item Préfère un $m$ aussi petit que possible (utilité croissante en $-m$
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Exemples de tarification}
+
+\begin{itemize}
+\item Prix unique : quelque soit la quantité : $F(x_1) = px_1$
+\item Abonnement suivi d'un prix constant : $F(x_1) = F_0 + px_1$
+\item Double prix : $p$ si $\bar{x_1} > x_1, p'$ ensuite
+\item Offre à prendre ou à laisser : $(\bar{x_1}, F(\bar{x_1})$
+\item Un seuil : $x_1$
+\end{itemize}
+
+\subsubsection{Fonction d'utilité du consommateur}
+
+\begin{equation*}
+U(x_1, -m) = \textblue{v(x_1)} \textred{-m}
+\end{equation*}
+
+Elle est quasi-linéaire : linéaire en \textred{monnaie}, non linéaire en \textblue{biens}.
+
+\subsubsection{Surplus du consommateur}
+
+C'est ce qu'il gagne en bien être dans la transactions.
+
+La fonction $v(x)$ représente le surplus d'utilité que le consommateur tire de la consommation du bien.
+\begin{itemize}
+\item Elle est concave : volonté à payer décroissante
+\item Elle est croissante : volonté à payer toujours positive
+\end{itemize}
+$v(x) =$ l'utilité marginale (elle est toujours positive, et sa dérivée est toujours négative).
+
+\subsubsection{Maximisation de l'utilité}
+
+Le consommateur fait face à une tarification $F$. \textblue{Contrainte} : la quantité d'argent que le consommateur va débourser doit être supérieure ou égale à la quantité d'argent que le vendeur demande.
+\begin{equation*}
+\max_{x_1, -m} U(x_1, -m) \text{ s.c. } m \geq F(x_1)
+\end{equation*}
+Comme la contrainte doit être liante, on a :
+\begin{equation*}
+\max_{x_1, -m} U(x_1, -m) = v(x_1) - F(x_1)
+\end{equation*}
+Le maximum est atteint lorsque la dérivée première est nulle
+\begin{equation*}
+\frac{d v(x_1^*)}{dx_1} = \frac{dF(x_1^*}{dx_1}
+\end{equation*}
+$\Rightarrow$ Le résultat est le même en cas de bons d'achat (car $B$ est une constante qui disparaît en dérivant) : la quantité optimale dépend uniquement de $v$ et $F$.
+
+\subsubsection{Propriétés des fonctions d'utilité quasi-linéaires}
+
+\begin{enumerate}
+\item L'effet revenu est nul
+\item La demande du consommateur est insensible à l'augmentation du revenu : le bien 1 doit être très petit dans le budget du consommateur
+\item Le surplus du consommateur peut se mesurer en monnaie
+\item Richesse nette = richesse brute - coût de production
+\end{enumerate}
+Les CI sont parallèles entre elles, et l'utilité se mesure sur l'axe horizontal (donc en €)
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth,keepaspectratio]{tarification_monopoleur}
+\end{figure}
+
+\subsubsection{Rappel sur le Lagrangien}
+
+\begin{equation*}
+\max f(x) \text{ s.c. } g(x) \geq b
+\end{equation*}
+\begin{enumerate}
+\item On ajoute une nouvelle variable : "le multiplicateur de Lagrange"
+	\begin{equation*}
+	\max \Lagr = f(x) \textred{-} \lambda (\textred{b - g(x)})
+	\end{equation*}
+	\textred{Membre de la parenthèse} : On écrit la contrainte sous la forme "$... < 0$"
+\item On dérive le Lagrangien selon toutes ses variables
+	\begin{equation*}
+	f'(x) = + \lambda^* g'(x) = 0
+	\end{equation*}
+	\begin{itemize}
+	\item Si $\lambda^* < 0$ : \textred{impossible}
+	\item Si $\lambda^* = 0$ : $g(x) > b$
+	\item Si $\lambda^* > 0$ : $g(x) = b$ (contrainte liante)
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Un consommateur, un producteur et un planificateur}
+
+\textblue{Planificateur} : bienveillant et omniscient (il dispose de 100\% de l'information). Il décide de la quantité à produire et de la manière de répartir le surplus entre le consommateur et le producteur.
+$\Rightarrow$ s'il veut garantir un profit $\bar{\Pi}$ au producteur :
+\begin{equation*}
+\max_{x_1, F} U(x_1, -F) = v(x_1) - F \text{ s.c. } F - c x_1 \geq \bar{\Pi}
+\end{equation*}
+
+\begin{enumerate}
+\item Le Lagrangien s'écrit : $\Lagr = v(x_1) - F - \lambda(\bar{\Pi} - (F + c x_1)$
+\item La solution : dériver par rapport aux "vraies" variables :
+	\begin{enumerate}
+	\item[] $frac{\partial \Lagr}{\partial x_1} = v'(x_1) - \lambda c = 0 \Leftrightarrow v'(x^*_1) = c$
+	\item[] $frac{\partial \Lagr}{\partial F} = - 1 + \lambda = 0 \Leftrightarrow \lambda = 1$ ($\lambda > 0$, la contrainte et bien liante)
+	\end{enumerate}
+\item On obtient donc : $\frac{\partial \Lagr}{\partial \lambda} = -(\bar{\Pi} - (F - cx_1)) = 0$
+\end{enumerate}
+$\Rightarrow$ Comme la contrainte est liante, $F - c x_1 = \bar{\Pi}$.
+La quantité produite ($v(x_1) - c x_1$) est celle qui maximise le surplus.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth,keepaspectratio]{planificateur}
+\end{figure}
+\begin{itemize}
+\item[$\Rightarrow$] Au plus la droite se déplace vers la gauche, au plus $\pi$ augmente
+\item[$\rightarrow$] Le \textit{producteur} voit son utilité \textit{augmenter} si on se déplace vers la gauche
+\item[$\rightarrow$] Le \textit{consommateur} voit son utilité \textit{diminuer} si on se déplace vers la gauche
+\end{itemize}
+
+\subsection{Un consommateur et un monopoleur en information parfaite}
+
+\subsubsection{Contrainte de participation du consommateur}
+
+\begin{equation*}
+U(x_1, -m) \geq U(0,0) \Leftrightarrow v(x_1) - m \geq 0
+\end{equation*}
+
+\textblue{Le monopoleur choisira la tarification qui maximise son profit}. $m = F$, donc ce que dépense le consommateur est ce que reçoit le monopoleur.
+
+\subsubsection{Objectif du monopoleur}
+
+\begin{equation*}
+\max_{x_1, F} F - c x_1 \text{ s.c. } v(x_1) - F \geq 0
+\end{equation*}
+
+\begin{enumerate}
+\item Le Lagrangien s'écrit : $\Lagr = F - c x_1 - \lambda (F - v(x_1))$
+\item La solution : dériver par rapport aux "vraies" variables :
+	\begin{enumerate}
+	\item[] $frac{\partial \Lagr}{\partial x_1} = - c + \lambda v'(x_1) = 0 \Leftrightarrow v'(x^*_1) = c$
+	\item[] $frac{\partial \Lagr}{\partial F} = 1 - \lambda = 0 \Leftrightarrow \lambda = 1$ ($\lambda > 0$, la contrainte et bien liante)
+	\end{enumerate}
+\item Comme la contrainte est liante, on a : $F^* = v(x^*_1)$, et comme $F = m$, on obtient : $U(x^*_1, F^*) = 0 \rightarrow$ le consommateur est donc indifférent entre acheter et ne pas acheter.
+\end{enumerate}
+
+\textblue{La solution est efficace} car tout le surplus potentiel est réalisé. \textblue{Le monopoleur accapare tout le surplus}.\\
+$\rightarrow$ Plusieurs tarifications différentes peuvent mener à la même solution dont une tarification avec un abonnement et un prix constant $c$ ou un contrat à prendre ou à laisser $(x^*_1, F^*)$.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth,keepaspectratio]{cons_mono}
+\end{figure}
+$\Rightarrow$ Le consommateur accepte tous les contrats situés dans la zone hachurée en vert.
+
+\subsection{Plusieurs consommateurs et un monopoleur en information parfaite}
+
+Information complète = monopoleur omniscient.
+Il y a deux types de consommateurs qu'on peut ordonner en fonction de leur goût pour le bien 1.
+
+\begin{equation*}
+U(x_1, -m) = g v(x_1) - m \text{ s.c. } g_a > g_b
+\end{equation*}
+
+$\rightarrow$ La volonté à payer de $a$ est toujours supérieure à celle de $b$. Le profit sera donc toujours plus élevé en échangeant avec $a$.
+
+\subsubsection{Condition de single crossing}
+\begin{itemize}
+\item Les CI des deux agents aux goûts différents se croisent au plus une fois
+\item Tous les consommateurs peuvent être rangés selon une seule dimension
+\item Le TmS d'un consommateur de type $a$ est en tout point supérieur à celui d'un autre consommateur de type $b$.
+\end{itemize}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth,keepaspectratio]{p_cons_mono}
+\end{figure}
+Le monopoleur peut donc proposer 2 contrats différents $(x^*_a, F^*_a)$ et $(x^*_b, F^*_b)$ aux 2 types d'agents comme s'il faisait affaire avec séparément.\\
+$\rightarrow$ Répliquer la solution précédente.\\
+\textblue{La solution est efficace} car tout les surplus potentiel est réalisé. \textblue{Le monopoleur accapare tout le surplus}.\\
+$\rightarrow$ Plusieurs tarifications différentes peuvent mener à la même solution dont une tarification avec un abonnement avec un prix contrant $p$ = $c$ ou une double tarification à prendre ou à laisser.\\
+$\Rightarrow$ \textblue{Solution optimale de premier rang}
+
+\subsection{Plusieurs consommateurs et un monopoleur en information incomplète}
+
+Monopoleur incapable de distinguer les agents de types $a$ et $b$ mais connaît la probabilité de faire face à chaque type. Il est donc en situation d'incertitude.\\
+\warning Cas d'antisélection : un consommateur de type $a$ peut se faire passer pour un consommateur de type $b$ (et inversement).\\
+Le monopoleur se limite aux offres à prendre ou à laisser et on suppose qu'il est neutre au risque.
+
+\begin{equation*}
+\Pi = q_a(F^i_a - c x^i_a) + q_b(F^i_a - c x^i_a)
+\end{equation*}
+Avec $q_a$ et $q_b$ les probabilités de faire face à un agent de type $a$/$b$.
+
+\subsubsection{Contraintes de participation (CP)}
+
+\begin{itemize}
+\item $U_a(x^i_a, F^i_a) = g_a v(x^i_a - F^i_a$
+\item $U_b(x^i_b, F^i_b) = g_b v(x^i_b - F^i_b$
+\end{itemize}
+
+\subsubsection{Contraintes de compatibilité avec les incitants (CI)}
+
+Il faut tenir compte du fait qu'un type de consommateur pourrait avoir envie de se faire passer pour l'autre
+\begin{itemize}
+\item $U_a(x^i_a, F^i_a) \geq U_a(x^i_b, F^i_b)$
+\item $U_b(x^i_b, F^i_b) \geq U_b(x^i_a, F^i_a)$
+\end{itemize}
+
+\subsubsection{Simplification des contraintes}
+
+Sachant que $g_a > g_b$ : $U_a(x^i_a, F^i_a) \geq U_a(x^i_b, F^i_b) \geq U_b(x^i_b, F^i_b) \geq 0$
+
+La CP de $a$ est donc satisfaite. Les agents $a$ peuvent avoir intérêt à se faire passer pour un agent $b$ mais pas le contraire.
+
+\begin{equation*}
+\max_{x_1, F} q_a(F_a^i - c x_a^i) + q_b (F_b^i - c x_b^i) \text{ s.c. } U_b(x^i_b, F^i_b) \geq 0 \text{ et } U_a(x^i_a, F^i_a) \geq U_a(x^i_b, F^i_b)
+\end{equation*}
+
+Par l'hypothèse de single corssing, $g_a > g_b$. Il y a trois cas à analyser :
+
+\begin{enumerate}
+\item Les volontés à payer des deux types d'agents sont supérieures à $c$
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth,keepaspectratio]{agents_sup_c}
+\end{figure}
+Le contrat $D$ n'est pas optimal ($a$ choisira toujours un contrat dans la zone hachurée au lieu de $D$).
+
+\item Les volontés à payer des deux types d’agents sont inférieures à $c$
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth,keepaspectratio]{agents_inf_c}
+\end{figure}
+Le contrat $D$ n’est pas optimal ($b$ choisira toujours un contrat dans la zone hachurée au lieu de $D$).
+
+\item La volonté à payer de $a$ est supérieure à $c$ et la volonté à payer de $b$ est inférieure à $c$
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth,keepaspectratio]{a_b_c}
+\end{figure}
+Le contrat $D$ n’est pas optimal ($a$ et $b$ choisiront toujours un contrat dans une des zones hachurées au lieu de $D$)
+\end{enumerate}
+
+$\Rightarrow$ Proposer uniquement le contrat $D$ ne sera jamais optimal pour le monopoleur car le contrat ne peut être mélangeant. Il faut qu'l propose \textblue{autant de contrats qu'il y a de types de consommateurs}.
+
+\subsubsection{Solution optimale}
+
+Le monopoleur doit modifier sa politique : diminuer $x^i_b$ et donc son $F$ associé (il prélève ainsi moins de surplus sur les agents $b$). En faisant cela, il diminue l'envie qu'ont les agents $a$ de se faire passer pour les agents $b$.
+
+\begin{enumerate}
+\item[$\rightarrow$] Il peut donc augmenter le prix payé par les agents $a$ et accaparer une plus grande part de leur surplus
+\item[$\rightarrow$] Il y a autant de contrats que d'agents
+\item[$\rightarrow$] L'équilibre est séparant (information révélée post transaction)
+\end{enumerate}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth,keepaspectratio]{solution_optimale}
+\end{figure}
+
+\subsubsection{Agents de type a}
+
+\begin{itemize}
+\item Quantité achetée = celle achetée en information complète
+\item Montant payé < celui payé en information complète
+	\begin{itemize}
+	\item[$\Rightarrow$] Strictement mieux qu'en information complète grâce à une rente informationnelle
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Agents de type b}
+
+\begin{itemize}
+\item Quantité achetée < celle achetée en information complète (demande volontairement distordue par le monopoleur)
+\item Montant payé < celui payé en information complète
+	\begin{itemize}
+	\item[$\Rightarrow$] Utilité pas affectée par l’asymétrie d’information
+	\end{itemize}
+\end{itemize}
+
+$\Rightarrow$ \textblue{Le surplus total est moindre} qu'en information complète
+\textblue{Solution optimale de second rang} : activité économique et bien-être créé < solution de premier rang mais cette dernière est inaccessible.
+
+\subsection{Concurrence parfaite}
+
+Si les firmes sont présentes en très grande nombre, elles deviennent des prices takers et doivent fixer leur prix à $p = c$. Il n'y a plus de distortion.\\
+Les agents choisissent librement leurs quantités, donc :
+\begin{enumerate}
+\item L'agent $a$ demandera $x_a^*$ au prix $cx_a^*$ pour maximiser $U_a = g_av(x_a) - cx_a$
+\item L'agent $b$ demandera $x_b^*$ au prix $cx_b^*$ pour maximiser $U_b = g_bv(x_b) - cx_b$
+\end{enumerate}
+
+L'équilibre est efficace au sens de Pareto et le surplus est alors maximal mais, cette fois-ci, il est accaparé intégralement par les consommateurs $\rightarrow$ la distribution de l'information est devenue non-pertinente.
