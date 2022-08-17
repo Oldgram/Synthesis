@@ -12,7 +12,7 @@ Trois éléments caractérisent ces noyaux :
 \begin{itemize}
 \item \textred{L'Atténuation} (ou affaiblissement) : la diminution de l'amplitude ou de la puissance d'une onde ou d'un signal lors de sa transmission. Il augmente avec la distance.
 \item \textred{Le Bruit} : partie du signal transmis dont on ne peut pas tirer d'information.
-\item \textred{La Distorsion} ou \textred{dispersion} : l'ensemble des modifications indésirables d'un signal. Il y a plusieurs sources de distorsion :
+\item \textred{La Distorsion} ou \textred{Dispersion} : l'ensemble des modifications indésirables d'un signal. Il y a plusieurs sources de distorsion :
 	\begin{itemize}
 	\item \textred{Les multitrajets} : Certains signaux arrivent directement à la source tandis que d'autres rebondissent sur des obstacles (par exemple des bâtiments). Par conséquent, le signal en arrivée est découpé en plusieurs morceaux de moindre intensité étalés sur le temps.
 	\item \textred{L'effet Doppler} : La fréquence des signaux s'approchant de nous est différente de celle s'éloignant de nous
@@ -35,8 +35,8 @@ f(t) &= \frac{1}{2 \pi} \int_{-\inf}^{+\inf} F(\omega) e^{j \omega t} d\omega
 \end{align*} 
 
 \section{Modulation}
-
-Les différents systèmes de télécommunication utilisent des bandes de fréquences bien précises pour chaque tâches. La modulation permet de transposer un signal autour d'une fréquence définie. Cette technique est utilisée pour partager les différentes bandes de fréquences.
+Les différents systèmes de télécommunication utilisent des bandes de fréquences bien précises pour chaque tâche.
+La modulation permet de transposer un signal autour d'une fréquence définie. Cette technique est utilisée pour partager les différentes bandes de fréquences.
 
 Un \textred{signal modulé} est un \textblue{signal modulant} mis sur une \textblue{porteuse} à la fréquence désirée.
 
@@ -53,21 +53,18 @@ D &= S_1 - S_2 = (G+D) - (G-D) = 2D
 \end{align*}
 
 \subsection{Télévision}
-
-Pour la télévision (analogique), le procédé est assez différent : la luminance (niveau de gris) des lignes est envoyé avec une pulsation de synchronisation (\textbf{synchronizing pulse}) entre chaque ligne.
-
-Le canon à électrons utilisé dans les télévisions envoie la lumière ligne après ligne sur l'écran afin d'afficher une image. pour éviter certains effets désagréables, il est nécessaire que la fréquence à laquelle les images sont envoyées soit synchronisée avec celle du réseau électrique. En Europe, le débit d'image est donc de $50/s$ alors qu'aux USA et au Japon il est de $60/s$.
-
-Une technique utilisée afin de réduire l'impression de scintillement sur les télévisions à tube cathodique et afin d'obtenir un meilleur débit d'images est l'entrelacement. Au lieu d'afficher l'image ligne par ligne, le canon envoie d'abord une ligne sur deux, en commençant par les lignes impaires. on utilise ainsi deux trames pour une image, soit un débit de 25 images par seconds (en Europe, 30 dans le reste du monde) au lieu de 50.
-
+Pour la télévision (analogique), le procédé est assez différent : la luminance (niveau de gris) des lignes est envoyé avec une pulsation de synchronisation (\textbf{synchronizing pulse}) entre chaque ligne.\\
+Le canon à électrons utilisé dans les télévisions envoie la lumière ligne après ligne sur l'écran afin d'afficher une image. Pour éviter certains effets désagréables, il est nécessaire que la fréquence à laquelle les images sont envoyées soit synchronisée avec celle du réseau électrique. En Europe, le débit d'image est donc de $50/s$ alors qu'aux USA et au Japon il est de $60/s$.\\
+Une technique utilisée afin de réduire l'impression de scintillement sur les télévisions à tube cathodique et afin d'obtenir un meilleur débit d'images est l'entrelacement. Au lieu d'afficher l'image ligne par ligne, le canon envoie d'abord une ligne sur deux, en commençant par les lignes impaires. on utilise ainsi deux trames pour une image, soit un débit de 25 images par seconds (en Europe, 30 dans le reste du monde) au lieu de 50.\\
 Pour l'envoi des couleurs, l'idée est la même que pour la radio : on va garder l'envoi de la luminance pour que les vieilles télévisions puissent toujours lire l'image et on va rajouter d'autres signaux afin de pourvoir avoir la couleur.
 
 Soient $RGB$ les couleurs et $YUV$ les signaux (luminance $Y$ et chrominance $UV$) :
 \begin{align*}
-Y &= 0.3R + 0.59G + 0.11B\footnote{\text{Coefficient des couleurs : G>R>B, valeurs liées à la luminosité de chaque couleur}}\\
+Y &= 0.3R + 0.59G + 0.11B\footnotemark\\
 U &= 0.493(B- Y)\\
 V &= 0.877(RY)
 \end{align*}
+\footnotetext{Coefficient des couleurs : G>R>B, valeurs liées à la luminosité de chaque couleur}
 
 De nos jours, la télévision numérique a remplacé la télévision analogique et les images sont désormais envoyées en binaire.
 
@@ -75,7 +72,7 @@ De nos jours, la télévision numérique a remplacé la télévision analogique 
 
 2 étapes : échantillonnage + quantification.
 
-La \textred{numérisation} va permettre de passer d'un signal analogique à un signal numérique. on va pour \textblue{échantillonner} le signal (capturer des valeurs à intervalle fixe). Les avantages des signaux numériques sont :
+La \textred{numérisation} va permettre de passer d'un signal analogique à un signal numérique. On va pour \textblue{échantillonner} le signal (capturer des valeurs à intervalle fixe). Les avantages des signaux numériques sont :
 \begin{itemize}
 \item Le traitement et stockage de l'information
 \item La régénération du signal par des codes correcteurs et détecteurs d'erreur.
@@ -112,7 +109,7 @@ On représente habituellement les lignes comme une résistance $R'(\Omega / m)$,
     \caption{Modélisation d'une ligne}
 \end{figure}
 
-Ces paramètres varient suivant le type de ligne, la fréquence et le matériel utilisé. L'équation des télégraphistes nous donne la relation suivante (avec $z$ la position, $t$ le temps et $v$ la tension sur la ligne :
+Ces paramètres varient suivant le type de ligne, la fréquence et le matériel utilisé. L'équation des télégraphistes nous donne la relation suivante (avec $z$ la position, $t$ le temps et $v$ la tension sur la ligne) :
 \begin{equation*}
 \frac{\partial^2v}{\partial z^2} = LC\frac{\partial^2v}{\partial t^2}+(RC+LG)\frac{\partial v}{\partial t}+RGv
 \end{equation*}
@@ -156,7 +153,7 @@ Soient le nombre de pulsations $\omega = 2 \pi f$, le vecteur d'onde $\beta = \f
 v_{ph} = \frac{\omega}{\beta}
 \end{equation*}
 
-la dispersion d'un signal provient des différent vitesses de déplacement des fréquences constituant une onde. L'onde à tendance à s'étaler sur le temps plus la ligne sera longue.
+La dispersion d'un signal provient des différent vitesses de déplacement des fréquences constituant une onde. L'onde à tendance à s'étaler sur le temps plus la ligne sera longue.
 
 \section{Impédance caractéristique}
 
@@ -227,8 +224,7 @@ Avantages et inconvénients du câble coaxial :
 	\item[+] Protection contre les interférences grâce à la gaine extérieure
 	\item[+] Technique éprouvée et répandue
 	\item[+] Facilité de réparation et de connexion
-	\item[+] Moins de résistance
-	\item[+] Atténuation moindre
+	\item[+] Moins de résistance, atténuation moindre
 	\item[-] Fréquences limitées
 	\item[-] Blindage jamais parfait
 \end{itemize}
@@ -243,7 +239,7 @@ Un \textred{mode} est un chemin emprunté par la lumière par rapport à sa réf
 
 \textred{Transducteur} : dispositif convertissant un signal physique en un autre, par exemple un signal lumineux.
 
-Avantages et inconvénients du câble coaxial :
+Avantages et inconvénients de la fibre optique :
 \begin{itemize}
 	\item[+] Énorme bande passante
 	\item[+] Très faible atténuation
@@ -506,7 +502,7 @@ Il y a \textblue{trois types de modulation} :
 
 \section{Modulation en bande de base}
 
-La transmission est dite de bande de base si elle ne subit aucune transposition de fréquence par modulation. les fréquences initiales du signal émis sont donc préservés.
+La transmission est dite de bande de base si elle ne subit aucune transposition de fréquence par modulation. les fréquences initiales du signal émis sont donc préservées.
 
 C'est un signal émis sans modulation, cette modulation est utilisée à basse fréquence, proche de 0.
 
@@ -626,7 +622,7 @@ p(t) &= A_c s(t) cos(\omega_c t +\varphi_c) . cos(\omega_c t + \varphi_c)\\
 &= A_c s(t) \frac{A+cos(2\omega_c t + 2\varphi_c}{2}
 \end{align*}
 
-Idéalement, il faut 'en plus d'avoir la même fréquence) que le démodulateur ait la même phase que le modulateur. C'est ce qu'on appelle un démodulateur "cohérent". On va filtrer en passe-bas dans le démodulateur pour récupérer $s(t)$.
+Idéalement, il faut (en plus d'avoir la même fréquence) que le démodulateur ait la même phase que le modulateur. C'est ce qu'on appelle un démodulateur "cohérent". On va filtrer en passe-bas dans le démodulateur pour récupérer $s(t)$.
 
 \subsection{Bandes latérales}
 
@@ -636,8 +632,7 @@ Comme nous avons vu au dessus, il y a des fréquences "négatives" qui sont envo
   \item LSB: Lower side band (\textblue{envoi les deux aux centres})
 \end{itemize}
 
-%Underfull \hbox badness here, ignore it
-\subsection{Modulation d'amplitude en quadrature (QAM)}
+\subsection{Modulation d'amplitude en q\-uadrature (QAM)}
 
 Pour cette modulation d'amplitude en quadrature il faut convertir le signal $m(t)$ en deux signaux $s_1(t)$ et $s_2(t)$. Cette technique a l'avantage de diviser la bande passante nécessaire par deux (c'est utilisé pour la transmission de signaux télévisés).
 \begin{equation*}
@@ -655,7 +650,7 @@ Pour la modulation de fréquence, nous allons faire \textblue{varier la fréquen
 
 D'abord la fréquence du signal envoyé est égale à la fréquence de la porteuse $\omega_c$ additionnée à $k$ fois le signal modulant.
 \begin{equation*}
-\omega (t) = \omega_c + ks(t
+\omega (t) = \omega_c + ks(t)
 \end{equation*}
 Nous allons poser dans un signal $cos(\omega t + \varphi)$, la \textblue{phase instantané} $\beta$, tel que:
 \begin{equation*}
@@ -692,7 +687,7 @@ Mais une technique utilisée en FM pour la réduction du bruit est la \textblue{
 
 La \textred{préaccentuation} consiste à favoriser les fréquences aiguës par rapport au fréquence basses afin de minimiser les défauts. Le bruit rapporté à chaque fréquence est ainsi constant.
 
-La \textred{désaccentuation}est le procédé inverse de la préaccentuation, qui consiste à redonner à un signal audio pré-accentué, son contenu fréquentiel d'origine.
+La \textred{désaccentuation} est le procédé inverse de la préaccentuation, qui consiste à redonner à un signal audio pré-accentué, son contenu fréquentiel d'origine.
 
 \section{Modulation numérique}
 
@@ -714,14 +709,14 @@ Le \textred{mapping} transforme une séquence de bits en séquence de "symboles"
 
 \section{Réception superhétérodyne}
 
-En électronique, un récepteur hétérodyne est un récepteur conçu sur le principe du mélange de fréquences, ou \textblue{hétérodynage}, pour convertir le signal reçu en une fréquence intermédiaire plus basse qu'il est plus facile d'utiliser que la fréquence reçue en direct.
+En électronique, un récepteur hétérodyne est un récepteur conçu sur le principe du mélange de fréquences, ou \textblue{hétérodynage}, pour convertir le signal reçu en une fréquence intermédiaire plus basse qui est plus facile d'utiliser que la fréquence reçue en direct.
 
 Il faut se ramener à une fréquence plus faible pour pouvoir amplifier et démoduler plus facilement le signal reçu.
-\begin{align*}
+\begin{align}
     f_{IF} &= f_{rx} - f_{local}\\
-    f_{IF} &= f_{local} - f_{rx}
-\end{align*}
-Ces deux fréquences sont donc symétriques autour de $f_{local}$, et nous récupérons (2) qui est la fréquence plus basse du signal reçu via un filtre passe bas.\footnote{$f_{local}$ qui est la fréquence de l'oscillateur local doit être adapté à la fréquence du signal reçu. Si la fréquence d'un signal varie, l'oscillateur doit s'adapter pour que $f_{IF}$ reste constante.}
+    f_{IF} &= f_{local} - f_{rx}\label{eq:5.2}
+\end{align}
+Ces deux fréquences sont donc symétriques autour de $f_{local}$, et nous récupérons (\ref{eq:5.2}) qui est la fréquence la plus basse du signal reçu via un filtre passe bas.\footnote{$f_{local}$ qui est la fréquence de l'oscillateur local doit être adapté à la fréquence du signal reçu. Si la fréquence d'un signal varie, l'oscillateur doit s'adapter pour que $f_{IF}$ reste constante.}
 
 \section{Emetteur-recepteur radio}
 
@@ -849,7 +844,7 @@ L'audio, les images et les videos demandent énormément de place pour leur stoc
 \item Vidéo ($50:1$)
 \end{itemize}
 
-Il existe deux types de compressions: \textblue{avec pertes} (lossy) et \textblue{sans pertes} (lossless). Les deux principes de la compressions sont: \textred{suppression de la redondance} et \textred{conservation des caractéristiques importantes}.
+Il existe deux types de compressions: \textblue{avec pertes} (lossy, 1) et \textblue{sans pertes} (lossless, 2). Les deux principes de la compressions sont: \textred{suppression de la redondance} (2) et \textred{conservation des caractéristiques importantes} (1).
 
 \section{Codage sans pertes}
 
@@ -860,15 +855,15 @@ Le principe du codage entropique est d'utiliser des codes courts pour des mots q
 
 \subsection{Code de Huffman}
 
-Exemple de code entropique, optimal si on cnnait la table de probabilités.
+Exemple de code entropique, optimal si on connaît la table de probabilités.
 
-On va former un nouvel alphabet de lettre en construisant un arbre sur base de la probabilité de voir une lettre (on observe sur le message habituellement). L'arbre est organisé tel que la branche de gauche est 0 et celle de droite 1. On commence en haut de l'arbre on mets la lettre la plus probable à gauche et le reste à droite. et on refait ca à chaque niveau.
+On va former un nouvel alphabet de lettre en construisant un arbre sur base de la probabilité de voir une lettre (on observe sur le message habituellement). L'arbre est organisé tel que la branche de gauche est 0 et celle de droite 1. On commence en haut de l'arbre on mets la lettre la plus probable à gauche et le reste à droite. et on refait ça à chaque niveau.
 
 On envoie le dictionnaire au début de la transmission.
 
 \subsection{Lempel-Ziv(L77)}
 
-C'est le codage de winzip et gzip. On regarde les données précédemment envoyé et on trouve le bout déja envoyé, on va spécifier à quel distance il se situe du points actuel et sur quel longueur il s'étend.
+C'est le codage de winzip et gzip. On regarde les données précédemment envoyé et on trouve le bout déjà envoyé, on va spécifier à quel distance il se situe du points actuel et sur quel longueur il s'étend.
 
 \section{Codage avec pertes}
 
@@ -877,9 +872,9 @@ On va mesurer une distorsion (somme carré des erreurs ou distance de Hamming) q
 \newpage
 \subsection{JPEG}
 
-On remplace les blocs de $8 \times 8$ pixels par des matrices de coefficients DCT de taille $8 \times 8$. Cette compression est sans pertes, mais ca ne compresse pas! Le but en fait va être de ne prendre q'une partie des blocs de DCT. Virer des pixels dans l'image serait impensable, oublié un bloc DCT n'est pas grave.
+On remplace les blocs de $8 \times 8$ pixels par des matrices de coefficients DCT de taille $8 \times 8$. Cette compression est sans pertes, mais cela ne compresse pas! Le but en fait va être de ne prendre qu’une partie des blocs de DCT. Virer des pixels dans l'image serait impensable, oublier un bloc DCT n'est pas grave.
 
-Après avoir transformé la matrice de pixel en matrice de coefficient DCT on applique la \textred{quantification}. On divise la matrice de coefficient par une matrice de quantification dans le but d’atténuer les hautes fréquences (fréquences auxquels l’œil humain est très peu sensible). Certains coefficient sont souvent ramené à 0 (ceux en bas à droite de la matrice). Après un codage en ZIG-ZAG permet de ne garder qu'un minimum de coefficient et de se débarrasser des nuls.
+Après avoir transformé la matrice de pixel en matrice de coefficient DCT on applique la \textred{quantification}. On divise la matrice de coefficient par une matrice de quantification dans le but d’atténuer les hautes fréquences (fréquences auxquels l’œil humain est très peu sensible). Certains coefficient sont souvent ramené à 0 (ceux en bas à droite de la matrice). Ensuite, un codage en ZIG-ZAG permet de ne garder qu'un minimum de coefficient et de se débarrasser des nuls.
 
 C'est comparable à la transformée de Fourier : on passe de blocs de $8 \times 8$ pixels à des blocs de $8 \times 8$ coefficients de DCT (opération sans perte, il est donc possible de retrouver les blocs $8 \times 8$ pixels comme dans le cas de Fourier). À chacun de ces nouveaux blocs correspond "une somme des blocs de base" auxquels on multiplie une certaine valeur de luminance.
 
@@ -894,12 +889,11 @@ La compression vidéo se passe donc comme la JPEG mais avec une prédiction temp
 \item Interframe: image prédite à partir d'une précédente
 \item Bidirect: image prédite à partir d'une précédente ou d'une suivante
 \end{enumerate}
-La prédiction consiste en fait dans la translation d'une série de bloc appartenant à l'image précédente utilisée (encodage complexe et lent, mais décodage plus rapide).
+La prédiction consiste en la translation d'une série de bloc appartenant à l'image précédente utilisée (encodage complexe et lent, mais décodage plus rapide).
 
 \chapter{GSM}
 
-Le système GSM se base sur un système de cellules hexagonales de
-tailles différentes:
+Le système GSM (2G) se base sur un système de cellules hexagonales de tailles différentes:
 \begin{itemize}
 	\item Macrocell: 30km
 	\item Microcell: 2-3km
@@ -919,7 +913,7 @@ Les bandes fréquences GSM \textred{montantes} vont de \textblue{890 à 915 $MHz
 
 \section{Modulation}
 
-Le système GSM utilise le \textblue{GMSK} (Gaussian Minimum Shift Keying) pour l'envoi des données numériques. Ce système est robuste mais pas très efficace.
+Le système GSM utilise le \textblue{GMSK} (Gaussian Minimum Shift Keying) pour l'envoi des données numériques (modulation de fréquences numériques). Ce système est robuste mais pas très efficace.
 
 \section{Multiplexage}
 
@@ -1015,9 +1009,20 @@ Vitesse:
 \item 144 kbit/s pour les stations mobiles (véhicules rapides)
 \end{itemize}
 
+\subsection{LTE (4G)}
+
+Utilise une modulation OFDM et SC-FDMA, et a été créé à partir de la 3G. Ce système utilise des fréquences de 450Mhz à 3.8Ghz selon les pays et une modulation adaptative qui permet d'adapter la constellation utilisé. Si la liaison est bonne, alors on aura une constellation avec beaucoup de points permettant un meilleur débit (à l'inverse, avec une mauvaise liaison on prendra une constellation avec peu de points pour éviter les erreurs).
+
+\begin{itemize}
+	\item[+] Débit
+	\item[+] Moindre saturation
+	\item[-] Consommation de data
+	\item[-] Compatibilité
+\end{itemize}
+
 \chapter{Wifi}
 
-Le wifi débute en 2000, il existe de nombreux standard différents (802.11a,b,g,n,...). WLAN (Wireless Local Area Network), il s'agit en fait d'un réseau d'une seul cellule sur lequel les utilisateurs sont séparés en fréquence (FDMA). La bande de wifi est autour de 2.4GHz avec 14 bandes de 5 Mhz avec un débit de 1 à 11Mb/s.
+Le wifi débute en 2000, il existe de nombreux standard différents (802.11a,b,g,n,...). WLAN (Wireless Local Area Network), il s'agit en fait d'un réseau d'une seul cellule sur lequel les utilisateurs sont séparés en fréquence (FDMA). La bande de wifi est autour de 2.4GHz avec 14 bandes de 5Mhz avec un débit de 1 à 11Mb/s.
 
 \textblue{IEEE 802.11a} possède une fréquence de 5GHz avec des bandes de 20MHz et un débit de 6 à 50 Mb/s (mais le matériel pour ce type de transmission est très différent).
 
@@ -1057,7 +1062,7 @@ Nom & Fréquence & Modulation & Bande Passante & Portée\\
 
 \section{Modulation}
 
-On est sur un type de modulation \textblue{OFDM}avec division en 256 sous-porteuse (7-31: flux montant et 33-256: flux descendant). On utilise une constellation de bit \textblue{adaptative}.
+On est sur un type de modulation \textblue{OFDM} avec division en 256 sous-porteuse (7-31: flux montant et 33-256: flux descendant). On utilise une constellation de bit \textblue{adaptative}.
 
 \section{Standards}
 

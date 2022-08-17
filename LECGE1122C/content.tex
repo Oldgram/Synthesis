@@ -244,7 +244,7 @@ Utiliser le Lagrangien ou :
 \item Si c'est une solution de coin :
 \begin{itemize}
 \item Pour le bien 1 : $(\frac{m}{p_1}, 0)$
-\item Pour le bien 2 : $(0, \frac{m}{p_2}$
+\item Pour le bien 2 : $(0, \frac{m}{p_2})$
 \end{itemize}
 \end{enumerate}
 
@@ -1118,11 +1118,11 @@ $\Rightarrow$ s'il veut garantir un profit $\bar{\Pi}$ au producteur :
 \end{equation*}
 
 \begin{enumerate}
-\item Le Lagrangien s'écrit : $\Lagr = v(x_1) - F - \lambda(\bar{\Pi} - (F + c x_1)$
+\item Le Lagrangien s'écrit : $\Lagr = v(x_1) - F - \lambda(\bar{\Pi} - (F - c x_1))$
 \item La solution : dériver par rapport aux "vraies" variables :
 	\begin{enumerate}
-	\item[] $frac{\partial \Lagr}{\partial x_1} = v'(x_1) - \lambda c = 0 \Leftrightarrow v'(x^*_1) = c$
-	\item[] $frac{\partial \Lagr}{\partial F} = - 1 + \lambda = 0 \Leftrightarrow \lambda = 1$ ($\lambda > 0$, la contrainte et bien liante)
+	\item[] $\frac{\partial \Lagr}{\partial x_1} = v'(x_1) - \lambda c = 0 \Leftrightarrow v'(x^*_1) = c$
+	\item[] $\frac{\partial \Lagr}{\partial F} = - 1 + \lambda = 0 \Leftrightarrow \lambda = 1$ ($\lambda > 0$, la contrainte et bien liante)
 	\end{enumerate}
 \item On obtient donc : $\frac{\partial \Lagr}{\partial \lambda} = -(\bar{\Pi} - (F - cx_1)) = 0$
 \end{enumerate}
@@ -1158,8 +1158,8 @@ U(x_1, -m) \geq U(0,0) \Leftrightarrow v(x_1) - m \geq 0
 \item Le Lagrangien s'écrit : $\Lagr = F - c x_1 - \lambda (F - v(x_1))$
 \item La solution : dériver par rapport aux "vraies" variables :
 	\begin{enumerate}
-	\item[] $frac{\partial \Lagr}{\partial x_1} = - c + \lambda v'(x_1) = 0 \Leftrightarrow v'(x^*_1) = c$
-	\item[] $frac{\partial \Lagr}{\partial F} = 1 - \lambda = 0 \Leftrightarrow \lambda = 1$ ($\lambda > 0$, la contrainte et bien liante)
+	\item[] $\frac{\partial \Lagr}{\partial x_1} = - c + \lambda v'(x_1) = 0 \Leftrightarrow v'(x^*_1) = c$
+	\item[] $\frac{\partial \Lagr}{\partial F} = 1 - \lambda = 0 \Leftrightarrow \lambda = 1$ ($\lambda > 0$, la contrainte et bien liante)
 	\end{enumerate}
 \item Comme la contrainte est liante, on a : $F^* = v(x^*_1)$, et comme $F = m$, on obtient : $U(x^*_1, F^*) = 0 \rightarrow$ le consommateur est donc indifférent entre acheter et ne pas acheter.
 \end{enumerate}
@@ -1213,8 +1213,8 @@ Avec $q_a$ et $q_b$ les probabilités de faire face à un agent de type $a$/$b$.
 \subsubsection{Contraintes de participation (CP)}
 
 \begin{itemize}
-\item $U_a(x^i_a, F^i_a) = g_a v(x^i_a - F^i_a$
-\item $U_b(x^i_b, F^i_b) = g_b v(x^i_b - F^i_b$
+\item $U_a(x^i_a, F^i_a) = g_a v(x^i_a - F^i_a)$
+\item $U_b(x^i_b, F^i_b) = g_b v(x^i_b - F^i_b)$
 \end{itemize}
 
 \subsubsection{Contraintes de compatibilité avec les incitants (CI)}
