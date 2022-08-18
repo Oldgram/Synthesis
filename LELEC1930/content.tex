@@ -467,9 +467,7 @@ Différents types d'antenne:
 
 \subsection{Trajets multiples}
 
-Les antennes envoient des ondes, il arrive que ces ondes croisent des objets (comme dit précédemment, des couches de l'atmosphère p.ex.), ces objets reflètent les ondes et entraînent le problème des \textblue{trajets multiples}. Les trajets multiples sont un problème courant qui fait que le même signal arrive à des moments différents chez le récepteur, provoquant les mêmes effets que le \textblue{principe de dispersion} ainsi qu'une désynchronisation du signal.
-
-Un signal qui varie vite a une plus grande sensibilité aux trajets multiples.
+Les antennes envoient des ondes, il arrive que ces ondes croisent des objets (comme dit précédemment, des couches de l'atmosphère p.ex.), ces objets reflètent les ondes et entraînent le problème des \textblue{trajets multiples}. Les trajets multiples sont un problème courant qui fait que le même signal arrive à des moments différents chez le récepteur, provoquant les mêmes effets que le \textblue{principe de dispersion} ainsi qu'une désynchronisation du signal. Un signal qui varie vite a une plus grande sensibilité aux trajets multiples.
 
 \subsection[Dipôle]{Dipôle $\lambda/2$}
 
@@ -1018,6 +1016,15 @@ Utilise une modulation OFDM et SC-FDMA, et a été créé à partir de la 3G. Ce
 	\item[+] Moindre saturation
 	\item[-] Consommation de data
 	\item[-] Compatibilité
+\end{itemize}
+
+\subsubsection{Modifications entre 4G et les systèmes précédents}
+
+\begin{itemize}
+\item AMC : \textit{Adaptative Modulation and Coding} : On adapte le débit à la qualité de la transmission. Si on a une transmission de qualité, on va augmenter la taille de la constellation pour augmenter le débit.
+\item Multiplexage/modulation : Modulation OFDM : Consiste à diviser le temps et les fréquences utilisables en un quadrillage où chaque carré représente une ressource. on va alors allouer aux utilisateurs des ressources de manière dynamique (adaptative) en fonction des besoins de l'utilisateur, du trafic, des interférences et/ou de la mobilité de l'utilisateur.
+\item Bande variable : dû à l'OFDM, on peut utiliser une bande variante pour une transmission donnée. Cela rajoute une complexité au niveau des émetteurs et récepteurs 4G.
+\item HARQ (\textit{Hybrid Automatic Repeat reQuest}) : Lorsqu'un bloc n'est pas acquitté, on ne retransmet pas toute la frame mais plutôt certains bits.
 \end{itemize}
 
 \chapter{Wifi}
