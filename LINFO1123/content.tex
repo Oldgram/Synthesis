@@ -17,12 +17,12 @@ Exemples : $\Sigma = \{0, 1\}, \Sigma = \{a, b, c\}$
 
 Une \textblue{chaîne de caractères}, ou mot, est une séquence finie de symboles juxtaposés.\\
 Exemples : $010110, abccbcabcb, \epsilon$ (= chaîne de caratères vide)\\
-L'ensemble de tous les mots de l'\textblue{alphabet $\Sigma$} s'écrit $\Sigma*$\\
-Exemples : $\Sigma = \{\} \rightarrow \Sigma* = \{\epsilon\}, \Sigma = \{a\} \rightarrow \Sigma* = \{\epsilon, a, aa, aaa, aaaa, ...\}$
+L'ensemble de tous les mots de l'\textblue{alphabet $\Sigma$} s'écrit $\Sigma^*$\\
+Exemples : $\Sigma = \{\} \rightarrow \Sigma^* = \{\epsilon\}, \Sigma = \{a\} \rightarrow \Sigma^* = \{\epsilon, a, aa, aaa, aaaa, ...\}$
 
 \subsection{Relations et fonctions}
 
-Une \textblue{relation} $R$ sur $A, B$ est un sous ensemble de $AxB$. En pratique, on dit que c'est une \textblue{fonction}.
+Une \textblue{relation} $R$ sur $A, B$ est un sous ensemble de $A$x$B$. En pratique, on dit que c'est une \textblue{fonction}.
 
 Une \textblue{fonction $f$} (de A dans B) est une relation t.q. pour $a \in A$, il existe au plus un $b \in B$ t.q. $<a, b> \in f$.
 
@@ -32,8 +32,8 @@ Soit $f : A \rightarrow B$ :
 \begin{itemize}
 \item \textblue{Domaine} de $f$ : dom($f$) $= \{a \in A \ | \ f(a) \neq \bot\}$
 \item \textblue{Image} de $f$ = im($f$) $= \{b \in B \ | \ \exists a \in A : b = f(a)\}$
-\item $f$ est fonction \textblue{totale} ssi dom($f$) $= \ A \ (\nexists a \in A : f(a) = \bot)$ 
-\item $f$ est fonction \textblue{partielle} ssi dom($f$) $\subseteq \ A$ ($f$ totale est partielle mais $f$ partielle n'est pas forcément totale)
+\item $f$ est fonction \textblue{totale} ssi dom($f$) $= A \ (\nexists a \in A : f(a) = \bot)$ 
+\item $f$ est fonction \textblue{partielle} ssi dom($f$) $\subseteq A$ ($f$ totale est partielle mais $f$ partielle n'est pas forcément totale)
 \item $f$ est \textblue{surjective} ssi im($f$) $= B$ (tout $y$ a au moins un $x$)
 \item $f$ est \textblue{injective} ssi $\forall a, a' \in A : a \neq a' \rightarrow f(a) \neq f(a')$ (tout x a un y différent)
 \item $f$ est \textblue{bijective} ssi $f$ est totale, injective et surjective (tout y a un et un seul x)
@@ -41,7 +41,7 @@ Soit $f : A \rightarrow B$ :
 
 \section{Ensembles énumérables}
 
-Un ensemble est \textblue{énumérable} s'il est soit fini ou s'il a le même \textblue{cardinal}\footnote{Deux Ensembles $A$ et $B$ ont le même cardinal s'il existe une bijection entre $A$ et $B$.} que $\mathbb{N}$\footnote{L'ensemble $\mathbb{N}$ est l'ensemble des entiers positifs $\mathbb{N} = \{0, 1, 2, 3, \ldots\}$.} (si on peut le mettre en bijection avec $\mathbb{N}$). En informatique, un programme est une chaîne finie de caractères $\rightarrow$ énumérable.
+Un ensemble est \textblue{énumérable} s'il est soit fini ou s'il a le même \textblue{cardinal}\footnote{Deux Ensembles $A$ et $B$ ont le même cardinal s'il existe une bijection entre $A$ et $B$.} que $\mathbb{N}$\footnote{Pour rappel, l'ensemble $\mathbb{N}$ est l'ensemble des entiers positifs $\mathbb{N} = \{0, 1, 2, 3, \ldots\}$.} (si on peut le mettre en bijection avec $\mathbb{N}$). En informatique, un programme est une chaîne finie de caractères $\rightarrow$ énumérable.
 
 \subsubsection{Propriétés}
 
@@ -57,7 +57,7 @@ Soit $E = \{x \in \mathbb{R} \ | \ 0 < x \leq 1\}$. \textblue{$E$ est non énum�
 
 \textblue{Preuve} :
 \begin{enumerate}
-\item \red{Supposons $E$ énumérable}. Il existe donc une énumération des éléments de $E : x_0, ..., x_k, ...$
+\item Supposons $E$ énumérable. Il existe donc une énumération des éléments de $E : x_0, ..., x_k, ...$
 \begin{figure}[H]
     	\centering
     	\begin{tabular}{c|cccccc}
@@ -70,7 +70,7 @@ Soit $E = \{x \in \mathbb{R} \ | \ 0 < x \leq 1\}$. \textblue{$E$ est non énum�
 	$x_k$ & $x_{k0}$ & $x_{k1}$ & $x_{k2}$ & $\cdots$ & $x_{kk}$ & $\cdots$ \\ 
 	$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ \\ 
 	\end{tabular}
-	\caption{Construire une table t.q. le nombre $x_k = 0,x_{k0} x_{k1} x_{k2} \ldots x_{kk} \ldots$}
+	\caption{\red{Construire une table} t.q. le nombre $x_k = 0,x_{k0} x_{k1} x_{k2} \ldots x_{kk} \ldots$}
 \end{figure}
 \item \red{Prendre la diagonale} ($d = 0,x_{00} x_{11} x_{22} \ldots x_{kk} \ldots$)
 \item \red{Modifier la diagonale} t.q.
@@ -92,7 +92,7 @@ Ce qui donne $d' =  0,x_{00}' x_{11}' x_{22}' \ldots x_{kk}' \ldots \ (d' \in E)
 
 \bigskip
 
-Avec ceci, on remarque qu'il existe des ensembles avec un cardinal plus grand que $\mathbb{N}$. Quels que un des ces ensembles sont : $\mathcal{P}(A)$, fonctions de $\mathbb{N} \rightarrow \mathbb{N}$, chaînes infinies sur un alphabet fini, etc. Le fait que les fonctions de $\mathbb{N} \rightarrow \mathbb{N}$ soient non énumérables (cfr. section \ref{sec:ensembleF}) nous dit que l'ensemble des problèmes a donc un plus grand cardinal que l'ensemble des programmes (ayant le même cardinal que $\mathbb{N}$).
+Avec ceci, on remarque qu'il existe des ensembles avec un cardinal plus grand que $\mathbb{N}$. Quelques un des ces ensembles sont : $\mathcal{P}(A)$, fonctions de $\mathbb{N} \rightarrow \mathbb{N}$, chaînes infinies sur un alphabet fini, etc. Le fait que les fonctions de $\mathbb{N} \rightarrow \mathbb{N}$ soient non énumérables (cfr. section \ref{sec:ensembleF}) nous dit que l'ensemble des problèmes a donc un plus grand cardinal que l'ensemble des programmes (ayant le même cardinal que $\mathbb{N}$).
 
 \chapter{Résultats fondamentaux}
 
