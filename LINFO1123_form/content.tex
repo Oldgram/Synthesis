@@ -4,13 +4,13 @@
 
 Soit $f : A \rightarrow B$ :
 \begin{itemize}
-\item \textred{Domaine} de $f$ : dom($f$) $= \{a \in A \ | \ f(a) \neq \bot\}$
-\item \textred{Image} de $f$ = im($f$) $= \{b \in B \ | \ \exists a \in A : b = f(a)\}$
-\item $f$ est fonction \textred{totale} ssi dom($f$) $= \ A \ (\nexists a \in A : f(a) = \bot)$ 
-\item $f$ est fonction \textred{partielle} ssi dom($f$) $\subseteq \ A$ ($f$ totale est partielle mais $f$ partielle n'est pas forcément totale)
-\item $f$ est \textred{surjective} ssi im($f$) $= B$ (tout $y$ a au moins un $x$)
-\item $f$ est \textred{injective} ssi $\forall a, a' \in A : a \neq a' \rightarrow f(a) \neq f(a')$ (tout x a un y différent)
-\item $f$ est \textred{bijective} ssi $f$ est totale, injective et surjective (tout y a un et un seul x)
+\item \textblue{Domaine} de $f$ : dom($f$) $= \{a \in A \ | \ f(a) \neq \bot\}$
+\item \textblue{Image} de $f$ = im($f$) $= \{b \in B \ | \ \exists a \in A : b = f(a)\}$
+\item $f$ est fonction \textblue{totale} ssi dom($f$) $= \ A \ (\nexists a \in A : f(a) = \bot)$ 
+\item $f$ est fonction \textblue{partielle} ssi dom($f$) $\subseteq \ A$ ($f$ totale est partielle mais $f$ partielle n'est pas forcément totale)
+\item $f$ est \textblue{surjective} ssi im($f$) $= B$ (tout $y$ a au moins un $x$)
+\item $f$ est \textblue{injective} ssi $\forall a, a' \in A : a \neq a' \rightarrow f(a) \neq f(a')$ (tout x a un y différent)
+\item $f$ est \textblue{bijective} ssi $f$ est totale, injective et surjective (tout y a un et un seul x)
 \end{itemize}
 
 \section{Enumérable}
@@ -19,9 +19,9 @@ Un ensemble est énumérable s'il est soit fini ou s'il a le même cardinal que 
 
 \subsection{Diagonalisation de Cantor}
 
-Soit $E = \{x \in \mathbb{R} \ | \ 0 < x \leq 1\}$. \textred{$E$ est non énumérable}\footnote{Il n'existe pas de bijection entre $E$ et $\mathbb{N}$ c.à.d. qu'il y a beaucoup plus de réels entre 0 et 1 qu'il n'y a d'entiers positifs}
+Soit $E = \{x \in \mathbb{R} \ | \ 0 < x \leq 1\}$. \textblue{$E$ est non énumérable}\footnote{Il n'existe pas de bijection entre $E$ et $\mathbb{N}$ c.à.d. qu'il y a beaucoup plus de réels entre 0 et 1 qu'il n'y a d'entiers positifs}
 
-\textred{Preuve} :
+\textblue{Preuve} :
 \begin{enumerate}
 \item Supposons $E$ énumérable. Il existe donc une énumération des éléments de $E : x_0, ..., x_k, ...$
 \begin{figure}[H]
@@ -36,10 +36,10 @@ Soit $E = \{x \in \mathbb{R} \ | \ 0 < x \leq 1\}$. \textred{$E$ est non énumé
 	$x_k$ & $x_{k0}$ & $x_{k1}$ & $x_{k2}$ & $\cdots$ & $x_{kk}$ & $\cdots$ \\ 
 	$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ \\ 
 	\end{tabular}
-	\caption{Construire une table t.q. le nombre $x_k = 0,x_{k0} x_{k1} x_{k2} \ldots x_{kk} \ldots$}
+	\caption{\red{Construire une table} t.q. le nombre $x_k = 0,x_{k0} x_{k1} x_{k2} \ldots x_{kk} \ldots$}
 \end{figure}
-\item Prendre la diagonale ($d = 0,x_{00} x_{11} x_{22} \ldots x_{kk} \ldots$)
-\item Modifier la diagonale t.q.
+\item \red{Prendre la diagonale} ($d = 0,x_{00} x_{11} x_{22} \ldots x_{kk} \ldots$)
+\item \red{Modifier la diagonale} t.q.
 \begin{equation*}
 	x'_{ii}=
 	\begin{cases}
@@ -48,12 +48,12 @@ Soit $E = \{x \in \mathbb{R} \ | \ 0 < x \leq 1\}$. \textred{$E$ est non énumé
     \end{cases}
 \end{equation*}
 Ce qui donne $d' =  0,x_{00}' x_{11}' x_{22}' \ldots x_{kk}' \ldots \ (d' \in E)$
-\item Contradiction : Comme $E$ est énumérable, et que $d' \in E$, alors $d'$ doit être dans l'énumération. Or, si $d' = x_p$, on a :
+\item \red{Contradiction} : Comme $E$ est énumérable, et que $d' \in E$, alors $d'$ doit être dans l'énumération. Or, si $d' = x_p$, on a :
 \begin{align*}
 	d' &= 0,x_{p0} x_{p1} x_{p2} \ldots x_{pp} \ldots\\
 	   &= 0,x'_{p0} x'_{p1} x'_{p2} \ldots x'_{pp} \ldots
 \end{align*}
-\item Conclusion : $E$ n'est pas énumérable
+\item \red{Conclusion} : $E$ n'est pas énumérable
 \end{enumerate}
 
 \chapter{Résultats fondamentaux}
@@ -112,14 +112,14 @@ Soit la fonction $halt : P \times \mathbb{N} \rightarrow \mathbb{N}$ t.q. $halt(
 	0 & \text{sinon}
 \end{cases}$
 
-\textred{$halt$ n'est pas calculable.}
+\textblue{$halt$ n'est pas calculable.}
 
 \subsubsection{Preuve}
 
 Supposons $halt$ calculable.
 
 \begin{enumerate}
-\item Construire de la table
+\item \red{Construire la table}
 	\begin{figure}[H]
     		\centering
     		\begin{tabular}{c|cccccc}
@@ -134,8 +134,8 @@ Supposons $halt$ calculable.
 		\end{tabular}
 		\caption{Table des valeurs de la fonction $halt$}
 	\end{figure}
-\item Prendre la diagonale : $d(n) = halt(n,n)$
-\item Modifier la diagonale :
+\item \red{Prendre la diagonale} : $d(n) = halt(n,n)$
+\item \red{Modifier la diagonale} :
 	\begin{equation*}
 		d'(n)=
 		\begin{cases}
@@ -144,15 +144,15 @@ Supposons $halt$ calculable.
       	\end{cases}
     \end{equation*}
     Si $halt$ est calculable, alors $d'$ est calculable. Soit $P_d$ le programme qui calcule cette fonction.
-\item Contradiction :
+\item \red{Contradiction} :
 	\begin{equation*}
 		d'(d)=
 		\begin{cases}
-      		1 & \rightarrow halt(d,d) = 0 \rightarrow P_d \text{ ne se termine pas \textred{OR} }d'(d) = 1\\
-      		\bot & \rightarrow halt(d,d) = 1 \rightarrow P_d \text{ se termine \textred{OR} }d'(d) = \bot
+      		1 & \rightarrow halt(d,d) = 0 \rightarrow P_d \text{ ne se termine pas \textblue{OR} }d'(d) = 1\\
+      		\bot & \rightarrow halt(d,d) = 1 \rightarrow P_d \text{ se termine \textblue{OR} }d'(d) = \bot
       	\end{cases}
     \end{equation*}
-\item Conclusion : $d'$ n'est pas calculable, donc $halt$ n'est pas calculable.
+\item \red{Conclusion} : $d'$ n'est pas calculable, donc $halt$ n'est pas calculable.
 \end{enumerate}
 
 \newpage
@@ -163,7 +163,7 @@ Soit un langage $Q$ qui a des programmes $Q_k$ et qui ne calcule que des fonctio
 \item La fonction $\varphi'_k$ est calculée par le programme $Q_k$
 \item L'interpréteur $interpret(n,x)$ de ce langage $Q$ est calculable
 \item La fonction $halt(n,x)$ pour ce langage $Q$ est calculable (fonction constante qui vaut 1)
-\item \textred{$interpret(n, x)$ n'est pas calculable \textit{dans $Q$}}
+\item \textblue{$interpret(n, x)$ n'est pas calculable \textit{dans $Q$}}
 \end{itemize}
 
 \subsubsection{Preuve}
@@ -171,7 +171,7 @@ Soit un langage $Q$ qui a des programmes $Q_k$ et qui ne calcule que des fonctio
 Supposons $interpret$ calculable dans $Q$.
 
 \begin{enumerate}
-\item Construire de la table
+\item \red{Construire la table}
 	\begin{figure}[H]
     		\centering
     		\begin{tabular}{c|cccccc}
@@ -184,10 +184,10 @@ Supposons $interpret$ calculable dans $Q$.
 		\end{tabular}
 		\caption{Table des valeurs de la fonction $interpret$}
 	\end{figure}
-\item Prendre la diagonale : $d(n) = interpret(n,n)$
-\item Modifier la diagonale : $d'(n)= interpret(n,n) + 1$ (calculable dans $Q$ si $interpret$ calculable dans $Q$)
-\item Contradiction : $d'(d)= interpret(d,d) + 1 \text{ \textred{OR} } d'(d) = \varphi'(d) = interpret(d,d)$
-\item Conclusion : l’interpréteur de $Q$ n'est pas calculable dans $Q$
+\item \red{Prendre la diagonale} : $d(n) = interpret(n,n)$
+\item \red{Modifier la diagonale} : $d'(n)= interpret(n,n) + 1$ (calculable dans $Q$ si $interpret$ calculable dans $Q$)
+\item \red{Contradiction} : $d'(d)= interpret(d,d) + 1 \text{ \textblue{OR} } d'(d) = \varphi'(d) = interpret(d,d)$
+\item \green{Conclusion} : l’interpréteur de $Q$ n'est pas calculable dans $Q$
 \end{enumerate}
 
 \subsection{Rice}
@@ -199,7 +199,7 @@ Deux formulations :
 \end{enumerate}
 $\rightarrow$ Aucun programme ne peut dire si une fonction respecte des spécifications
 
-\textred{Si A $\neq \varnothing$ et $A \neq \mathbb{N},\ \forall i \in A, \forall j \in \bar{A} \ : \ \varphi_i \neq \varphi_j$. Alors A non récursif.}
+\textblue{Si A $\neq \varnothing$ et $A \neq \mathbb{N},\ \forall i \in A, \forall j \in \bar{A} \ : \ \varphi_i \neq \varphi_j$. Alors A non récursif.}
 
 \subsubsection{Preuve}
 
@@ -314,7 +314,7 @@ Comme ND-Récursif sauf que le cas $x \notin A$ ne se fini pas forcément.
 
 \section{Réduction algorithmique (calculabilité)}
 
-Un ensemble $A$ est \textred{algorithmiquement réductible} à un ensemble $B \ (A \leq_a B)$ si en supposant $B$ récursif, $A$ est récursif.
+Un ensemble $A$ est \textblue{algorithmiquement réductible} à un ensemble $B \ (A \leq_a B)$ si en supposant $B$ récursif, $A$ est récursif.
 
 Exemple :
 
@@ -335,14 +335,14 @@ $HALT \ \leq_a P$ (si $P$ énumérable, $HALT$ énumérable)
 
 \section{Réduction fonctionnelle (complexité)}
 
-Un ensemble $A$ est \textred{fonctionnellement réductible} à un ensemble $B \ (A \leq_r B)$ ssi il existe une fonction totale calculable $f$ t.q. :
+Un ensemble $A$ est \textblue{fonctionnellement réductible} à un ensemble $B \ (A \leq_r B)$ ssi il existe une fonction totale calculable $f$ t.q. :
 \begin{equation*}
 a \in A \Leftrightarrow f(a) \in B
 \end{equation*}
 
 \section{Réduction polynomiale}
 
-Un ensemble $A$ est \textred{polynomialement réductible} à un ensemble $B \ (A \leq_p B)$ ssi il existe une fonction totale calculable $f$ de complexité temporelle polynomiale t.q. :
+Un ensemble $A$ est \textblue{polynomialement réductible} à un ensemble $B \ (A \leq_p B)$ ssi il existe une fonction totale calculable $f$ de complexité temporelle polynomiale t.q. :
 \begin{equation*}
 a \in A \Leftrightarrow f(a) \in B
 \end{equation*}
@@ -414,14 +414,14 @@ Soit $D$ un nouveau formalisme de calculabilité :
 
 Soit $F$ l'ensemble des fonctions totales telles que $f : \mathbb{N} \rightarrow \mathbb{N}$.
 
-$F$ est non énumérable.
+\blue{$F$ est non énumérable}.
 
 \subsubsection*{Preuve}
 
 Supposons $F$ énumérable. Il existe donc une énumération des éléments de $F : f_0(0), f_1(0), \ldots$.
 
 \begin{enumerate}
-\item Construire de la table
+\item \red{Construire la table}
 	\begin{figure}[H]
     		\centering
     		\begin{tabular}{c|cccccc}
@@ -436,8 +436,8 @@ Supposons $F$ énumérable. Il existe donc une énumération des éléments de $
 		\end{tabular}
 		\caption{Table des résultats de la fonction $f$}
 	\end{figure}
-\item Prendre la diagonale $d$ qui est aussi une fonction de $\mathbb{N} \rightarrow \mathbb{N} \ (d \in F)$
-\item Modifier la diagonale pour obtenir $d'$ t.q. :
+\item \red{Prendre la diagonale} $d$ qui est aussi une fonction de $\mathbb{N} \rightarrow \mathbb{N} \ (d \in F)$
+\item \red{Modifier la diagonale} pour obtenir $d'$ t.q. :
 	\begin{equation*}
 		f'_i(j)=
 		\begin{cases}
@@ -447,7 +447,7 @@ Supposons $F$ énumérable. Il existe donc une énumération des éléments de $
     \end{equation*}
     
     Où $f_i(j)$ est le résultat de la fonction $f$ avec le numéro $i$ pour la donnée $j$.
-\item Contradiction :
+\item \red{Contradiction} :
 
 	Comme $F$ est énumérable et que $d' \in F$, alors $d'$ doit être dans l'énumération. Or si $d'$ a le numéro $p$ on a :
 	\begin{align*}
@@ -455,54 +455,7 @@ Supposons $F$ énumérable. Il existe donc une énumération des éléments de $
 		   &= f'_p(0),f'_p(1),f'_p(2),\ldots,f'_p(p),\ldots\\
     \end{align*}
     Si $f_p(0)$ vaut 5, on a $(f_p(0) = 5) \neq (f'_p(0) = 6)$.
-\item Conclusion :
+\item \red{Conclusion} :
 
 	$F$ n'est pas énumérable.
 \end{enumerate}
-
-\chapter{Exemples de QCM/Vrai ou Faux}
-
-\begin{itemize}
-\item Soit $A$ un problème appartenant à $DTIME(n^2)$ : % Q92
-	\begin{itemize}
-	\item $A \in P$
-	\item $A \in DSPACE (n^2)$
-	\item Il peut exister un programme Java de complexité $\bigO(n)$ qui décide $A$
-	\item $A \in DTIME(n^3)$
-	\end{itemize}
-\item Si une fonction $f$ est calculable, alors toute fonction $g$ dont $f$ est une extension est calculable : \textred{Faux} % Q41
-\item Si le domaine d’une fonction est fini, alors cette fonction est calculable : \textgreen{Vrai} % Q21
-\item Si SAT $\leq_a A$ et $A \in P$, alors SAT $\in P$  : \textred{Faux} % Q108
-\item L’ensemble des sous-ensembles récursivement énumérables de $\mathbb{N}$ est énumérable : \textgreen{Vrai} % Q18
-\item Tout ensemble de paires d’entiers est récursif : \textred{Faux} % Q17
-\item L’ensemble des programmes Java calculant une fonction $f$ telle que $f(10)=10$ est un ensemble récursif : \textred{Faux} % Q25
-\item Un sous-ensemble infini d’un ensemble récursivement énumérable est récursivement énumérable : \textred{Faux} % Q7
-\item Soit $D$ un nouveau modèle de calculabilité. Si toute fonction calculable est calculable dans $D$ et si toute fonction calculable dans $D$ est effectivement calculable, alors $D$ est un modèle complet de la calculabilité : \textred{Faux} % Q111
-\item Un algorithme donné ne calcule qu’une et une seule fonction  : \textgreen{Vrai} % Q12
-\item Un sous-ensemble d’un ensemble récursivement énumérable est récursivement énumérable : \textred{Faux} % Q19
-\item Un problème qui peut être résolu par un algorithme (de complexité) exponentiel est pratiquement infaisable (intrinsèquement complexe) : \textred{Faux} %Q84
-\item Le complément d’un ensemble récursivement énumérable est récursivement énumérable : \textred{Faux} %Q10
-\item Soient les programmes $P_{32}(n)$ dont le code est « print(1) » et $P_{57}(n)$ dont le code est « print(0) » : %Q32
-	\begin{itemize}
-	\item Les fonctions $phi_{32}$ et $phi_{57}$ sont des fonctions constantes
-	\end{itemize}
-\item Les propriétés SA, CD et S sont suffisantes pour que D soit un modèle complet de la calculabilité : \textgreen{Vrai} %Q113
-\item Un ensemble est f-réductible (fonctionnellement réductible) à son complément : \textred{Faux} %Q88
-\item Si A peut être décidé par un algorithme polynomial et si B est f-réductible à A, alors B peut être décidé par un algorithme polynomial : \textred{Faux} %Q89
-\item Tout ensemble récursivement énumérable est a-réductible à HALT : \textgreen{Vrai} %Q87
-\item Un ensemble énumérable est récursif : \textred{Faux} % Q2
-\item Si A est un sous-ensemble (strict et non vide) récursif de programmes Java, alors toute fonction calculée par un programme de A est aussi calculée par un programme du complément de A : \textred{Faux} %Q28
-\item Soit A est un ensemble (infini) récursivement énumérable. Si B $\subseteq$ A, alors B est aussi récursivement énumérable : \textred{Faux} %Q39
-\item Il existe un ensemble infini de chaînes finies de caractères (A-Z) qui est non récursivement énumérable : \textgreen{Vrai} % Q36
-\item Une extension d’une fonction partielle calculable est toujours calculable : \textred{Faux} % Q33
-\item Le modèle de calcul BLOOP possède les propriétés SD et SA : \textgreen{Vrai} % Q110
-\item L’union d’une infinité énumérable d’ensembles récursivement énumérable est récursivement énumérable : \textred{Faux} % Q9
-\item Pour déterminer si un problème A est NP-complet, il suffit de déterminer que A est polynomialement réductible un problème NP-complet connu (e.g. SAT) : \textred{Faux} % Q97
-\item Il existe des ensembles récursifs qui ne sont pas récursivement énumérables : \textred{Faux} % Q97
-\item Un sous-ensemble infini d’un ensemble récursif est récursif : \textred{Faux} % Q3
-\end{itemize}
-
-%Halt, c'est que Halt est non-récursif -> réduction à halt 
-%Rice -> on ne peut pas faire un programme qui compare des programmes (par rapport à leur fonction) (ça revient à faire une réduction à Halt)
-%hore Alisson -> Si on langage (non trivial) peut calculer Halt, alors il ne peut pas aussi calculer son Interpreteur -> prouver qu'un langage est pas complet
-%Point fixe, pour chaque transformateur de programme, il existe au moins 1 programmes dont la fonction ne change pas même après avoir été transformé -> par exemple prouver le théo de rice (modifié)
