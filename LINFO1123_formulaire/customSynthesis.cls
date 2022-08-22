@@ -91,20 +91,20 @@
 \colorlet{framecolor}{blue!50!black}
 
 %---Multicolumn TOC---%
-\makeatletter
-\patchcmd{\l@section}
-  {\hfil}
-  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep     mu$}\hfill}
-  {}{}
+%\makeatletter
+%\patchcmd{\l@section}
+%  {\hfil}
+%  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep     mu$}\hfill}
+%  {}{}
 
-\renewcommand\tableofcontents{%
-    \begin{multicols}{2}[\chapter*{ \contentsname
-        \@mkboth{%
-           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}]%
-    \@starttoc{toc}%
-    \end{multicols}%
-    }
-\makeatother
+%\renewcommand\tableofcontents{%
+%    \begin{multicols}{2}[\chapter*{ \contentsname
+%        \@mkboth{%
+%           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}]%
+%    \@starttoc{toc}%
+%    \end{multicols}%
+%    }
+%\makeatother
 
 %---Custom TOC title---%
 \addto\captionsenglish{%
@@ -190,16 +190,17 @@
   \MakeFramed{\advance\hsize-\width\FrameRestore}%
   \noindent\hspace{-4.55pt}% disable indenting first paragraph
   \begin{adjustwidth}{}{7pt}%
+  \vspace{2pt}\vspace{2pt}%
 }
 {%
-  \vspace{1pt}\end{adjustwidth}\endMakeFramed%
+  \vspace{2pt}\end{adjustwidth}\endMakeFramed%
 }
 
 %---Custom commands---%
 \newcommand{\bigO}{\text{\usefont{OMS}{cmsy}{m}{n}O}}
-\newcommand{\red}[1]{\textcolor{deepRed}{#1}}
-\newcommand{\blue}[1]{\textcolor{darkBlue}{#1}}
-\newcommand{\green}[1]{\textcolor{darkGreen}{#1}}
+\newcommand{\textred}[1]{\textcolor{deepRed}{#1}}
+\newcommand{\textblue}[1]{\textcolor{darkBlue}{#1}}
+\newcommand{\textgreen}[1]{\textcolor{darkGreen}{#1}}
 
 %---Other---%
 \hypersetup{
