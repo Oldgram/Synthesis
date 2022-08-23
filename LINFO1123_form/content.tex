@@ -4,13 +4,13 @@
 
 Soit $f : A \rightarrow B$ :
 \begin{itemize}
-\item \textblue{Domaine} de $f$ : dom($f$) $= \{a \in A \ | \ f(a) \neq \bot\}$
-\item \textblue{Image} de $f$ = im($f$) $= \{b \in B \ | \ \exists a \in A : b = f(a)\}$
-\item $f$ est fonction \textblue{totale} ssi dom($f$) $= \ A \ (\nexists a \in A : f(a) = \bot)$ 
-\item $f$ est fonction \textblue{partielle} ssi dom($f$) $\subseteq \ A$ ($f$ totale est partielle mais $f$ partielle n'est pas forcément totale)
-\item $f$ est \textblue{surjective} ssi im($f$) $= B$ (tout $y$ a au moins un $x$)
-\item $f$ est \textblue{injective} ssi $\forall a, a' \in A : a \neq a' \rightarrow f(a) \neq f(a')$ (tout x a un y différent)
-\item $f$ est \textblue{bijective} ssi $f$ est totale, injective et surjective (tout y a un et un seul x)
+\item \blue{Domaine} de $f$ : dom($f$) $= \{a \in A \ | \ f(a) \neq \bot\}$
+\item \blue{Image} de $f$ = im($f$) $= \{b \in B \ | \ \exists a \in A : b = f(a)\}$
+\item $f$ est fonction \blue{totale} ssi dom($f$) $= \ A \ (\nexists a \in A : f(a) = \bot)$ 
+\item $f$ est fonction \blue{partielle} ssi dom($f$) $\subseteq \ A$ ($f$ totale est partielle mais $f$ partielle n'est pas forcément totale)
+\item $f$ est \blue{surjective} ssi im($f$) $= B$ (tout $y$ a au moins un $x$)
+\item $f$ est \blue{injective} ssi $\forall a, a' \in A : a \neq a' \rightarrow f(a) \neq f(a')$ (tout x a un y différent)
+\item $f$ est \blue{bijective} ssi $f$ est totale, injective et surjective (tout y a un et un seul x)
 \end{itemize}
 
 \section{Enumérable}
@@ -19,9 +19,9 @@ Un ensemble est énumérable s'il est soit fini ou s'il a le même cardinal que 
 
 \subsection{Diagonalisation de Cantor}
 
-Soit $E = \{x \in \mathbb{R} \ | \ 0 < x \leq 1\}$. \textblue{$E$ est non énumérable}\footnote{Il n'existe pas de bijection entre $E$ et $\mathbb{N}$ c.à.d. qu'il y a beaucoup plus de réels entre 0 et 1 qu'il n'y a d'entiers positifs}
+Soit $E = \{x \in \mathbb{R} \ | \ 0 < x \leq 1\}$. \blue{$E$ est non énumérable}\footnote{Il n'existe pas de bijection entre $E$ et $\mathbb{N}$ c.à.d. qu'il y a beaucoup plus de réels entre 0 et 1 qu'il n'y a d'entiers positifs}
 
-\textblue{Preuve} :
+\blue{Preuve} :
 \begin{enumerate}
 \item Supposons $E$ énumérable. Il existe donc une énumération des éléments de $E : x_0, ..., x_k, ...$
 \begin{figure}[H]
@@ -112,7 +112,7 @@ Soit la fonction $halt : P \times \mathbb{N} \rightarrow \mathbb{N}$ t.q. $halt(
 	0 & \text{sinon}
 \end{cases}$
 
-\textblue{$halt$ n'est pas calculable.}
+\blue{$halt$ n'est pas calculable.}
 
 \subsubsection{Preuve}
 
@@ -148,8 +148,8 @@ Supposons $halt$ calculable.
 	\begin{equation*}
 		d'(d)=
 		\begin{cases}
-      		1 & \rightarrow halt(d,d) = 0 \rightarrow P_d \text{ ne se termine pas \textblue{OR} }d'(d) = 1\\
-      		\bot & \rightarrow halt(d,d) = 1 \rightarrow P_d \text{ se termine \textblue{OR} }d'(d) = \bot
+      		1 & \rightarrow halt(d,d) = 0 \rightarrow P_d \text{ ne se termine pas \blue{OR} }d'(d) = 1\\
+      		\bot & \rightarrow halt(d,d) = 1 \rightarrow P_d \text{ se termine \blue{OR} }d'(d) = \bot
       	\end{cases}
     \end{equation*}
 \item \red{Conclusion} : $d'$ n'est pas calculable, donc $halt$ n'est pas calculable.
@@ -163,7 +163,7 @@ Soit un langage $Q$ qui a des programmes $Q_k$ et qui ne calcule que des fonctio
 \item La fonction $\varphi'_k$ est calculée par le programme $Q_k$
 \item L'interpréteur $interpret(n,x)$ de ce langage $Q$ est calculable
 \item La fonction $halt(n,x)$ pour ce langage $Q$ est calculable (fonction constante qui vaut 1)
-\item \textblue{$interpret(n, x)$ n'est pas calculable \textit{dans $Q$}}
+\item \blue{$interpret(n, x)$ n'est pas calculable \textit{dans $Q$}}
 \end{itemize}
 
 \subsubsection{Preuve}
@@ -186,7 +186,7 @@ Supposons $interpret$ calculable dans $Q$.
 	\end{figure}
 \item \red{Prendre la diagonale} : $d(n) = interpret(n,n)$
 \item \red{Modifier la diagonale} : $d'(n)= interpret(n,n) + 1$ (calculable dans $Q$ si $interpret$ calculable dans $Q$)
-\item \red{Contradiction} : $d'(d)= interpret(d,d) + 1 \text{ \textblue{OR} } d'(d) = \varphi'(d) = interpret(d,d)$
+\item \red{Contradiction} : $d'(d)= interpret(d,d) + 1 \text{ \blue{OR} } d'(d) = \varphi'(d) = interpret(d,d)$
 \item \green{Conclusion} : l’interpréteur de $Q$ n'est pas calculable dans $Q$
 \end{enumerate}
 
@@ -199,7 +199,7 @@ Deux formulations :
 \end{enumerate}
 $\rightarrow$ Aucun programme ne peut dire si une fonction respecte des spécifications
 
-\textblue{Si A $\neq \varnothing$ et $A \neq \mathbb{N},\ \forall i \in A, \forall j \in \bar{A} \ : \ \varphi_i \neq \varphi_j$. Alors A non récursif.}
+\blue{Si A $\neq \varnothing$ et $A \neq \mathbb{N},\ \forall i \in A, \forall j \in \bar{A} \ : \ \varphi_i \neq \varphi_j$. Alors A non récursif.}
 
 \subsubsection{Preuve}
 
@@ -213,8 +213,8 @@ $\rightarrow$ Aucun programme ne peut dire si une fonction respecte des spécifi
 		 \begin{cases}
 		 \text{Construire le programme (sans l'exécuter) } P(z) \equiv P_n(x); P_m(z)\\
 		 d = \text{ numéro du programme }P(z)\\
-		 \text{if } d \in A \text{ then } print(1) \ \textgreen{\text{Si }P_n \text{ se termine, } \varphi_d = \varphi_m \rightarrow d \in A}\\
-		 \text{else } print(0) \ \textgreen{\text{Si }P_n \text{ ne se termine pas, } \varphi_d = \varphi_k \rightarrow d \in \bar{A}}\\
+		 \text{if } d \in A \text{ then } print(1) \ \green{\text{Si }P_n \text{ se termine, } \varphi_d = \varphi_m \rightarrow d \in A}\\
+		 \text{else } print(0) \ \green{\text{Si }P_n \text{ ne se termine pas, } \varphi_d = \varphi_k \rightarrow d \in \bar{A}}\\
 		 \end{cases}
 	\end{equation*}
 \item $halt$ n'est pas calculable, donc $A$ est non récursif
@@ -289,7 +289,7 @@ Si on pose que $S(k') = k$, on obtient :
 \section{ND-Java}
 
 C’est un sous-ensemble de Java (“Non-Deterministic Java”)
-On y ajoute fonction $choose(n)$ renvoyant un entier aléatoire entre 0 et $n$. Cette \textblue{fonction est non-déterministe} car à un même input elle ne renvoie pas toujours le même output.
+On y ajoute fonction $choose(n)$ renvoyant un entier aléatoire entre 0 et $n$. Cette \blue{fonction est non-déterministe} car à un même input elle ne renvoie pas toujours le même output.
 
 \section{ND-Récursif}
 
@@ -314,7 +314,7 @@ Comme ND-Récursif sauf que le cas $x \notin A$ ne se fini pas forcément.
 
 \section{Réduction algorithmique (calculabilité)}
 
-Un ensemble $A$ est \textblue{algorithmiquement réductible} à un ensemble $B \ (A \leq_a B)$ si en supposant $B$ récursif, $A$ est récursif.
+Un ensemble $A$ est \blue{algorithmiquement réductible} à un ensemble $B \ (A \leq_a B)$ si en supposant $B$ récursif, $A$ est récursif.
 
 Exemple :
 
@@ -335,14 +335,14 @@ $HALT \ \leq_a P$ (si $P$ énumérable, $HALT$ énumérable)
 
 \section{Réduction fonctionnelle (complexité)}
 
-Un ensemble $A$ est \textblue{fonctionnellement réductible} à un ensemble $B \ (A \leq_r B)$ ssi il existe une fonction totale calculable $f$ t.q. :
+Un ensemble $A$ est \blue{fonctionnellement réductible} à un ensemble $B \ (A \leq_r B)$ ssi il existe une fonction totale calculable $f$ t.q. :
 \begin{equation*}
 a \in A \Leftrightarrow f(a) \in B
 \end{equation*}
 
 \section{Réduction polynomiale}
 
-Un ensemble $A$ est \textblue{polynomialement réductible} à un ensemble $B \ (A \leq_p B)$ ssi il existe une fonction totale calculable $f$ de complexité temporelle polynomiale t.q. :
+Un ensemble $A$ est \blue{polynomialement réductible} à un ensemble $B \ (A \leq_p B)$ ssi il existe une fonction totale calculable $f$ de complexité temporelle polynomiale t.q. :
 \begin{equation*}
 a \in A \Leftrightarrow f(a) \in B
 \end{equation*}

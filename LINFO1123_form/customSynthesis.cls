@@ -163,10 +163,10 @@
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
-\fancyfoot[C]{\thepage \hspace{1pt} \textblue{|} \pageref{LastPage}}
+\fancyfoot[C]{\thepage \hspace{1pt} \blue{|} \pageref{LastPage}}
 \fancypagestyle{plain}{
 	\fancyhf{}
-	\fancyfoot[C]{\thepage \hspace{1pt} \textblue{|} \pageref{LastPage}}
+	\fancyfoot[C]{\thepage \hspace{1pt} \blue{|} \pageref{LastPage}}
 	\renewcommand{\headrulewidth}{0pt}
 }
 
@@ -198,9 +198,9 @@
 
 %---Custom commands---%
 \newcommand{\bigO}{\text{\usefont{OMS}{cmsy}{m}{n}O}}
-\newcommand{\textred}[1]{\textcolor{deepRed}{#1}}
-\newcommand{\textblue}[1]{\textcolor{darkBlue}{#1}}
-\newcommand{\textgreen}[1]{\textcolor{darkGreen}{#1}}
+\newcommand{\red}[1]{\textcolor{deepRed}{#1}}
+\newcommand{\blue}[1]{\textcolor{darkBlue}{#1}}
+\newcommand{\green}[1]{\textcolor{darkGreen}{#1}}
 
 %---Other---%
 \hypersetup{

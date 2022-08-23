@@ -163,10 +163,10 @@
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
-\fancyfoot[C]{\thepage \hspace{1pt} \textblue{|} \pageref{LastPage}}
+\fancyfoot[C]{\thepage \hspace{1pt} \blue{|} \pageref{LastPage}}
 \fancypagestyle{plain}{
 	\fancyhf{}
-	\fancyfoot[C]{\thepage \hspace{1pt} \textblue{|} \pageref{LastPage}}
+	\fancyfoot[C]{\thepage \hspace{1pt} \blue{|} \pageref{LastPage}}
 	\renewcommand{\headrulewidth}{0pt}
 }
 
