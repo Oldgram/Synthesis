@@ -264,6 +264,5 @@ TSWLatexianTemp*
 # standalone packages
 *.sta
 
-# Compiled pdfs except in root folder
+# Compiled pdfs
 *.pdf
-!/*.pdf
