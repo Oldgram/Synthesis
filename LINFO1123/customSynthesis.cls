@@ -159,17 +159,6 @@
 \titlespacing*{\subsection}{0pt}{*3.25}{*1.5}%
 \titlespacing{\chapter}{0pt}{2pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
 
-%---Page numbering---%
-\pagestyle{fancy}
-\fancyhf{}
-\renewcommand{\headrulewidth}{0pt}
-\fancyfoot[C]{\thepage \hspace{1pt} \blue{|} \pageref{LastPage}}
-\fancypagestyle{plain}{
-	\fancyhf{}
-	\renewcommand{\headrulewidth}{0pt}
-	\fancyfoot[C]{\thepage \hspace{1pt} \blue{|} \pageref{LastPage}}
-}
-
 %---Boxed environement---%
 \newenvironment{frshaded*}{%
 	\def\FrameCommand{\fboxrule=\FrameRule\fboxsep=\FrameSep \fcolorbox{framecolor}{shadecolor}}%

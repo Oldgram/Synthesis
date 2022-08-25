@@ -897,6 +897,30 @@ Supposons $F$ énumérable. Il existe donc une énumération des éléments de $
 	$F$ n'est pas énumérable.
 \end{enumerate}
 
+\newpage
+\section{Conséquence logique}
+
+\begin{itemize}
+\item $p$ est une tautologie (vraie dans toutes les interprétations) ssi $\neg p$ est non satisfaisable.
+\item $q$ est une conséquence logique de $p$ si $p \Rightarrow q$ est une tautologie ($p \models q$).
+\end{itemize}
+
+$p \models q$ ssi $(p \wegde \neg q)$ est non satisfaisable.
+
+\subsubsection*{Preuve}
+
+\begin{align*}
+p \models q\ &\text{ssi } p \Rightarrow q \text{est une tautologie}& \\
+&\text{ssi } p \Rightarrow q \text{est vrai dans toutes les interprétations}& \\
+&\text{ssi } \neg(p \Rightarrow q) \text{est faux dans toutes les interprétations}& \\
+&\text{ssi } \neg(p \Rightarrow q) \text{est non satisfaisable}& \\
+&\text{ssi } \neg(\negp \vee q) \text{est non satisfaisable}& \\
+&\text{ssi } (\neg \neg p \wedge q) \text{est non satisfaisable}& \\
+&\text{ssi } (p \wedge \neg q) \text{est non satisfaisable}& 
+\end{align*}
+
+
+
 \section[P = NP]{Si $SAT \in P$ alors $P = NP$}\label{dem:PNP}
 
 Le théorème de Cook dit que $SAT$ est NP-complet. Cela implique :
@@ -912,3 +936,6 @@ a \in A \Leftrightarrow f(a) \in B
 \end{equation*}
 
 Comme $A \leq_p SAT$, $\forall A \in NP$, on pourrait alors réduire n'importe quel problème $NP$ à $SAT$ en complexité polynomiale puis résoudre $SAT$ en temps polynomiale également, ce qui entraînerait $P = NP$.
+
+%----------------------------------------------------------------------------------------------%
+\label{lastpage}
