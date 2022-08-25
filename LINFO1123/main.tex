@@ -33,7 +33,7 @@
 %----------------------------------------------------------------------------------------------%
 
 \pagenumbering{roman}
-\setcounter{tocdepth}{2} %sets toc depth
+\setcounter{tocdepth}{2} % sets toc depth
 \tableofcontents
 \thispagestyle{empty} % Remove numbering on toc page
 \clearpage
@@ -42,6 +42,12 @@
 %----------------------------------------------------------------------------------------------%
 
 \include{content}
+
+\pagenumbering{arabic}
+\renewcommand*{\thepage}{A\arabic{page}}
+
+\appendix
+\include{appendix}
 
 %----------------------------------------------------------------------------------------------%
 

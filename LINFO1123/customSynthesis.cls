@@ -166,8 +166,8 @@
 \fancyfoot[C]{\thepage \hspace{1pt} \blue{|} \pageref{LastPage}}
 \fancypagestyle{plain}{
 	\fancyhf{}
-	\fancyfoot[C]{\thepage \hspace{1pt} \blue{|} \pageref{LastPage}}
 	\renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[C]{\thepage \hspace{1pt} \blue{|} \pageref{LastPage}}
 }
 
 %---Boxed environement---%
@@ -213,3 +213,32 @@
 % For debug purposes
 \showboxdepth=5
 \showboxbreadth=5
+
+% MCQ table environment (from https://github.com/Gp2mv3/Syntheses)
+\RequirePackage{longtable} % so that table can be over several pages
+\renewcommand{\arraystretch}{1.5} % to bring space to the table
+
+\newenvironment{mcqs}
+{\begin{longtable}{|p{0.84\textwidth}|p{0.1\textwidth}|}}
+{\hline\end{longtable}}
+
+
+\newcommand{\mcq}[3]{
+  \hline
+  #1 &
+  \ifthenelse{\equal{\Sol}{false}}
+  {}
+  {
+    \ifthenelse{\equal{#2}{1} \OR \equal{#2}{true} \OR \equal{#2}{True} \OR \equal{#2}{TRUE} \OR \equal{#2}{vrai} \OR \equal{#2}{Vrai} \OR \equal{#2}{VRAI}}
+    {\green{Vrai}}
+    {\ifthenelse{\equal{#2}{0} \OR \equal{#2}{false} \OR \equal{#2}{False} \OR \equal{#2}{FALSE} \OR \equal{#2}{faux} \OR \equal{#2}{Faux} \OR \equal{#2}{FAUX}}
+      {\red{Faux}}
+      {\blue{Ouvert}}
+    }
+  \\
+  \hline
+  \multicolumn{2}{|p{0.94\textwidth}|}{\emph{Justification:}
+    \ifthenelse{\equal{#3}{}}{TODO}{#3}
+  }}\\
+}
+
