@@ -211,6 +211,14 @@
 \newcommand{\textblue}[1]{\textcolor{darkBlue}{#1}}
 \newcommand{\textgreen}[1]{\textcolor{darkGreen}{#1}}
 
+%---Outer join symbols--%
+% Source: https://tex.stackexchange.com/questions/20740/symbols-for-outer-joins
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
 %---Other---%
 \hypersetup{
     colorlinks,
