@@ -137,10 +137,9 @@
   \mcq{Toute fonction bijective est injective}{1}
   {Injectif: Ensemble d'arrivée n'est pas la cible de deux éléments de l'ensemble de départ; Bijectif: tous élément est cible de 1 et 1 seul.}
   \mcq{Une fonction dont la table est infinie ne peut être décrite de manière finie}{0}
-  {$f\colon \mathbb{R}\rightarrow\mathbb{R} : f(x)=x^{2}$}
+  {$f \colon \mathbb{R}\rightarrow\mathbb{R} : f(x)=x^{2}$}
   \mcq{Toute fonction totale est surjective}{0}
-  {$f\colon \R \to \R : f(x) = x^2$ n'est pas surjective car $\mathop{\mathrm{image}}(f) = \mathbb{R}^+$, les réels positifs
-  mais $\mathop{\mathrm{dom}}(f) = \mathbb{R}$.}
+  {$f \colon \R \to \R : f(x) = x^2$ n'est pas surjective car $\mathop{\mathrm{image}}(f) = \mathbb{R}^+$, les réels positifs mais $\mathop{\mathrm{dom}}(f) = \mathbb{R}$.}
   \mcq{Toute extension d'une fonction surjective est surjective}{1}
   {Tout ce qu'on fait c'est parfois changer l'output lorsqu'elle était $\bot$. On a donc au moins toutes les mêmes output qu'avant.}
   \mcq{Tout ensemble non-énumérable peut être mis en bijection avec l'ensemble des réels}{0}
@@ -221,8 +220,8 @@
   \mcq{Il existe des ensembles récursifs qui ne sont pas énumérables}{0}
   {Tout ensemble récursif est énumérable. En informatique, on ne gère que les input qui peuvent être définie de manière finie
   donc on ne gère pas les ensemble non-énumérables.}
-  \mcq{Si le domaine d'une fonction est fini, alors cette fonction est calculable}{1}
-  {On peut hardcoder toute les image dans le programme et détermine laquelle on prend avec un "case" sur l'input.\label{QCM:C3:1}}
+  \mcq{Si le domaine d'une fonction est fini, alors cette fonction est calculable\label{QCM:C3:1}}{1}
+  {On peut hardcoder toute les image dans le programme et détermine laquelle on prend avec un \textit{case} sur l'input.}
   \mcq{Si le domaine d'une fonction est infini, alors cette fonction est non-calculable.\label{QCM:C3:2}}{0}
   {La fonction constante "$+1$" a un domaine infini mais elle est calculable}
   \mcq{Une fonction constante est toujours calculable}{1}
@@ -424,11 +423,11 @@
 
 \begin{mcqs}
   \mcq{Si la complexité temporelle d'un algorithme est $\bigO(n^{2})$, alors elle est aussi $\bigO(n^{3})$}{1}
-  {$(n^2) \in \bigoh(n^3)$ et $\bigO$ est transitif.}
+  {$(n^2) \in \bigO(n^3)$ et $\bigO$ est transitif.}
   \mcq{Si la complexité spatiale d'un algorithme est $\bigO(n^{3})$, alors elle ne peut pas être $\bigO(n^{2})$}{0}
   {$\bigO(n^{3})$ est une borne supérieure mais ça peut être moins!}
   \mcq{Un algorithme de complexité $\bigO(n^{2})$ est toujours plus rapide qu'un algorithme de complexité $\bigO(n^{3})$}{0}
-  {Déjà c'est juste des bornes, peut être que le deuxième est $\bigoh(n)$.
+  {Déjà c'est juste des bornes, peut être que le deuxième est $\bigO(n)$.
   Aussi c'est une complexité de pire cas, sur certains input, le deuxième est peut être plus rapide mais si dans le pire cas il est plus lent.
   Il y a également la constante, peut être que devant le $n^3$ il y a une petite constant, sur des petites inputs le deuxième est alors quand même plus rapide dans le pire cas.}
   \mcq{Un problème qui peut être résolu par un algorithme (de complexité) polynomial est pratiquement faisable.}{1}
@@ -463,8 +462,8 @@
   {Il faut au moins que $A \in DTIME(c^f)$. f est la profondeur maximale de l'arbre. Si on simule le ND, alors on doit faire un bfs dans un arbre de profondeur f.}
   \mcq{Si $A \in NTIME(n^{2})$ alors $A \in NP$}{1}
   {$n^2$ est polynomial donc c'est non-déterministe polynomial.}
-  \mcq{S'il existe un algorithme Java de complexité temporelle $\bigoh(n^{2})$ décidant l'ensemble $A$, alors il existe une machine de Turing de complexité temporelle $\bigoh(n^{2})$ décidant l'ensemble $A$.}{0}
-  {Pas de transfert de complexité entre formalismes. On peut seulement dire que la MT va résoudre le problème en un temps polynomial. On ne peut pas assurer $\bigoh(n^{2})$}
+  \mcq{S'il existe un algorithme Java de complexité temporelle $\bigO(n^{2})$ décidant l'ensemble $A$, alors il existe une machine de Turing de complexité temporelle $\bigO(n^{2})$ décidant l'ensemble $A$.}{0}
+  {Pas de transfert de complexité entre formalismes. On peut seulement dire que la MT va résoudre le problème en un temps polynomial. On ne peut pas assurer $\bigO(n^{2})$}
   \mcq{Le choix d'un modèle de calculabilité n'influence pas la classe $DTIME(n^{2})$}{0}
   {$n^2$ en Java ne veut pas dire $n^2$ en MT, juste polynomial.}
   \mcq{Si $A \leq_{p} B$ alors $A \leq_{a} B$.}{1}

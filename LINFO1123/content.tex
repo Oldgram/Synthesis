@@ -905,7 +905,7 @@ Supposons $F$ énumérable. Il existe donc une énumération des éléments de $
 \item $q$ est une conséquence logique de $p$ si $p \Rightarrow q$ est une tautologie ($p \models q$).
 \end{itemize}
 
-$p \models q$ ssi $(p \wegde \neg q)$ est non satisfaisable.
+$p \models q$ ssi $(p \wedge \neg q)$ est non satisfaisable.
 
 \subsubsection*{Preuve}
 
@@ -914,7 +914,7 @@ p \models q\ &\text{ssi } p \Rightarrow q \text{est une tautologie}& \\
 &\text{ssi } p \Rightarrow q \text{est vrai dans toutes les interprétations}& \\
 &\text{ssi } \neg(p \Rightarrow q) \text{est faux dans toutes les interprétations}& \\
 &\text{ssi } \neg(p \Rightarrow q) \text{est non satisfaisable}& \\
-&\text{ssi } \neg(\negp \vee q) \text{est non satisfaisable}& \\
+&\text{ssi } \neg(\neg p \vee q) \text{est non satisfaisable}& \\
 &\text{ssi } (\neg \neg p \wedge q) \text{est non satisfaisable}& \\
 &\text{ssi } (p \wedge \neg q) \text{est non satisfaisable}& 
 \end{align*}

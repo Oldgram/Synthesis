@@ -189,6 +189,7 @@
 \newcommand{\red}[1]{\textcolor{deepRed}{#1}}
 \newcommand{\blue}[1]{\textcolor{darkBlue}{#1}}
 \newcommand{\green}[1]{\textcolor{darkGreen}{#1}}
+\newcommand{\R}{\mathbb{R}}
 
 %---Other---%
 \hypersetup{
@@ -204,6 +205,9 @@
 \showboxbreadth=5
 
 % MCQ table environment (from https://github.com/Gp2mv3/Syntheses)
+\ifthenelse{\isundefined{\Sol}}{\def\Sol{true}}{}
+\ifthenelse{\equal{\Sol}{false}}
+
 \RequirePackage{longtable} % so that table can be over several pages
 \renewcommand{\arraystretch}{1.5} % to bring space to the table
 
