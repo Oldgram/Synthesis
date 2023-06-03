@@ -1246,7 +1246,7 @@ The database management statement should execute the transaction in a manner tha
 
 Different types of logs :
 
-\subsubsection{Undo log}
+\subsubsection{Undo Log}
 
 Before data is written to disk, the old value of the data is written to a log file.
 
@@ -1270,7 +1270,7 @@ Before data is written to disk, the old value of the data is written to a log fi
 \end{itemize}
 \end{minipage}
 
-\paragraph{Undo caching}
+\paragraph{Undo Log : caching}
 
 Writing on cache to avoid writing every time on the disk
 
@@ -1282,4 +1282,348 @@ Writing on cache to avoid writing every time on the disk
         \item Write them to disk sooner
     \end{itemize}
     \item In both cases there is still performance degradation
+\end{itemize}
+
+\subsubsection{Redo Log}
+
+\textblue{Goal} : Write changes to the log file on disk when a commit is confirmed, but reflect the changes on disk only later when emptying caches.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth,keepaspectratio]{redo_log}
+\end{figure}
+
+\begin{minipage}{0.48\textwidth}
+\textgreen{Advantages} :
+\begin{itemize}
+    \item Faster database operation: the database operates mostly from main memory (still, log files are updated when a transaction ends)
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\textred{Disadvantages} :
+\begin{itemize}
+    \item As we can only update data on disk after a commit, what do we do with large transactions? (e.g., Transactions that don’t fit in memory; too many items in the data affected)
+\end{itemize}
+\end{minipage}
+
+\subsubsection{Undo/Redo Log}
+
+\begin{itemize}
+    \item Write both old and new values to the log
+    \item For transactions that are not finished, the "old" values in the log are used to undo any changes that may have been written to disk already
+    \item For transactions that are finished, the "new" values in the log are used to redo any changes that may have not been written to disk yet
+\end{itemize}
+
+\begin{minipage}{0.48\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth,keepaspectratio]{undo_redo_1}
+    \end{figure}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth,keepaspectratio]{undo_redo_2}
+    \end{figure}
+\end{minipage}
+
+\subsubsection{Conclusion}
+
+\begin{itemize}
+    \item Ensuring ACID properties requires maintaining a log file (journal) on disk
+    \item Performance tuning :
+    \begin{itemize}
+        \item Put the log file on a faster type of disk
+        \item Tuning of the log file: how often are caches flushed, how often do we clean up the log file, checkpoints
+    \end{itemize}
+    \item Downsides :
+    \begin{itemize}
+        \item Maintaining a log file takes time
+        \item A log file takes additional space
+    \end{itemize}
+\end{itemize}
+
+\chapter{NoSQL}
+
+NoSQL = "Not Only SQL"
+
+
+\begin{itemize}
+    \item \textblue{Motivations for NoSQL} :
+    \begin{itemize}
+        \item \textblue{Scalability} : relational databases do not scale to the size of data that needs to be maintained by Google, Facebook, Amazon, ...
+        \item \textblue{Supported data types and data queries} : social networks, webpages, documents are not easily stored and queried using Relational Database Management Systems
+    \end{itemize}        
+    \item Examples :
+    \begin{itemize}
+        \item \textblue{Semi-structured data} : data that has structure, but does have a fixed schema; the data is often stored in a textual document and describes its own structure (JSON file, ...)
+        \item \textblue{Network data} : structures consisting of labeled nodes and edges (social networks, biological networks, communication networks, ...)
+        \item \textblue{Other data} : Image, video, ...
+    \end{itemize}
+\end{itemize}
+
+\section{Types Of NoSQL Databases}
+
+\subsection{Graph Databases}
+
+\textblue{Neo4J and Cypher}
+
+\begin{itemize}
+    \item An ACID database (just like relational databases)
+    \item Assumes a labeled property graph data model
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth,keepaspectratio]{neo4j}
+\end{figure}
+
+\subsection{Key-Value Stores}
+
+Two scaling problems to consider :
+\begin{enumerate}
+    \item Scaling towards \textblue{large numbers of users}
+    \begin{itemize}
+        \item To reduce response times, servers should be physically close to users
+        \item Data needs to be replicated on multiple machines
+    \end{itemize}
+    \item Scaling towards \textblue{large amounts of data}
+    \begin{itemize}
+        \item Storing all data on one machine is not feasible
+        \item Data needs to be distributed across multiple machines
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Replication}
+
+The same data is store on multiple servers
+\begin{itemize}
+    \item Be able to recover from errors
+    \item Provide shorter response times to different user
+\end{itemize}
+
+\subsubsection{Partitioning}
+
+Data is too large, is stored on multiple servers
+\begin{itemize}
+    \item Horizontal partioning / Sharding
+    \item Vertical partioning
+\end{itemize}
+
+\subsection{Capt Theorem}
+
+The CAP theorem, also known as Brewer's theorem, states that in a distributed computer system, it is impossible to simultaneously achieve all the following three guarantees: consistency, availability, and partition tolerance.
+
+\begin{itemize}
+    \item \textblue{Consistency} refers to every read operation receiving the most recent write or an error. In other words, all nodes in the distributed system see the same data at the same time.
+    \item \textblue{Availability} means that every request to the system receives a response, even in the presence of failures. THe system remains operational and accessible to users.
+    \item \textblue{Partition} tolerance ensures that the system continues to function and provide availability even if network partitions occure, causing messages to be delayed or lost between nodes.
+\end{itemize}
+
+The CAP theorem states that in the event of a network partition, a distributed system must choose between maintaining consistency (C) or availability (A). It is not possible to have both guarantees simultaneously. However, partition tolerance (P) is a necessary characteristic for a distributed system.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth,keepaspectratio]{cap}
+\end{figure}
+
+In practical terms, the CAP theorem implies that when designing distributed systems, trade-offs must be made between consistency and availability based on the specific requirements and constraints of the application and its environment. Different systems prioritize either consistency or availability, leading to different consistency models (such as strong consistency or eventual consistency) and availability strategies (such as high availability or fault tolerance).
+
+So Instead of ACID semantics, many NoSQL database systems provide \textblue{BASE} semantics:
+
+\begin{itemize}
+    \item \textblue{Basically Available} : the system remains available even if a part stops working
+    \item \textblue{Soft state} : the same data item may be in a different state in different parts of the system
+    \item \textblue{Eventual consistency} : within finite time after a set of write operations (but not necessarily immediately) all data items will be in the state reflected by the last write to them
+\end{itemize}
+
+\section{Key-Value Stores}
+
+Distributed database systems that for a given key can quickly retrieve associated data, or update associated data.
+
+\subsection{Documents stores}
+
+\begin{itemize}
+    \item Store semi-structured documents
+    \item Provide support for processing these structures documents
+    \item Typically provide \textit{horizontal partitioning} (sharding)
+\end{itemize}
+
+\subsubsection{MongoDB}
+
+Has a querying interface, but this querying interface is focused on retreiving from \textit{one document} collection those documents satisfying conditions.
+
+A time-consuming linear scan is needed for queries that access other attributes than the key, unless indexes are maintained.
+
+\begin{itemize}
+    \item Distributed nature
+    \begin{itemize}
+        \item The same document can be stored on multiple servers (\textit{replication})
+        \item The documents within the same collection can be stored across multiple servers if the collection is too large (\textit{sharding})
+    \end{itemize}
+    \item By default
+    \begin{itemize}
+        \item For every document there is \textit{one} primary server: all \textit{write} operations for that document are directed towards that server
+        \item \textit{Read/write} operations to the primary server are \textit{immediately consistent}
+        \item \textit{Read} operations can also be served by any other server storing the document, but they are only \textit{eventually consistent}
+        \item There can be an even number of secondary servers that store copies of the document
+        \item If the primary server fails, the secondary servers organize an \textit{election} to appoint one of them as the new primary server
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{CouchDB}
+
+\begin{itemize}
+    \item AP document store instead of CP document store
+    \item All replicas can process a write request
+    \begin{itemize}
+        \item Increase availability in case of a partition
+        \item Decreases consistency in case of a partition
+    \end{itemize}
+    \item Versioning : every server maintains a history of changes, which will be eventually consistent
+\end{itemize}
+
+\subsection{Generic Key-Value Stores}
+
+\subsubsection{Amazon DynamoDB}
+
+Commercial product to store data in Amazon's cloud. Consists of tables :
+\begin{itemize}
+    \item Within a table is stored a set of items
+    \item Each items consist of a set of (attribute, value) pairs
+    \item Every table must have one attribute that servers as its key, and this attribute must be present in all items
+\end{itemize}
+
+\newpage
+Withing a table, DynamoDB can quickly retrieve the corresponding item for a given key, and the value for a given attribute within that item
+\begin{itemize}
+    \item Items are shared (horizontally partitioned)
+    \item No query language, only a interface for retrieving values for a given (table, key, attribute)
+    \item Distributes :
+    \begin{itemize}
+        \item Eventual consistency
+        \item No primary server, multiple nodes may process writes
+        \item Versioning to reconcile
+        \item Similar open source products (LinkedIn's Voldemort, Redis, ... $\rightarrow$ focus in keeping data in memory)
+    \end{itemize}
+\end{itemize}
+
+\subsection{Column Stores}
+
+Suppose we have columns in our data (A, B, C, D) and we are looking for documents with a given value in column D.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth,keepaspectratio]{wide_column}
+\end{figure}
+
+\subsubsection{Apache HBase}
+
+\begin{itemize}
+    \item A database in HBase consists of \textit{tables}
+    \item Within a table is stored a set of \textit{items}
+    \item Each \textit{item} consists of a set of (column family, column quantifier, value) tuples
+    \begin{itemize}
+        \item Column Families are specified when the table is created
+        \item Column Quantifiers are not fixed in advance : the data is still self-describing, as within a column family any nymber of attributes quantifiers is possible
+    \end{itemize}
+    \item Every \textit{item} has a \textit{key} that uniquely identifies the item within the table, and which \textit{has an order}
+    \begin{itemize}
+        \item The order is used in sharding : shards consist of consecutive keys
+    \end{itemize}
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline 
+  & HBase & Cassandra \\ 
+\hline 
+Locking server & One server for locking & Multiple locking server \\ 
+\hline 
+Consistency & High & Low \\ 
+\hline 
+Availability & Low & High \\ 
+\hline 
+\end{tabular} 
+\end{center}
+
+For both, when a server fails, one of the remaining servers will take over.
+
+\paragraph{Hadoop File System (HDFS)}
+
+\begin{itemize}
+    \item Implements a distributed file system
+    \item Programs can red and writes files to the file system
+    \item Files have a path
+    \item HDFS has one NameNode that locates files, processes requests for adding/removing/moving files
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.55\textwidth,keepaspectratio]{hdfs}
+    \end{figure}
+    \begin{itemize}
+        \item Single point of failure; lower availability
+    \end{itemize}
+    \item The number of files that can be stored in the HDFS is "limited" (400 million files)
+\end{itemize}
+
+\paragraph{Apach Hadoop (MapReduce)}
+
+\begin{itemize}
+    \item \textblue{Map} map$(k1, v1) \rightarrow$ list$(k2, v2)$ : a function that returns for a key and its value, a new list of (key, values) pairs
+    \item \textblue{Reduce} reduce$(k2,$ list$(v1)) \rightarrow$ list$(v3)$ : a function that returns for a key and a list of values, a new list of values
+\end{itemize}
+
+\subsubsection{Apache Hive}
+
+Provides an SQL-like interface to tables stored in the HDFS and calculates answers to queries using Hadoop/MapReduce. Its original purpose is to answer queries that \textit{read} data on a massive scale.
+
+\begin{itemize}
+    \item If was originally \textit{not} designed to support online transactions efficiently
+    \item But developers are increasingly adding ACID support
+    \item Currently ACID at a row-level, using locks for rows on appropriate data formats.
+\end{itemize}
+
+Queries are transformed into relational algebra, operators are implemented using Map \& Reduce (limited query optimization)
+
+\subsubsection{Apache Hive vs Apache HBase}
+
+\begin{itemize}
+    \item Apache HBase is a key-value store that supports high frequency read/writes; can be used to support a live running system
+    \item Apache Hive is meant to be used by analysts that have collected large amounts of data and wish to run queries over that data
+\end{itemize}
+
+\newpage
+\subsubsection{Apache Spark SQL}
+
+\begin{itemize}
+    \item Data processing framework based on \textit{Resilient Distributed Datases (RDDs)}, datasets that are (temporarily) stored in the memory of distributed servers
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth,keepaspectratio]{apache_spark}
+    \end{figure}
+    \item Support Map, Reduce, and other operations
+    \item Implementation of SQL on Spark
+\end{itemize}
+
+\subsubsection{Apache Spark SQL vs Apache Hive}
+
+\begin{itemize}
+    \item Spark SQL relies on Spark, which supports in-memory data structures $\rightarrow$ better performance
+    \item Spark SQL supports a wider range of input data formats, including all data formats supported by Hive
+    \item Apache Hive is more mature, and is adding support for transactions $\rightarrow$ starts to be more usable as a database system
+\end{itemize}
+
+\subsubsection{NewSQL: Google Spanner Features}
+
+\begin{itemize}
+    \item Relational data model, support for standard SQL, ACID
+    \item Software as a service; an entirely private world-wide network is used to ensure high availability
+    \begin{itemize}
+        \item A clock is used to ensure every read/write request, and every data item, has a reliable time stamp with bounded error
+        \item Multiple versions of a data item are maintained
+        \item Replicas return an older version as long as a write request is not committed (time stamp read < time stamp write commit)
+        \item High concistency: writes are only confirmed if all nodes worldwide have confirmed that they have processed the write
+    \end{itemize}
 \end{itemize}
