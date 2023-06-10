@@ -279,7 +279,7 @@ CREATE TABLE DEPARTMENT (
     \item \textblue{Superkey} : a set of one or more attributes that can uniquely identify a tuple (row) in a table. In other words, a superkey is a combination of one or more attributes that can garantee the uniqueness of each tuple in a table.
     \item \textblue{Key} : a minimal superkey; a superkey that has no other superkey as its subset.
     \item If a relation has multiple keys, all these keys are also called \textblue{candidate keys}. In database design it is common to indicate one the candidate keys as the \textblue{primary key}. The other candidate keys are \textblue{unique keys}.
-    \item \textblue{Foreign key} : a field or combination of gields in one table that refers to the primary key of another table. It establish a relationship between two tables by ensuring referential integrity (meaning that data in one table is consistent with data in another table).
+    \item \textblue{Foreign key} : a field or combination of fields in one table that refers to the primary key of another table. It establish a relationship between two tables by ensuring referential integrity (meaning that data in one table is consistent with data in another table).
 \end{itemize}
 
 \section{Transaction}
@@ -653,7 +653,7 @@ A database design that satisfies formal properties are said to be in a normal fo
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-\textgreen{Good design} in second normal form. Information are not repeates, and changing a the name of a course would affect only one row.
+\textgreen{Good design} in second normal form. Information are not repeated, and changing a the name of a course would affect only one row.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth,keepaspectratio]{second_normal_form_good}
@@ -666,7 +666,7 @@ Functional dependencies are relationships between attributes in a relational dat
 
 \subsection{Definition}
 
-A \textblue{functional dependency} $X \rightarrow Y$ betqween sets of attributes $X$ and $Y$ in relation $R$, specifies a constraint that for any two tuples $t_1$ and $t_2$ in $R$ :
+A \textblue{functional dependency} $X \rightarrow Y$ between sets of attributes $X$ and $Y$ in relation $R$, specifies a constraint that for any two tuples $t_1$ and $t_2$ in $R$ :
 
 \begin{equation*}
 \text{if } \forall A \in X : t_1.A = t_2.A \text{ then it holds that } \forall A \in Y : t_1.A = t_2.A
@@ -892,7 +892,7 @@ Indexes are data structures that make it more efficient to search for desired re
 \subsubsection{Clustering Indexes}
 
 \begin{itemize}
-    \item Defiend on an ordered data file
+    \item Defined on an ordered data file
     \item Distinguishing feature : the data file can also be ordered a non-key field (multiple records can have the same value)
     \item A clustering index is also a nondense (sparse) index, when defined on non-key attributes
 \end{itemize}
