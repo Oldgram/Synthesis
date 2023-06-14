@@ -277,11 +277,11 @@ The principle of this filter is the following :
         \item We consider that a mail $m$ consists of $n$ tokens $t_1, t_2, ..., t_n$
         \item Assuming that tokens appear independently in emails (\textit{Naive Bayer Classifier})
         \begin{align*}
-        P(m\ isSpam) &:= \frac{\prod \frac{p_1}{P(isSpam)}}{\prod \frac{p_1}{P(isSpam)} + \prod(1-p_i)P(isNotSpam)}
+        P(m\ isSpam) &:= \frac{\prod \frac{p_i}{P(isSpam)}}{\prod \frac{p_i}{P(isSpam)} + \prod(1-p_i)P(isNotSpam)}
         \end{align*}
         \item If we assume that $P(isSpam) = P(isNotSpam)$ :
         \begin{align*}
-        P(m\ isSpam) &:= \frac{\prod p_1}{\prod p_1 + \prod(1-p_i)}\\
+        P(m\ isSpam) &:= \frac{\prod p_i}{\prod p_i + \prod(1-p_i)}\\
                      &\ \ \ \ \ \text{where }p_i = P(isSpam | t_i)
         \end{align*}
     \end{itemize}
