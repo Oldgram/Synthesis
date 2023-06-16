@@ -466,20 +466,20 @@ Even with loop‐free paths, the number of paths in a graph can be \textblue{exp
     \item[$\Rightarrow$] \textblue{Fixed point} computation
 \end{itemize}
 
-\textbf{Worklist Algorithm} :
+\textblue{Worklist Algorithm} :
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth,keepaspectratio]{worklist_alg}
 \end{figure}
 
-\textbf{Example} :
+\textblue{Example} :
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth,keepaspectratio]{worklist_ex_1}\\
     \includegraphics[width=0.7\textwidth,keepaspectratio]{worklist_ex_2}
 \end{figure}
 
-\textbf{Particular cases} :
+\textblue{Particular cases} :
 \begin{enumerate}
     \item \textblue{Avail expressions} : expression $exp$ is \textblue{available} at node $n$ iff for all paths to $n$, $exp$ has been computed and not subsequently modified (used in compiler construction)
     \begin{figure}[H]
@@ -493,7 +493,7 @@ Even with loop‐free paths, the number of paths in a graph can be \textblue{exp
     \end{figure}
 \end{enumerate}
 
-\textbf{Classification of analyses} :
+\textblue{Classification of analyses} :
 \begin{itemize}
     \item \textblue{Forward/backward} : a node’s set depends on that of its predecessors/successors
     \item \textblue{Any-path/all‐path} : a node’s set contains a value iff it is coming from any/all of its inputs
@@ -656,17 +656,683 @@ and definitions
 
 \chapter{Structural testing}
 
+\section{Define statement, branch and condition coverage, compound conditions and MC/DC, and compare their strengths}
+
+\begin{enumerate}
+    \item \textblue{Statement coverage}\\
+    Each statement must be executed at least once.\\
+    Motivation : a fault in a statement can only be revealed by executing the faulty statement 
+    $$C_{stmt} = \frac{\#executed\ statement}{\#statement}$$
+    NB : CFG nodes $\neq$ statements : may represent basic blocks, multiple statements or parts of statements. Difference in granularity, not in concept (100\% node coverage = 100\% statement coverage)
+    \item \textblue{Branch coverage}\\
+    Each branch must be executed at least once.\\
+    Variant: edge coverage → each edge in the CFG.\\
+    In a graph: traversing all edges $\Rightarrow$ visiting all nodes.
+    $$C_{branch} = \frac{\#executed\;branches}{\#branches}$$
+    NB: 100\% branch coverage $\Rightarrow$ 100\% statement coverage\\
+    Branch coverage = \textblue{decision coverage} : each decision must be true and false at least once (decision = top-level boolean expression)
+    \item \textblue{Condition coverage}\\ 
+    Considers case analysis in more detail : individual conditions in a boolean decision are tested. Each \textblue{basic condition} must be true and false at least once.
+$$C_{bcond} = \frac{
+\begin{gathered}
+\#executed\;true\;basic\;conds\\
++\#executed\;false\;basic\;conds
+\end{gathered}
+}{2*\#basic\;conds}$$
+    Note: basic condition coverage can be satisfied without satisfying branch coverage. Branch and basic condition are not comparable $\rightarrow$ neither implies the other
+    \item \textblue{Compound conditions coverage}\\ 
+    Each possible evaluation of each decision must be taken at least once: all branches of the decision tree.\\
+    Note : exponential complexity. $N$ conditions $\Rightarrow$ \bigO$(2^N)$ test cases
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth,keepaspectratio]{exp_compl}
+    \end{figure}
+    \item \textblue{MC/DC (Modified condition/decision) coverage}
+    
+    \begin{minipage}{0.7\textwidth}
+        Each basic condition is shown to independently affect the decision\\
+        Motivation : test important combinations of conditions, without exponential blow-up\\
+        Requires, for each basic condition $C$ in a decision $D$, two test cases such that:
+        \begin{enumerate}
+            \item Values of all evaluated conditions except $C$ are the same and 
+            \item $D$ evaluates to true for one and false for the other
+        \end{enumerate}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.22\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth,keepaspectratio]{mc_dc_1}
+    \end{figure}
+    \end{minipage}
+    N basic conditions $\Rightarrow$ N+1 test cases (linear complexity)
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.35\textwidth,keepaspectratio]{mc_dc_2}
+    \end{figure}
+    It is a good balance of thoroughness and test size (and therefore widely used).
+
+    It is basic condition coverage ($C$) + decision (=branch) coverage ($DC$) + one additional condition ($M$) that every condition must independently affect the decision’s output.
+\end{enumerate}
+
+\section{Define path coverage, discuss limitations and show some practical path coverage criteria}
+
+\begin{itemize}
+    \item \textblue{Path coverage} : decision and condition coverage only consider individual program decisions. Many more paths than branches. Each path must be executed at least once
+    $$C_{path} = \frac{\#executed\ paths}{\#paths}$$
+    \item \textblue{Limitations} :
+    \begin{enumerate}
+        \item Program with loops $\Rightarrow$ infinite number of paths ! Full path coverage is therefore usually impossible to satisfy.
+        \item Feasible criterion : partition infinite set of paths into a finite number of classes, by limiting :
+        \begin{enumerate}
+            \item the number of traversals of loops
+            \item the length of the paths to be traversed
+            \item the dependencies among selected paths
+        \end{enumerate}
+    \end{enumerate}
+    \item \textblue{Some practical path coverage criteria} :
+    \begin{itemize}
+        \item \textblue{Boundary interior path coverage} : each path up to the first repeated node must be executed at least once
+        \begin{enumerate}
+            \item Group together paths that differ only in the subpath they follow when repeating the body of a loop
+            \item construction: unfold the CFG up to the first repeated node
+            \item limitations: the number of paths can still grow exponentially
+        \end{enumerate}
+        \item \textblue{Cyclomatic coverage}: a basis of independent paths must be executed
+        \item \textblue{Loop boundary coverage}: each loop body must be iterated zero times, one time and more than one time at least once.
+    \end{itemize}
+\end{itemize}
+
+\section{Define data flow coverage criteria}
+
+\begin{enumerate}
+    \item \textblue{All DU (def-use) pairs}: \textit{each DU pair} is exercised \textit{at least once}
+    \item \textblue{All DU paths} : \textit{each simple (non looping) DU path} is exercised \textit{at least once} (often impractical)
+    \item \textblue{All definitions}: \textit{for each definition, some DU pair} is exercised \textit{at least once} (every computed value is used somewhere)
+\end{enumerate}
+
+\section{Discuss the problems of aliases and infeasibility}
+
+\begin{itemize}
+    \item \textblue{Problem with aliases} : which references are (always or sometimes) the same ?\\
+    Ex: $p=\&x; ...; *p=99 \rightarrow *p$ is an alias of $x$
+    \item \textblue{Problem of infeasibility}: with conditional statement, it is possible that a variable is defined and never used = infeasibility problem. This problem is relevant, combinations of elements matter, it is impossible to decide feasible paths. In practice, we achieve reasonable coverage, but full coverage is usually unattainable. Number of paths is exponential in worst case, but often linear. But testing all DU paths is more often impractical since attainability is an undecidable problem
+\end{itemize}
+
 \chapter{Model-based testing}
+
+\section{Explain the principles of model-based testing}
+
+\begin{enumerate}
+    \item It is used in order to test structured specifications (state machines, tables, graphs, grammars,...)
+    \item Consist on devising test cases to check actual behaviour against behaviour specified by the model
+    \item Coverage similar to structural testing, but applied to specification and design model
+\end{enumerate}
+
+\section{Explain path-insensitive and path-sensitive state machine coverage criteria}
+
+\begin{enumerate}
+    \item \textblue{Covering finite state machine} :\\
+    Finite state machines: for describing behaviour that depends on sequences of events or stimuli
+    \begin{itemize}
+        \item \textblue{State coverage} : every state in the model should be visited at least once
+        \item \textblue{Transition coverage} : every transition in the model should be traversed at least once (this is the most commonly used criterion).\\
+        Transition coverage assumes that \textblue{transitions depend only on current state} and not on path to reach the state. This is not always true $\rightarrow$ needs path-sensitive criteria
+    \end{itemize}
+    \item \textblue{Path-sensitive criteria} :
+    \begin{itemize}
+        \item \textblue{Single state path coverage}: traverse each subpath that reached states at most once
+        \item \textblue{Single transition path coverage}: traverse each subpath that reaches transitions at most once
+        \item \textblue{Boundary interior loop coverage}: traverse each distinct loop the minimum, an intermediate, and the maximum or a large number of times (the most common)
+    \end{itemize}
+\end{enumerate}
+
+\section{Discuss coverage criteria for decision structures and grammars}
+
+\begin{itemize}
+        \item \textblue{Coverage criteria for decision structures} :\\
+        A representation of a function $result = F(conditions)$\\
+        $n$ conditions $\rightarrow$ $2^n$ possible combinations (decision tables/trees, flow charts).\\
+        Treat as \textblue{Boolean expressions}.\\
+        \textblue{Covering} : Apply condition / decision‐based criteria : 
+        \begin{enumerate}
+            \item \textblue{Basic condition coverage} : a test case for each column
+            \item \textblue{Compound condition coverage} : a test case for each (possible) combination of basic conditions
+            \item \textblue{Modified coverage (MC/DC)} : add columns that differ in one input row and in outcome, merge compatible columns, a test case specification for each column
+        \end{enumerate}
+        
+        \item \textblue{Coverage criteria for decision grammars} : \\
+        Useful for sequences and nested structure. Test cases are string generated from the grammar : 
+        \begin{enumerate}
+            \item \textblue{Production coverage} : each production must be used at least once
+            \item \textblue{Boundary condition coverage} : each recursive production must be used ($min$, $min+1$, $max-1$, $max$) times, where min and max are set for each production (similar to boundary interior path)
+        \end{enumerate}
+        Test cases generated depend on generation strategy:
+        \begin{enumerate}
+            \item Productions with non-terminals first $\rightarrow$ few, large test cases
+            \item Productions with terminals first $\rightarrow$ many, small test cases
+        \end{enumerate}
+\end{itemize}
 
 \chapter{Object-oriented testing}
 
+\section{Explain the principles of testing of object-oriented software, at the unit and integration level}
+
+For an object oriented software : \textblue{unit} = single class (or cluster of strongly related classes e.g. exceptions)
+\begin{itemize}
+    \item [$\Rightarrow$] \textblue{Unit testing} = \textit{intra}-class testing
+    \item [$\Rightarrow$] \textblue{Integration testing} = \textit{inter}-class testing
+\end{itemize}
+
+\section{Discuss structural coverage criteria for intra- and inter-class testing}
+
+\begin{minipage}[t]{0.48\textwidth}
+    \textblue{Inter-class testing} (state machine):
+    \begin{itemize}
+        \item Test interactions between classes
+        \item Bottom-up integration, according to\\ "depends" relation
+        \item Use / include hierarchy:
+        \begin{enumerate}
+            \item $A$ uses $B = A$ makes method calls on $B$
+            \item $A$ includes $B = A$ objects include references to $B$ objects, ignore inheritance, abstract classes
+        \end{enumerate}
+        \item Bottom-up integration, clustering
+    \end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \textblue{Intra-class testing} :
+    Basic idea :
+    \begin{itemize}
+        \item Objects have a state
+        \item Methods calls are state transitions
+        \item Test cases are sequences of method calls
+    \end{itemize}
+    State machine can be derived from specification and code $\rightarrow$ Model-based testing, state / transition coverage
+\end{minipage}
+   
+\begin{minipage}[t]{0.48\textwidth} 
+    \textblue{Inter-class structural testing} :\\
+    DU pair structural testing:
+    \begin{itemize}
+        \item Working bottom-up in dependence hierarchy (leaf classes, then classes that use leaf classes, ...)
+        \item Classify each method:
+        \begin{enumerate}
+            \item \textblue{Inspectors} : use, but do not modify, object state
+            \item \textblue{Modifiers} : modify, but not use, object state
+            \item \textblue{Inspector / modifiers} : use and modify object state
+            \item Treating a whole object as variable (not each field)
+        \end{enumerate}
+        \item Treat inspector calls as uses, modifier calls as defs
+    \end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \textblue{Intra-class structural testing} :
+    \begin{itemize}
+        \item As for procedural software, start with functional testing (from specifications), then complete with structural testing (from the code)
+        \item Use control flow graph :\\
+        Each method $+$\\
+        Node for class $+$\\
+        Edges $\rightarrow$ method, method $\rightarrow$ class\\
+        $\Rightarrow$ control flow through sequences of method calls
+    \end{itemize}
+\end{minipage}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{intra_inter_class_testing}
+\end{figure}
+
+\section{Discuss the issues of test oracles, polymorphism and exception handling}
+
+\begin{enumerate}
+    \item \textblue{Test oracles} must be able to check the correctness of a test execution
+    \begin{itemize}
+        \item \textblue{Correct output} : OK, can be checked
+        \item \textblue{Correct new state} : not accessible, encapsulation
+    \end{itemize}
+    Accessing the state:
+    \begin{itemize}
+        \item \textblue{Intrusive approach} : use language constructs, add inspector methods → breaks encapsulation, may produce undesired results
+        \item \textblue{Equivalent scenarios approach} : generate equivalent sequences of method calls, compare the final states of the objects
+    \end{itemize}
+    \item \textblue{Polymorphism} : Combinatorial explosion problem (dynamic bindings). When testing a child class, we would like to test only what is needed not what has been tested in the parent class (any method whose behaviour has been changed)\\
+Testing history approach : 
+\begin{enumerate}
+    \item Track test suites and test executions
+    \begin{itemize}
+        \item Determine which new tests are needed
+        \item Determine which old tests must be re-executed
+    \end{itemize}
+    \item New and changed behaviour
+    \begin{itemize}
+        \item New methods must be tested
+        \item Redefined methods must be tested, we can partially reuse test suites
+        \item Unchanged methods need not be retested
+    \end{itemize}
+    \item Executing test cases is usually cheap, it may be simpler to re-execute the full parent test suite
+\end{enumerate}
+
+    \item \textblue{Exceptions} : 
+    \begin{enumerate}
+        \item \textblue{Exceptions} 
+        \begin{itemize}
+            \item Implicit control flows
+            \item May be handled by different handler
+        \end{itemize}
+        Impractical to treat exceptions like normal flow
+        \begin{itemize}
+            \item Too many flows: every exception source times every exception handler
+        \end{itemize}
+        \item \textblue{Program error exceptions} : test to prevent them, not to handle them.
+        \item \textblue{Explicit throws} : test with respect to every handler on call stack
+        \item \textblue{Local exception handlers} : test the exception handler
+        \item \textblue{Non-local exception handlers} :
+        \begin{itemize}
+            \item Difficult to determine all <source, handler> pairs
+            \item Design rule: if a method propagates an exception, the method call should have no other effect
+            \item Test all sources, all handlers (but not all pairs)
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}
+
 \chapter{Fault-based testing}
+
+\section{Explain the principles and assumptions of mutation testing}
+
+\begin{itemize}
+    \item \textblue{Principles} :
+    \begin{enumerate}
+        \item A mutation is a syntactic change (a seeded fault) $\rightarrow$ ex: change ($i<0$) to ($i\leq0$)
+        \item A mutant is a copy of a program with a mutation (valid mutant = syntactically correct)
+        \item Run test suite on all the mutants
+        \item A mutant is killed if it fails on at least one test case
+        \item If many mutants are killed then the test suite is effective at finding real faults
+    \end{enumerate}
+    \item \textblue{Assumptions} :
+    \begin{enumerate}
+        \item \textblue{Competent programmer hypothesis} :\\
+        Programs are assumed to be nearly correct. Real faults are small variations from correct program. Mutants are reasonable models of real faults
+        \item \textblue{Coupling effect hypothesis} : \\
+        Tests that find simple faults also find more complex faults. Even if mutants are only simple faults, a test suite that kills mutants is good at finding complex faults too
+    \end{enumerate}
+\end{itemize}
+
+\section{Give examples of mutation operators}
+
+\begin{enumerate}
+    \item \textblue{crp}: constant for constant replacement : $(x < 5) \rightarrow (x < 12)$
+    \item \textblue{ror}: relational operator replacement : $(x \leq 5) \rightarrow (x < 5)$
+    \item \textblue{vie}: variable initialization elimination : $int x = 5; \rightarrow int x;$
+\end{enumerate}
+
+\section{Discuss fault-based coverage measures}
+
+There are two possible reasons that a mutant survive:
+\begin{enumerate}
+    \item \textblue{The mutant is equivalent to the original program}. The mutation does not change the behaviour. The seeded fault is not really a fault.
+    \item \textblue{The test suite is inadequate}. The mutant could have been killed, but was not. Adding a test case for just this mutant is a bad idea : we care about the real bugs, not the fakes.
+\end{enumerate}
+
+\noindent \textblue{Fault-based coverage} : All non-equivalent mutants are killed by at least one test case
+$$C_{Fault} = \frac{\#killed\;mutant}{\#non-equiv\ mutant}$$
+
+\section{Discuss ways to reduce the cost of mutation testing}
+
+Equivalent mutants are hard to determine (undecidable in the worst case) and there are lots of mutants
+\begin{itemize}
+    \item[$\hookrightarrow$] High cost; Grows with the square of program size; Running each test case on each mutant is expensive
+\end{itemize}
+
+\textblue{Solutions} : 
+\begin{enumerate}
+    \item \textblue{Weak mutation} : observe states of program and mutant, kill as soon as a difference is found (do not wait for test completion)
+    \item \textblue{Meta-mutant} : mutant with several seeded faults, with mechanism to activate the mutants (check several mutants in one test run)
+    \item \textblue{Statistical mutation} : create a random sample of mutants (OK for assessing a test suite)
+\end{enumerate}
+
+\section{Explain fault estimation using seeded faults or independent test groups}
+
+\begin{enumerate}
+    \item\textblue{Seeded faults} :\\
+    How many remaining (natural) faults $N$ ?\\
+    Intentionally seed $S$ faults in the program\\
+    Run the tests
+    \begin{itemize}
+        \item $s$ discovered seeded faults
+        \item $n$ discovered natural faults
+    \end{itemize}
+    \textblue{Hypothesis}: same effectiveness $\frac{n}{N} = \frac{s}{S}$
+    \begin{itemize}
+        \item [$\Rightarrow$]$N = \frac{S * n}{s}$
+    \end{itemize}
+
+    \item \textblue{Independent test groups} :\\
+    If we don’t know typical faults ?\\
+    Split tests in two groups $E_1$, $E_2$
+    \begin{itemize}
+        \item $n_1$ faults detected by $E_1$
+        \item $n_2$ faults detected by $E_2$
+        \item $n_{12}$ faults detected by both $E_1$ and $E_2$
+        \item $N$ faults in total
+    \end{itemize}
+
+    \textblue{Hypothesis} : effectiveness of $E_1$ is the same on all faults as on faults detected by $E_2$:
+    \begin{itemize}
+        \item [$\Rightarrow$]$\frac{n_1}{N} = \frac{n_{12}}{n_2}$
+        \item [$\Leftrightarrow$]$N = \frac{n_1 * n_2}{n_{12}}$
+    \end{itemize}
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.2\textwidth,keepaspectratio]{fault_estimation}
+\end{figure}
 
 \chapter{Test execution I}
 
+\section{Describe the principles of scaffolding for test execution}
+
+\textblue{Scaffolding} (échafaud) : code produced to support development activities especially testing. Not part of the product. May be temporary.
+
+\begin{minipage}{0.74\textwidth}
+    It includes :
+    \begin{enumerate}
+        \item \textblue{Test harness} : environment in which the component is tested. Ex: Software simulation of a hardware device
+        \item \textblue{Test driver} : calls the component. Applies the test cases. A "main" program for running a test
+        \item \textblue{Test stubs} : called by the component. Substitutes for called components
+    \end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}{0.25\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.55\textwidth,keepaspectratio]{scaffolding_1}
+    \end{figure}
+\end{minipage}
+
+\begin{minipage}{0.74\textwidth}
+    The scaffolding must provide : 
+    \begin{enumerate}
+        \item \textblue{Controllability} : allow to execute test cases
+        \item \textblue{Observability} : allow to judge the outcome of tests
+        \item [$\Rightarrow$] May require additional interfaces, drivers
+    \end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}{0.25\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.55\textwidth,keepaspectratio]{scaffolding_2}
+    \end{figure}
+\end{minipage}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.49\textwidth,keepaspectratio]{scaffolding_3}\hfill
+    \includegraphics[width=0.49\textwidth,keepaspectratio]{scaffolding_4}\hfill
+    \includegraphics[width=0.49\textwidth,keepaspectratio]{scaffolding_5}
+\end{figure}
+
+\newpage
+\section{Discuss different types of test oracles}
+
+Did this test case succeed, or fail ? \textblue{Oracle} : software that determines whether a test passed or failed.
+
+Better than manual checking :
+\begin{enumerate}
+    \item More efficient
+    \item More reliable
+    \item More capable (e.g timing, large data)
+\end{enumerate}
+Oracles should ideally :
+\begin{itemize}
+    \item Report \textgreen{PASS} for \textblue{all} \textgreen{correct} executions
+    \item Report \textred{FAIL} for \textblue{all} \textred{incorrect} executions
+\end{itemize}
+
+\textblue{Partial oracles} :
+\begin{itemize}
+    \item Must report PASS for \textgreen{all correct} executions
+    \item May report PASS for \textred{some incorrect} executions
+\end{itemize}
+No false alarms (\textred{FAIL} on correct executions). Several partial oracles may be more effective than one complete oracle.
+    
+\textblue{Comparison‐Based Oracle} :
+
+\begin{minipage}{0.58\textwidth}
+    Oracle compares actual to expected output, reports if (actual = expected) then \textgreen{PASS} else \textred{FAIL}. Fine for a small number of hand‐generated test cases (e.g. JUnit test cases: assertEquals(actual, expected)).
+\end{minipage}
+\hfill
+\begin{minipage}{0.40\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth,keepaspectratio]{comparison_based_oracle}
+    \end{figure}
+\end{minipage}
+   
+\textblue{Self‐Checks as Oracle} :
+
+\begin{minipage}{0.58\textwidth}
+    \begin{itemize}
+        \item [$\oplus$]Usable with large, automatically generated test suites
+        \item [$\ominus$]Often only a partial check (e.g., structural invariants of data structures)
+    \end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}{0.40\textwidth}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth,keepaspectratio]{self_checks_oracle}
+    \end{figure}
+\end{minipage}
+    
+\textblue{Assertions as Oracle} :
+\begin{itemize}
+    \item \textblue{Invariants on data structures} (e.g. "assert 0 <= size \&\& size <= a.length")
+    \item \textblue{Pre‐ and post‐conditions} (e.g. "assert k != null; v = dict.get(k); assert dict.contains(k, v);")
+\end{itemize}
+May need to deal with quantifiers. implement as iteration $\Rightarrow$ does not scale well or sample some elements (partition testing)
+    
+\textblue{Capture and Replay} :
+\begin{itemize}
+    \item \textblue{Capture} a manually run test case, sequence of inputs, outputs
+    \item \textblue{Replay} it automatically with a comparison‐based oracle and compare actual to captured outputs
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{capture_replay_oracle}
+\end{figure}
+
+Reusable only until a program change invalidates it. Lifetime depends on abstraction level of input and output.
+
+\section{Describe the nature and objectives of unit and integration testing activities}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.49\textwidth,keepaspectratio]{program_testing}\hfill
+    \includegraphics[width=0.49\textwidth,keepaspectratio]{testing_activities}
+\end{figure}
+
+\begin{itemize}
+    \item \textblue{Unit Testing} : Aka module testing, component testing
+    \begin{itemize}
+        \item Testing : feed inputs, check valid outputs
+        \item Code reviews, analysis : check internal data structures, logic 
+    \end{itemize}
+    \item \textblue{Integration Testing} : 
+    \begin{itemize}
+        \item Assemble components together
+        \item Check correct interaction
+    \end{itemize}
+\end{itemize}
+
+\section{Discuss and compare different integration testing strategies}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth,keepaspectratio]{str_int_strategies}
+\end{figure}
+
+\textblue{Functional integration strategies} :
+\begin{itemize}
+    \item \textblue{Threads} :\\
+    \textit{Thread} = user-visible program feature across several modules (e.g. send a messages, change user, create mailbox, ...)\\
+    Test each thread incrementally.\\
+    $\Rightarrow$ Minimizes stubs and drivers but integration plan may be complex
+    \item \textblue{Critical modules} :\\
+    Test modules with highest risk first and integrate them with thread or sandwich strategy.\\
+    $\Rightarrow$ Requires risk assessment first.
+\end{itemize}
+
 \chapter{Test execution II}
 
+\section{Describe the nature and objectives of system, acceptance and regression testing activities}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth,keepaspectratio]{testing_comparison}
+\end{figure}
+
+\begin{itemize}
+    \item \textblue{System Testing}
+    \begin{itemize}
+        \item Based	on a requirements specification of observable behaviour
+        \begin{itemize}
+            \item Functional and non-functional (performance)
+            \item Not user needs (validation), not opinion
+        \end{itemize}
+        \item Independent of design	and	implementation (avoid repeating software design errors	 in system test design)
+    \end{itemize}
+    \item \textblue{Acceptance Testing}
+    \begin{itemize}
+        \item Goal : enable the customers and users to determine if the system meets their needs (uncover remaining requirement discrepancies and needs unspecified in the requirements)
+        \item Measuring	quality, not searching for faults (fundamentally different goal than system testing)
+    \end{itemize}
+    \item \textblue{Regression Testing}
+    \begin{itemize}
+        \item Regression = loss of correct functionality after a change (adding new features; changing, adapting conditions; bugs fixing)
+        \item \textblue{Regression testing} $=$ re‐executing tests after any change to detect regressions
+        \item Can be a major cost of software maintenance. Sometimes much more than making the change
+    \end{itemize}
+\end{itemize}
+
+\newpage
+\section{Explain regression test selection and prioritization}
+
+Problems of Regression Testing :
+\begin{itemize}
+    \item Maintaining the test suite (obsolete or redundant tests)
+    \item Cost of re-testing = often proportional to the product size
+    \begin{itemize}
+         \item [$\Rightarrow$]\textblue{Select} or \textblue{prioritize} test cases
+    \end{itemize}
+\end{itemize}
+
+\textblue{Test case selection} : do not execute some test cases. When test cases are expensive to execute (special equipment, or long run‐times, or manual intervention)
+\begin{itemize}
+    \item \textblue{Principle}: execute only test cases related to elements that were affected by the change
+    \item [$\Rightarrow$]\textblue{Code‐based selection}: only execute test cases that execute changed or new code
+    \begin{enumerate}
+        \item \textblue{Independent} : a test case can’t find a fault in code it doesn’t execute\\
+        \textblue{Variants} : changed CFG nodes (control‐flow) changed def‐use pairs (data‐flow)
+        \item Needs to record elements touched by each test case and modified by each change
+    \end{enumerate}
+    \item [$\Rightarrow$]\textblue{Specification‐based selection} : only execute test cases that test new and changed functionality\\ 
+    Not independent: a test case that is not "for" a changed feature X might find a bug in feature X\\
+    $\Rightarrow$ Prefer prioritization rather than selection
+\end{itemize}
+
+\textblue{Test case prioritization} : execute some test cases less often. When a very large test suite cannot be executed every day
+\begin{itemize}
+    \item \textblue{Basic idea} :\\
+    Execute all test cases, eventually \\
+    Execute some sooner than others
+    \item Possible priority schemes:
+    \begin{enumerate}
+        \item \textblue{Specification‐based} : priority to test cases related to changed and added features
+        \item \textblue{Round robin} : Priority to least‐recently‐run test cases
+        \item \textblue{Track record} : Priority to test cases that have detected faults before. They probably execute code with a high fault density
+        \item \textblue{Structural} : Priority for executing elements that have not been recently executed. Can be coarse‐grained : features, methods, files,...
+    \end{enumerate}
+\end{itemize}
+
 \chapter{Symbolic execution}
+
+\section{Describe the principles of symbolic program execution}
+
+\begin{enumerate}
+    \item Values are symbolic expressions
+    \item Executing statements computes new expressions
+    \item For branching statements, both branches are possible (non-determinism). Need to record the condition for the execution of each branch
+    \item Path accumulate conditions which may become extremely complex. We can simplify it by replacing a complex condition $P$ with a weaker condition $W$ such that $P \Rightarrow W$. $W$ describes the path with less precision ($W$ is a summary of $P$)
+    \item To reason about program behaviour in a loop, we can place an invariant. Each time program execution reaches the invariant $W$, we can weaken the execution condition $P$ to $W$:
+    \begin{enumerate}
+        \item check that $P \Rightarrow W$
+        \item substitute $W$ for $P$
+    \end{enumerate}
+    \item If : 
+    \begin{enumerate}
+        \item every loop contains an invariant
+        \item there is an assertion at the beginning of the program
+        \item there is an assertion at the end of the program
+    \end{enumerate}
+    Then, every possible execution path is a sequence of segments (basic paths) from one assertion to the next.
+    \begin{itemize}
+        \item \textblue{Precondition} : assertion at the beginning of a segment
+        \item \textblue{Postcondition} : assertion at the end of the segment
+    \end{itemize}
+\end{enumerate}
+
+\section{Describe the principles of program verification using symbolic execution}
+
+To verify program correctness, we do the following:
+\begin{enumerate}
+    \item Verify for each basic path:
+    \begin{enumerate}
+        \item Starting from the precondition
+        \item Executing the program segment
+        \item The postcondition holds at the end
+    \end{enumerate}
+    \item Then the execution of any path is correct
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{symbolic_execution}
+\end{figure}
+
+\section{Discuss contract-based reasoning on procedures and data structures}
+
+\begin{itemize}
+    \item \textblue{On procedure} : Compositional reasoning\\
+    Follow the hierarchical structure of a program :
+    \begin{itemize}
+        \item At a small scale (within a single procedure)
+        \item At a larger scales (across multiple procedure ...)
+    \end{itemize}
+    \textblue{Hoare triple} : [pre] block [post]
+    \begin{itemize}
+        \item  if pre is satisfied at the entry to the block, then the post should be satisfied after execution of the block
+        \item[$\Rightarrow$] Summarize the effect of a block of program by a contract [pre] block [post]
+        \item[$\Rightarrow$] Prove that block satisfies pre/post then use the contract wherever the block is used
+    \end{itemize}
+
+    \item \textbf{On data structures} :\\
+    Data structure module $=$ data (encapsulated) + operations = variables + procedures (methods)\\
+    Contract $=$ 
+    \begin{enumerate}
+        \item \textbf{Abstraction function} "abs" : relates data structures D to an abstract model abs(D) (e.g. abs : Dictionary $\rightarrow$ {<key, value>})
+        \item \textbf{Structural invariant} "ok" : data structure characteristics that must be maintained (e.g. ok : Dictionary $\rightarrow$ bool)
+    \end{enumerate}
+    Contract for Dictionary.get :
+    \begin{itemize}
+        \item[] \textit{{[<k,v> in abs(dict) and ok(dict)]}}
+        \item[] \textit{o = dict.get(k)}
+        \item[] \textit{{[o = v and ok(dict)]}}
+    \end{itemize}
+\end{itemize}
 
 \chapter{Program analysis}
 
