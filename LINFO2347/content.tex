@@ -190,133 +190,139 @@ Protection :
     \item Do not store the session token in a cookie but send it as a normal request
 \end{itemize}
 
-\chapter{Network Scans}
+\chapter{SPAM and Phishing}
 
-Scans are information gathering attacks. The goal is to find vulnerabilities on hosts, discover network topology, system fingerprinting, ...
+Spam corresponds to unsolicited messages, sent in bulk to many recipients. Typically, the sender address is forged to prevent counter measures.
 
-\section{Ping Sweeps}
-
-The most simple form of network scan. It is performed by sending ICMP echo requests :
+It is used for multiples reasons:
 \begin{itemize}
-    \item If you get a reply, you know that there is someone at this address
-    \item If you get \textit{host unreachable}, then nobody is there (or the access is blocked)
+    \item Advertising products and goods (illegal products, fake products, stolen products, ...)
+    \item Fraud schemes (Nigerian prince, "earn money at home", ...)
+    \item Recruiting for illegal activities (money mules, re-shippers, ...)
+    \item Infection (botnets, ...)
+    \item Phishing + spear-phishing
 \end{itemize}
 
-However, it is simple but unreliable as most sysadmins configure hosts to ignore/block ICMP echo packets.
+Some techniques are used to sell the fake even further, like URL obfuscation (a spoofed website tries to have a genuine looking URL (characters look alike, e.g. I(uppercase i) and l (lowercase L), 0 and O).
 
-\section{TCP Port Scans}
+How to get e-mail addresses for spamming?
+\begin{itemize}
+    \item Crawl web pages
+    \item Join mailing lists, forums, ...
+    \item Hack servers of discussions forums, online communities, ...
+    \item Infect a PC and get the entries from their address book
+    \item Guess
+    \item Buy them (price depends on "quality")
+\end{itemize}
 
-\begin{minipage}[t]{0.45\textwidth}
-    \subsection{TCP With Regular Connection}
-    Easy to implement but slow and resources consuming
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth,keepaspectratio]{tcp_scan}
-	\end{figure}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-    \subsection{TCP With SYN Only}
-    Fast but not supported by the OS (you have to write your own code)
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth,keepaspectratio]{tcp_syn}
-	\end{figure}
-\end{minipage}
+It is hard to be successful, since you have to pass the spam filters, convince the user to read the email, to click the link, to stay on the website and buy something or enter sensitive information ($\rightarrow$ very low conversion rate)
 
-\subsection{TCP XMas-Tree Scan}
+How to send spam ?
+\begin{itemize}
+    \item Use your own SMTP server
+    \item Create fake mail accounts at free web mail providers
+    \item Use an open mail-relay server (probably blacklisted)
+    \item Use infected computers (botnets)
+\end{itemize}
+
+\section{Mail Filtering}
+
+Modern filters analyse several aspects of the mail : source IP, URL, mail addresses, keywords, etc. It computes a score for each mail, if the score is above a configurable threshold, the mail is marked as spam.
+
+\subsection{SPF Record}
+
+\textblue{Sender Policy Framework} (SPF), allows the owner of a domain to specify which computers are authorized to send emails with that sender address (can be queried over DNS).
+
+When a SMTP client sends a message to a SMTP server, the client first sends a HELO message with its identify. The server can use SPF to verify whether the sending IP address is authorized or not.
+
+\newpage
+\subsection{Blacklists}
+
+Sender IP address is checked against a blacklist (not sender mail address because it can be spoofed)
+
+Greylisting:
+\begin{itemize}
+    \item First attempt is rejected
+    \item Real mail server will try a second time, spam servers will probably not retry (to save resources)
+    \item Several minutes between the two attempts. Gives time for blacklists to register the spam campaign
+\end{itemize}
+
+\textblue{SBL} (list of IP of known spammers), \textblue{XBL} (list of IP of hijacked PC). This lists can be downloaded or accessed via DNS.
+
+\ctext{lightGray}{dig +short <ip>.spamhauss.be} : Response specify if IP is blacklisted
+
+Blacklists are filled by spam traps (mail honeypots). This can be hidden emails on web pages.
+
+\subsection{Bayesian filtering}
+
+The principle of this filter is the following :
+\begin{enumerate}
+    \item Take a large corpus of ($a$) spam mails and ($b$) non-spam mails
+    \item Split the mails into tokens (words) and calculate the token frequencies in ($a$) and ($b$)
+    \item Based on the result from step 2, calculate for each token the probability that a mail containing the token is spam
+    \begin{itemize}
+        \item Probability that an e-mail is spam if it contains token $t$ : $P(isSpam | t)$
+        \item Bayes theorem :
+        \begin{align*}
+        P(isSpam | t) &= \frac{P(t | isSpam) * P(isSpam)}{P(t)}\\
+                      &= \frac{P(t | isSpam) * P(isSpam)}{P(t | isSpam) * P(isSpam) + P(t | isNotSpam) * P(isNotSpam)}
+        \end{align*}
+        \item Paul Graham's original mail filter assumed that $P(isSpam) = P(isNotSpam)$ and got the simpler formula :
+        \begin{align*}
+        P(isSpam | t) &= \frac{P(t | isSpam)}{P(t | isSpam) + P(t | isNotSpam)}
+        \end{align*}
+    \end{itemize}
+    \item For a new mail, look at all its tokens and calculate the probability that the mail is spam
+    \begin{itemize}
+        \item We consider that a mail $m$ consists of $n$ tokens $t_1, t_2, ..., t_n$
+        \item Assuming that tokens appear independently in emails (\textit{Naive Bayer Classifier})
+        \begin{align*}
+        P(m\ isSpam) &:= \frac{\prod \frac{p_i}{P(isSpam)}}{\prod \frac{p_i}{P(isSpam)} + \prod(1-p_i)P(isNotSpam)}
+        \end{align*}
+        \item If we assume that $P(isSpam) = P(isNotSpam)$ :
+        \begin{align*}
+        P(m\ isSpam) &:= \frac{\prod p_i}{\prod p_i + \prod(1-p_i)}\\
+                     &\ \ \ \ \ \text{where }p_i = P(isSpam | t_i)
+        \end{align*}
+    \end{itemize}
+\end{enumerate}
+
+We define $g = 2 * $ token frequency in good mails, and $b = $ token frequencies in bad mails. 
+
+If $g + b \geq $\ctext{lightGray}{$<thresholdEnoughData>$}, then :
+\begin{align*}
+goodRatio &:= min(1, \frac{g}{totalNumberGoodMails})\\
+badRatio &:= min(1, \frac{g}{totalNumberBadMails})\\
+result &:= max(0.01, min (0.99, \frac{badRatio}{goodRatio + badRatio}))
+\end{align*}
+
+Remarks :
+\begin{itemize}
+    \item We get a concrete probability instead of an abstract score
+    \item Learning the token spam probabilities happens only one in training
+    \item There are ways to improve the algorithm (i.e. ignore frequent token such as "the", "on", etc., do not assume independence of tokens (take bigrams), ...)
+    \item The factor $2$ for good token is there because is practice we receive more good emails than bad ones
+    \item $0.01$ and $0.99$ is to limit the result if a token only appears in good/bad emails
+\end{itemize}
+
+\subsubsection{Practical example}
+
+\begin{itemize}
+    \item Good 1 : \textit{Thank you for the invitation}
+    \item Good 2 : \textit{I send you the offer for our latest product}
+    \item Bad 1 : \textit{The latest movies on our servers!}
+    \item New : \textbf{Download the latest movies!}
+\end{itemize}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth,keepaspectratio]{tcp_xmas}
+    \includegraphics[width=0.9\textwidth,keepaspectratio]{bayes_mail}
 \end{figure}
 
-\section{UDP Port Scan}
-
-UPD is connectionless so the TCP approach does not work. We need to send a packet to the target and :
-\begin{itemize}
-    \item wait for a negative answer (i.e. '\textit{port unreachable}' ICMP message if UDP port is closed)
-    \item wait for a positive answer
-\end{itemize}
-
-Easy to implement but not very reliable since UDP packets might be lost or ICMP might be disabled.
-
-\section{Scan Types}
-
-3 main types :
-\begin{itemize}
-    \item \textblue{Vertical scans} : scan all ports of a target
-    \item \textblue{Horizontal scans} : find targets with open ports of interest
-    \item \textblue{Block scans} : combination of both
-\end{itemize}
-
-\section{Obfuscation}
-
-Scans are also possible for other protocol such as HTTP, smart home automation, ...
-
-Scans might look suspicious for the cybersecurity engineer monitoring the traffic. There are solutions to obfuscate such footprint such as \textit{slow scan, distributed scan, indirect scan, ...}
-
-\subsection{Idle scan}
-
-The goal is to impersonate another computer whose network traffic is very slow or non-existent (hides our address IP as attacker).
-
-It is based on the fact that you can spoof the source IP address in the RCP header of a packer. The target server will therefore respond with a 'SYN/ACK' to the 'zombie' IP which will return a 'RST' containing a 'RST ID' that is sometimes just incremented by 1 each time. We only need to continuously ask the zombie to get a 'RST' in order to see a jump in the IDs
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth,keepaspectratio]{idlescan}
-\end{figure}
-
-\chapter{Denial Of Service (DoS)}
-
-\textblue{Goal} : overload or crash a server to make the service unavailable to legitimate users.
-
-\section{Types of DoS attacks}
-
-\begin{itemize}
-    \item \textblue{Semantic attacks} : make the server non functional by sending requests (e.g. :: sending queries that need a lot of time, that trigger errors, send half a request such that the server will keep the connection open, ... It is cheap for the attacker but requires specific knowledge of the target
-    \item \textblue{Brute-force attacks} : overwhelm the server by sending many requests. If coordinated from multiple hosts, we say that it is a Distributed Denial Of Service (DDoS) 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.3\textwidth,keepaspectratio]{ddos}
-    \end{figure}
-    \item \textblue{Reflected DoS attacks} : same as DDoS but hides the attacker's IP address with spoofing (DRDoS, uses DNS). Leads to \textit{amplification} : the response is larger that the request (solves the bandwidth problem for the attacker, since DNS queries are very small and answers can be up to 60 times bigger)
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.4\textwidth,keepaspectratio]{drdos}
-    \end{figure}
-\end{itemize}
-
-DNS servers are very popular for such attacks because they are open to anybody, they use UDP (perfect for spoofing) and they are made to handle high loads (high computational power).
-
-\section{Mitigation}
-
-\begin{itemize}
-    \item Do not let open services that can be misused for DRDoS attacks (switch off unused services, etc. Note that it cannot be done for DRDoS attacks using DNS)
-    \item Implement ingress filtering against reflective attacks : router discards packets if source IP does not match network address
-\end{itemize}
-
-\section{SYN flooding}
-
-Host $A$ sends many SYN packets to host $B$. It consumes memory in $B$ because the OS allocated data structures for the assumed TCP connections that are not completed. 
-
-$\rightarrow$ Protection with the TCPv4 header \& \textblue{SYN cookies} : $B$ does not allocate memory for the connection before receiving ACK packet from $A$. This ACK packet contains an ACK number, if the cookie is okay and not too old, it is very likely that $A$ sent a SYN before.
-
-\chapter{Domain Name System (DNS)}
-
-DNS is a hierarchical distributed database.
-
-The client queries the \textit{A Resource Record} (IPv4 address) or the \textit{AAA Resource Record} (IPv6 address) of the name to the Local Resolver (only works if the Local Resolver knows the answer).
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.49\textwidth,keepaspectratio]{dns_h}\hfill
-    \includegraphics[width=0.49\textwidth,keepaspectratio]{dns_q}
-\end{figure}
-
-They are 13 root name servers, that each have a database (\textit{root zone file}), with the IP addresses of the authoritative DNS servers for all Top Level Domains (TDL). These are locally replicated.
-
-To improve performance, the results of recursive DNS queries are caches in local resolvers. DNS records have a Time-To-Live (TTL) defined by the autorotative name server. After that time, they are removed from the cache.
+Probability that "new" is spam :
+\begin{equation*}
+\frac{0.5 * 0.5 * 0.99}{0.5 * 0.5 * 0.99 + (1-0.5) * (1-0.5) * (1-0.99)} = 0.99
+\end{equation*}
 
 \chapter{Cache Poisoning Attacks}
 
@@ -369,204 +375,219 @@ ARP = "DNS for Ethernet addresses".
     \item[$\rightarrow$] ARP clients also accept unsolicited responses
 \end{enumerate}
 
-\chapter{History Stealing and Tracking}
+\chapter{Denial Of Service (DoS)}
 
-\section{History Stealing}
+\textblue{Goal} : overload or crash a server to make the service unavailable to legitimate users.
 
-\textblue{Goal} : website $X$ wants to know what other website users $Y$ has visited before (attack before the privacy of the user).
+\section{Types of DoS attacks}
 
-3 main reasons :
 \begin{itemize}
-    \item Getting infos about competitors
-    \item Preparing a phishing attack
-    \item Improve user experience
+    \item \textblue{Semantic attacks} : make the server non functional by sending requests (e.g. :: sending queries that need a lot of time, that trigger errors, send half a request such that the server will keep the connection open, ... It is cheap for the attacker but requires specific knowledge of the target
+    \item \textblue{Brute-force attacks} : overwhelm the server by sending many requests. If coordinated from multiple hosts, we say that it is a Distributed Denial Of Service (DDoS) 
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.3\textwidth,keepaspectratio]{ddos}
+    \end{figure}
+    \item \textblue{Reflected DoS attacks} : same as DDoS but hides the attacker's IP address with spoofing (DRDoS, uses DNS). Leads to \textit{amplification} : the response is larger that the request (solves the bandwidth problem for the attacker, since DNS queries are very small and answers can be up to 60 times bigger)
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.4\textwidth,keepaspectratio]{drdos}
+    \end{figure}
 \end{itemize}
 
-In theory, JavaScript doest allow access to the browser history, the cache content or the cookies stored in the browser (unless they belong to the consulted website). But in reality, a lot of ways exists (some have been fixed years ago, some are still available and some other are "intentional" (i.e : browser extension)).
+DNS servers are very popular for such attacks because they are open to anybody, they use UDP (perfect for spoofing) and they are made to handle high loads (high computational power).
 
-\subsection{Stealing Through CSS}
+\section{Mitigation}
 
-Based on the fact that browsers can display visited and unvisited links differently, controlled by user settings and CSS files (ex : red if visited links). An attacker can then just check the color of a link (i.e by checking the display style of an hidden link).
-
-Fixes :
 \begin{itemize}
-    \item \ctext{lightGray}{getComputedStyle} always returns the unvisited style for links (not enough because of font sizes, ...)
-    \item Websites are only allowed to change the color of links (no impact on the layout of the site)
+    \item Do not let open services that can be misused for DRDoS attacks (switch off unused services, etc. Note that it cannot be done for DRDoS attacks using DNS)
+    \item Implement ingress filtering against reflective attacks : router discards packets if source IP does not match network address
 \end{itemize}
 
-\subsection{Timing Attack}
+\section{SYN flooding}
 
-Exploit the fact that some operations take longer than others. Website $X$ executes one of the below operations and measures the time to complete it :
-\begin{itemize}
-    \item Define a very complex style for visited links, such that they take more time to be displayed
-    \item Request an object from website $Y$ (rapidly if in cache) or load website $Y$ into a frame
-\end{itemize}
+Host $A$ sends many SYN packets to host $B$. It consumes memory in $B$ because the OS allocated data structures for the assumed TCP connections that are not completed. 
 
-Fixes :
-\begin{itemize}
-    \item Modern browsers have optimized render engines where display speed difference between styles is very small
-    \item Disable the cache / DNS / JavaScript
-    \item Cache isolation : ignore the cache if an object is loaded from a different domain name
-\end{itemize}
+$\rightarrow$ Protection with the TCPv4 header \& \textblue{SYN cookies} : $B$ does not allocate memory for the connection before receiving ACK packet from $A$. This ACK packet contains an ACK number, if the cookie is okay and not too old, it is very likely that $A$ sent a SYN before.
 
-\section{Tracking}
+\chapter{Domain Name System (DNS)}
 
-Browsers track users with cookies. Nowadays, websites embed links to tracking services on their web pages (e.g. Google Analytics, ...)
+DNS is a hierarchical distributed database.
 
-Blocking cookies does not mean that one cannot be tracked : all the information sent in HTTP header fields is enough to identify you.
-
-\textblue{Perma-cookie} : cookie injected into the HTTP requests of users by their Internet Service Provider (ISP) or their mobile phone operator (impossible in HTTPs)
-
-\chapter{Botnets}
-
-Collection of compromised / hijacked machines (bots, zombies) under control of an attacker (botmaster). Machines can be compromised with a malware containing a virus, a worm (a virus that spreads to other computers), ...
-
-Once a machine has been "recruited" for a botnet it is ready to receive instructions from the botmaster (commands, updates, transfer informations, ...). Botmaster operates a \textit{Command-and-Control} server that communicates with the bots.
-
-This is challenging because he has to operate 
-\begin{itemize}
-    \item without revealing its identify
-    \item without raising alarms of admins/users who monitor the traffic of their machines
-    \item in a flexible way (ability to find a new C\&C if the first one is shut down)
-\end{itemize}
-
-\section{Storm Architecture}
+The client queries the \textit{A Resource Record} (IPv4 address) or the \textit{AAA Resource Record} (IPv6 address) of the name to the Local Resolver (only works if the Local Resolver knows the answer).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth,keepaspectratio]{storm_architecture}
+    \includegraphics[width=0.49\textwidth,keepaspectratio]{dns_h}\hfill
+    \includegraphics[width=0.49\textwidth,keepaspectratio]{dns_q}
 \end{figure}
 
-Used for spamming :
+They are 13 root name servers, that each have a database (\textit{root zone file}), with the IP addresses of the authoritative DNS servers for all Top Level Domains (TDL). These are locally replicated.
+
+To improve performance, the results of recursive DNS queries are caches in local resolvers. DNS records have a Time-To-Live (TTL) defined by the authoritative name server. After that time, they are removed from the cache.
+
+\chapter{Network Scans}
+
+Scans are information gathering attacks. The goal is to find vulnerabilities on hosts, discover network topology, system fingerprinting, ...
+
+\section{Ping Sweeps}
+
+The most simple form of network scan. It is performed by sending ICMP echo requests :
 \begin{itemize}
-    \item \textit{Worker bots} : Computers that request jobs from the master servers and execute them
-    \item \textit{Public bots} : Infected computers that are externally accessible
-    \item \textit{Master servers} : Compromised computers managed by the botmaster directly and hosted in data centres using an NGINX reversed proxy server to hide the top-level server of the botmaster.
+    \item If you get a reply, you know that there is someone at this address
+    \item If you get \textit{host unreachable}, then nobody is there (or the access is blocked)
 \end{itemize}
 
-To find the master servers, bots resolve a domain name. The IP address of the domain name is rapidly changed, pointing to a compromised computer.
+However, it is simple but unreliable as most sysadmins configure hosts to ignore/block ICMP echo packets.
 
-\section{Fight Botnets}
+\section{TCP Port Scans}
 
-\begin{itemize}
-    \item Prevent infection with bot malware (hard)
-    \item Take down C\&C servers (hard because of botnet architecture)
-    \item Intrude the botnet and send switch-off commands (but modern botnets use encryption and authentication)
-    \item Seize the domain names used by the botnet (successful in the past, but not possible today since they generate large lists of possible domains)
-\end{itemize}
-
-\chapter{Firewalls}
-
-A firewall tries to improve security by isolating a trusted network from an untrusted network (e.g. isolate intranet from the Internet). It is a checkpoint where all traffic between the two networks has to pass through.
-
-Firewalls can be classified by their :
-\begin{itemize}
-    \item \textblue{Layer of operation} : Network layer (IPv4, IPv6), Transport layer (UDP, TCP), Application layer (HTTP, ...)
-    \item \textblue{Internal state} : stateless or stateful
-    \item \textblue{Location} : network or personal (host) firewall
-\end{itemize}
-
-\section{Internal State}
-
-\subsection{Stateless Firewall}
-
-These firewalls operate as rule-based packet filters (they look at every packet and decide whether packet should be dropped or forwarded).
-
-Examples :
-\begin{itemize}
-    \item \ctext{lightGray}{allow tcp 1.2.3.4:1025 $\rightarrow$ 5.6.7.8:80}
-    \item \ctext{lightGray}{deny tcp 1.2.3.4:* $\rightarrow$ 5.6.7.8:80}
-\end{itemize}
-
-The rules are browsed top-to-bottom and the directions is not taken into account. If no rule matched the traffic the default policy will be applied (default deny/default allow). In general, a default-deny policy is recommended.
-
-A stateless firewall does not know what a TCP connection is. It will therefore drop incoming packets of the outbound TCP connection if configured incorrectly.
-
-\subsection{Stateful Firewall}
-
-A stateful firewall has an internal list "state" of existing connections it has seen previously. If a packet comes in, the firewall checks the list whether the packet belongs to one of the existing connections (basically using a state table like NAT).
-
-It understands the protocol : it knows for example that a SYN packets needs to be followed by a SYNACK and so on. Therefore, they need more resources than stateless firewalls because they have to keep track of the state of connections. State information is removed based on observed packets (FIN-FINACK-...), timeouts or inactive connections.
-
-It is not always trivial to implement a stateful firewall for more complex protocols (like FTP-Active which uses 2 different ports to communicates). Not surprisingly, application-layer firewalls need more resources than lower-layer firewalls (of course, the more complex a firewall, the higher the risk that it has weaknesses or bugs)
-
-\section{Location}
-
-A \textblue{network firewall} is easy to monitor, protects the entire network but does not protect hosts against internal attacks coming from inside the network.
-
-A \textblue{host firewall} requires a large administration overhead if the network contains hundreds of hosts but protects against internal attacks.
-
-It is possible to combine both (expensive network firewall at application layer and fast \& light weight transport layer personal firewall)
-
-\section{DMZ}
-
-Often, a company also need to be reachable from the outside (e.g. web server). With a Demilitarized Zone (DMZ), we accept the fact that hosts exposed to the Internet are less trustable.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth,keepaspectratio]{dmz}
-\end{figure}
-
-However, DMZ attacks are still possible (e.g. : through connections from the intranet to the web server (database)).
-
-\section{Proxy Firewalls}
-
-Proxies are useful in many situations (as caches, for load balance) as they act as middleman.
-
-Two types of proxies :
-\begin{itemize}
-    \item \textblue{Transparent proxies} : intercept queries to the original wab server (client is not aware that is not talking to the original)
-    \item \textblue{Reverse proxies} : servers that hide the origin servers from the client (client has no knowledge of the original's existence), can handle authentication of clients. Proxies can operate as application firewalls
-\end{itemize}
-
-\section{Summary}
-
-\begin{itemize}
-    \item \textblue{Deny by default}
-    \item \textblue{Principles of least privileges} : only allow what is absolutely needed
-    \item \textblue{Choke point} : it is easier to implement security if all data has to go through one point
-    \item \textblue{Defence in depth} : deploy multiple defence systems
-    \item \textblue{Zoning} : establish trust zones
-\end{itemize}
-
-\chapter{Network Address Translation (NAT)}
-
-NAT is how our home network works. You have only 1 public IP address (assigned to your box) and multiple private addresses (assigned to each of the devices in your local network)
-
-NAT's goal is to manipulate packets on network and transport layer to make the translation between one private address and the public address by replacing the source IP address (by the public address) and the source port (by an arbitrary unused port).
-
-Network Address Translation will then keep an internal translation table and do the opposite algorithm for each incoming packet in order to dispatch it to the right device. The complete procedure for outgoing packets is :
-\begin{enumerate}
-    \item Check if there is a matching entry in the table
-    \item If no entre found, insert a new one
-    \item Replace address and port number in the packet
-\end{enumerate}
-
-You can also add a static table entry (port forwarding) if you for example want to access an internal device from the outside. If there is no matching entry in the table for the incoming packets, it is dropped by default.
-
-\begin{minipage}[t]{0.46\textwidth}
-    \section{Advantages}
-    \begin{itemize}
-        \item Entire network only needs one public IP address
-        \item Hosts inside the private network are not any more directly reachable from the internet (not intended as a security solution, every entry in the table "punches a hole" in the perimeter)
-        \item NAT is able to hide sequentially incrementing source port number
-    \end{itemize}
+\begin{minipage}[t]{0.45\textwidth}
+    \subsection{TCP With Regular Connection}
+    Easy to implement but slow and resources consuming
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth,keepaspectratio]{tcp_scan}
+	\end{figure}
 \end{minipage}
 \hfill
-\begin{minipage}[t]{0.46\textwidth}
-    \section{Drawbacks}
-    \begin{itemize}
-        \item Violates the separation of protocol layers
-        \item Makes network debugging and forensic analysis network traffic harder
-        \item An incorrectly implemented NAT might not choose port number randomly and makes them predictable for attacks
-        \item Resource intensive
-        \item Break the end-to-end principle of Internet (problem for p2p protocols)
-    \end{itemize}
+\begin{minipage}[t]{0.45\textwidth}
+    \subsection{TCP With SYN Only}
+    Fast but not supported by the OS (you have to write your own code)
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth,keepaspectratio]{tcp_syn}
+	\end{figure}
 \end{minipage}
 
-\section{Attacks}
+\subsection{TCP XMas-Tree Scan}
 
-An attacker \textblue{inside} the company network sends many SYN packets to different IP addresses. This will result of NAT running out of available port numbers, so any new outgoing connection will be blocked.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{tcp_xmas}
+\end{figure}
+
+\section{UDP Port Scan}
+
+UPD is connectionless so the TCP approach does not work. We need to send a packet to the target and :
+\begin{itemize}
+    \item wait for a negative answer (i.e. '\textit{port unreachable}' ICMP message if UDP port is closed)
+    \item wait for a positive answer
+\end{itemize}
+
+Easy to implement but not very reliable since UDP packets might be lost or ICMP might be disabled.
+
+\newpage
+\section{Scan Types}
+
+3 main types :
+\begin{itemize}
+    \item \textblue{Vertical scans} : scan all ports of a target
+    \item \textblue{Horizontal scans} : find targets with open ports of interest
+    \item \textblue{Block scans} : combination of both
+\end{itemize}
+
+\section{Obfuscation}
+
+Scans are also possible for other protocol such as HTTP, smart home automation, ...
+
+Scans might look suspicious for the cybersecurity engineer monitoring the traffic. There are solutions to obfuscate such footprint such as \textit{slow scan, distributed scan, indirect scan, ...}
+
+\subsection{Idle scan}
+
+The goal is to impersonate another computer whose network traffic is very slow or non-existent (hides our address IP as attacker).
+
+It is based on the fact that you can spoof the source IP address in the RCP header of a packer. The target server will therefore respond with a 'SYN/ACK' to the 'zombie' IP which will return a 'RST' containing a 'RST ID' that is sometimes just incremented by 1 each time. We only need to continuously ask the zombie to get a 'RST' in order to see a jump in the IDs
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth,keepaspectratio]{idlescan}
+\end{figure}
+
+\section{Honeypots}
+
+\textblue{Goal} : operating fake resources and service to attract attackers to identify/analyse them.
+
+Different types :
+\begin{itemize}
+    \item \textblue{High interaction honeypots} : imitate the behaviour of real web servers. They are like web servers in an isolated and restricted VM
+    \item \textblue{Low interaction honeypots} : just wait for incoming connections
+    \item \textblue{Tarpits} : answers very slowly to incoming requests in order to slow down attackers and worms
+    \item \textblue{Canary traps} : "secret" information that you intentionally publish to trap attackers
+\end{itemize}
+
+Honeypots can be very complex in order to look convincing (they can simulate an entire database/company network honeynet)
+
+\newpage
+\section{Network Telescopes}
+
+Researches discovered that even unused IP addresses constantly receive IP packets (from attackers looking for victims, misconfiguration, ...).
+
+Network telescopes run measurements on large unused IP subnetworks and can be used for :
+\begin{itemize}
+    \item Detecting new attack trends
+    \item Indirectly detecting DDoS attacks through their background radiation (backscatter = SYN/ACK packets sent from victim hosts attacked with SYN flooding attacks using spoofed IP addresses)
+    \item Identifying typical configuration mistakes
+\end{itemize}
+
+\section{Network Traffic Monitoring}
+
+Network operators keep an eye on the network traffic. IDS also need network traffic to do their job. Detecting attack patterns is difficult, but being able to collect and process network traffic in near real time is already a challenge in itself.
+
+We can measure multiple things :
+\begin{itemize}
+    \item \textblue{Low level metrics} : can be derived from the packets (packet payload, delay, packet loss, port usage, ...)
+    \item \textblue{High level metrics} : harder to get (connectivity between networks, protocol/application usage, availability of services, behaviour, ...)
+\end{itemize}
+
+\subsection{Active measurements}
+
+Generates "probing" traffic, such as network scans, pin packets, HTTP requests to web server to check response time, ... It creates additional load to the traffic but can be done at any scale.
+
+\subsection{Passive measurements}
+
+Measure by observing existing network traffic (not intrusive, but more challenging). It can be done on a single host via \textit{Tcpdump} or \textit{Wireshark} (promiscuous mode), on switches/routers (create mirror port \& send traffic from mirror port to measurement host), etc.
+
+There might be packet loss, if the output bandwidth cannot handle the amount of traffic of the entire network being monitored. Also, packet capturing is not trivial because in modern networks, the amount of data can be very high (up to 4000GB/hour for high link transports).
+
+\subsection{Collect And Process Less Informations}
+
+\begin{itemize}
+    \item \textblue{Packet header monitoring}
+    \begin{itemize}
+        \item Still some valuable informations (port numbers, source and destination addresses, TCP flags, packet size, ...)
+    \end{itemize}
+    \item \textblue{Packet aggregation by flows}
+    \begin{itemize}
+        \item A flow is a sequence of packets with common properties (source and destination address, port number, layer 3 protocol, ...) that record contains informations about a flow (flow size, flow duration, number of packets, ...)
+        \item 2 types of flow monitoring : flow exporter is either part of the router or not. They work as :
+        \begin{enumerate}
+            \item When packets arrives, calculate hash value for packet's flow key \& lookup in hash table whether the flow exists. Then update/create new flow entry
+            \item Entry from the table is remove \& flow record exported (as UDP packet) if :
+            \begin{itemize}
+                \item Packet observed with special TCP flags (FIN, RST)
+                \item Inactivity timeout (no new packets since $x$ seconds)
+                \item Activity timeout (entry in table is older than $y$ seconds)
+            \end{itemize}
+        \end{enumerate}
+        \item With flow monitoring, you lose information but you gain space
+    \end{itemize}
+    \item \textblue{Sampling}
+    \begin{itemize}
+        \item Do not take every packet
+        \item Can be systematic, random, or dynamic
+        \item Can also be done in flow-based measurements (before or after doing the flow)
+        \item But : sampling can introduce a bias
+    \end{itemize}
+\end{itemize}
+
+\subsection{Common Mistakes}
+
+\begin{itemize}
+    \item Measuring the wrong thing (e.g. measuring TCP traffic when attacks uses UDP)
+    \item Overestimating the capabilities of your measurement system (DDoS can overwhelm the system)
+    \item Ignoring measurement bias
+\end{itemize}
 
 \chapter{Intrusion Detection Systems (IDS)}
 
@@ -682,228 +703,118 @@ The dependency of the IDS performance on a specific detection parameter can be v
     \includegraphics[width=0.5\textwidth,keepaspectratio]{roc}
 \end{figure}
 
-\chapter{SPAM and Phishing}
+\chapter{Firewalls}
 
-Spam corresponds to unsolicited messages, sent in bulk to many recipients. Typically, the sender address is forged to prevent counter measures.
+A firewall tries to improve security by isolating a trusted network from an untrusted network (e.g. isolate intranet from the Internet). It is a checkpoint where all traffic between the two networks has to pass through.
 
-It is used for multiples reasons:
+Firewalls can be classified by their :
 \begin{itemize}
-    \item Advertising products and goods (illegal products, fake products, stolen products, ...)
-    \item Fraud schemes (Nigerian prince, "earn money at home", ...)
-    \item Recruiting for illegal activities (money mules, re-shippers, ...)
-    \item Infection (botnets, ...)
-    \item Phishing + spear-phishing
+    \item \textblue{Layer of operation} : Network layer (IPv4, IPv6), Transport layer (UDP, TCP), Application layer (HTTP, ...)
+    \item \textblue{Internal state} : stateless or stateful
+    \item \textblue{Location} : network or personal (host) firewall
 \end{itemize}
 
-Some techniques are used to sell the fake even further, like URL obfuscation (a spoofed website tries to have a genuine looking URL (characters look alike, e.g. I(uppercase i) and l (lowercase L), 0 and O).
+\section{Internal State}
 
-How to get e-mail addresses for spamming?
+\subsection{Stateless Firewall}
+
+These firewalls operate as rule-based packet filters (they look at every packet and decide whether packet should be dropped or forwarded).
+
+Examples :
 \begin{itemize}
-    \item Crawl web pages
-    \item Join mailing lists, forums, ...
-    \item Hack servers of discussions forums, online communities, ...
-    \item Infect a PC and get the entries from their address book
-    \item Guess
-    \item Buy them (price depends on "quality")
+    \item \ctext{lightGray}{allow tcp 1.2.3.4:1025 $\rightarrow$ 5.6.7.8:80}
+    \item \ctext{lightGray}{deny tcp 1.2.3.4:* $\rightarrow$ 5.6.7.8:80}
 \end{itemize}
 
-It is hard to be successful, since you have to pass the spam filters, convince the user to read the email, to click the link, to stay on the website and buy something or enter sensitive information ($\rightarrow$ very low conversion rate)
+The rules are browsed top-to-bottom and the directions is not taken into account. If no rule matched the traffic the default policy will be applied (default deny/default allow). In general, a default-deny policy is recommended.
 
-How to send spam ?
-\begin{itemize}
-    \item Use your own SMTP server
-    \item Create fake mail accounts at free web mail providers
-    \item Use an open mail-relay server (probably blacklisted)
-    \item Use infected computers (botnets)
-\end{itemize}
+A stateless firewall does not know what a TCP connection is. It will therefore drop incoming packets of the outbound TCP connection if configured incorrectly.
 
-\section{Mail Filtering}
+\subsection{Stateful Firewall}
 
-Modern filters analyse several aspects of the mail : source IP, URL, mail addresses, keywords, etc. It computes a score for each mail, if the score is above a configurable threshold, the mail is marked as spam.
+A stateful firewall has an internal list "state" of existing connections it has seen previously. If a packet comes in, the firewall checks the list whether the packet belongs to one of the existing connections (basically using a state table like NAT).
 
-\subsection{SPF Record}
+It understands the protocol : it knows for example that a SYN packets needs to be followed by a SYNACK and so on. Therefore, they need more resources than stateless firewalls because they have to keep track of the state of connections. State information is removed based on observed packets (FIN-FINACK-...), timeouts or inactive connections.
 
-\textblue{Sender Policy Framework} (SPF), allows the owner of a domain to specify which computers are authorized to send emails with that sender address (can be queried over DNS).
+It is not always trivial to implement a stateful firewall for more complex protocols (like FTP-Active which uses 2 different ports to communicates). Not surprisingly, application-layer firewalls need more resources than lower-layer firewalls (of course, the more complex a firewall, the higher the risk that it has weaknesses or bugs)
 
-When a SMTP client sends a message to a SMTP server, the client first sends a HELO message with its identify. The server can use SPF to verify whether the sending IP address is authorized or not.
+\section{Location}
 
-\subsection{Blacklists}
+A \textblue{network firewall} is easy to monitor, protects the entire network but does not protect hosts against internal attacks coming from inside the network.
 
-Sender IP address is checked against a blacklist (not sender mail address because it can be spoofed)
+A \textblue{host firewall} requires a large administration overhead if the network contains hundreds of hosts but protects against internal attacks.
 
-Greylisting:
-\begin{itemize}
-    \item First attempt is rejected
-    \item Real mail server will try a second time, spam servers will probably not retry (to save resources)
-    \item Several minutes between the two attempts. Gives time for blacklists to register the spam campaign
-\end{itemize}
+It is possible to combine both (expensive network firewall at application layer and fast \& light weight transport layer personal firewall)
 
-\textblue{SBL} (list of IP of known spammers), \textblue{XBL} (list of IP of hijacked PC). This lists can be downloaded or accessed via DNS.
+\section{DMZ}
 
-\ctext{lightGray}{dig +short <ip>.spamhauss.be} : Response specify if IP is blacklisted
-
-Blacklists are filled by spam traps (mail honeypots). This can be hidden emails on web pages.
-
-\subsection{Bayesian filtering}
-
-The principle of this filter is the following :
-\begin{enumerate}
-    \item Take a large corpus of ($a$) spam mails and ($b$) non-spam mails
-    \item Split the mails into tokens (words) and calculate the token frequencies in ($a$) and ($b$)
-    \item Based on the result from step 2, calculate for each token the probability that a mail containing the token is spam
-    \begin{itemize}
-        \item Probability that an e-mail is spam if it contains token $t$ : $P(isSpam | t)$
-        \item Bayes theorem :
-        \begin{align*}
-        P(isSpam | t) &= \frac{P(t | isSpam) * P(isSpam)}{P(t)}\\
-                      &= \frac{P(t | isSpam) * P(isSpam)}{P(t | isSpam) * P(isSpam) + P(t | isNotSpam) * P(isNotSpam)}
-        \end{align*}
-        \item Paul Graham's original mail filter assumed that $P(isSpam) = P(isNotSpam)$ and got the simpler formula :
-        \begin{align*}
-        P(isSpam | t) &= \frac{P(t | isSpam)}{P(t | isSpam) + P(t | isNotSpam)}
-        \end{align*}
-    \end{itemize}
-    \item For a new mail, look at all its tokens and calculate the probability that the mail is spam
-    \begin{itemize}
-        \item We consider that a mail $m$ consists of $n$ tokens $t_1, t_2, ..., t_n$
-        \item Assuming that tokens appear independently in emails (\textit{Naive Bayer Classifier})
-        \begin{align*}
-        P(m\ isSpam) &:= \frac{\prod \frac{p_1}{P(isSpam)}}{\prod \frac{p_1}{P(isSpam)} + \prod(1-p_i)P(isNotSpam)}
-        \end{align*}
-        \item If we assume that $P(isSpam) = P(isNotSpam)$ :
-        \begin{align*}
-        P(m\ isSpam) &:= \frac{\prod p_1}{\prod p_1 + \prod(1-p_i)}\\
-                     &\ \ \ \ \ \text{where }p_i = P(isSpam | t_i)
-        \end{align*}
-    \end{itemize}
-\end{enumerate}
-
-We define $g = 2 * $ token frequency in good mails, and $b = $ token frequencies in bad mails. 
-
-If $g + b \geq $\ctext{lightGray}{$<thresholdEnoughData>$}, then :
-\begin{align*}
-goodRatio &:= min(1, \frac{g}{totalNumberGoodMails})\\
-badRatio &:= min(1, \frac{g}{totalNumberBadMails})\\
-result &:= max(0.01, min (0.99, \frac{badRatio}{goodRatio + badRatio}))
-\end{align*}
-
-Remarks :
-\begin{itemize}
-    \item We get a concrete probability instead of an abstract score
-    \item Learning the token spam probabilities happens only one in training
-    \item There are ways to improve the algorithm (i.e. ignore frequent token such as "the", "on", etc., do not assume independence of tokens (take bigrams), ...)
-    \item The factor $2$ for good token is there because is practice we receive more good emails than bad ones
-    \item $0.01$ and $0.99$ is to limit the result if a token only appears in good/bad emails
-\end{itemize}
-
-\subsubsection{Practical example}
-
-\begin{itemize}
-    \item Good 1 : \textit{Thank you for the invitation}
-    \item Good 2 : \textit{I send you the offer for our latest product}
-    \item Bad 1 : \textit{The latest movies on our servers!}
-    \item New : \textbf{Download the latest movies!}
-\end{itemize}
+Often, a company also need to be reachable from the outside (e.g. web server). With a Demilitarized Zone (DMZ), we accept the fact that hosts exposed to the Internet are less trustable.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth,keepaspectratio]{bayes_mail}
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{dmz}
 \end{figure}
 
-Probability that "new" is spam :
-\begin{equation*}
-\frac{0.5 * 0.5 * 0.99}{0.5 * 0.5 * 0.99 + (1-0.5) * (1-0.5) * (1-0.99)} = 0.99
-\end{equation*}
+However, DMZ attacks are still possible (e.g. : through connections from the intranet to the web server (database)).
 
-\chapter{Network Traffic Monitoring}
+\section{Proxy Firewalls}
 
-Network operators keep an eye on the network traffic. IDS also need network traffic to do their job. Detecting attack patterns is difficult, but being able to collect and process network traffic in near real time is already a challenge in itself.
+Proxies are useful in many situations (as caches, for load balance) as they act as middleman.
 
-We can measure multiple things :
+Two types of proxies :
 \begin{itemize}
-    \item \textblue{Low level metrics} : can be derived from the packets (packet payload, delay, packet loss, port usage, ...)
-    \item \textblue{High level metrics} : harder to get (connectivity between networks, protocol/application usage, availability of services, behaviour, ...)
+    \item \textblue{Transparent proxies} : intercept queries to the original wab server (client is not aware that is not talking to the original)
+    \item \textblue{Reverse proxies} : servers that hide the origin servers from the client (client has no knowledge of the original's existence), can handle authentication of clients. Proxies can operate as application firewalls
 \end{itemize}
 
-\section{Active measurements}
-
-Generates "probing" traffic, such as network scans, pin packets, HTTP requests to web server to check response time, ... It creates additional load to the traffic but can be done at any scale.
-
-\section{Passive measurements}
-
-Measure by observing existing network traffic (not intrusive, but more challenging). It can be done on a single host via \textit{Tcpdump} or \textit{Wireshark} (promiscuous mode), on switches/routers (create mirror port \& send traffic from mirror port to measurement host), etc.
-
-There might be packet loss, if the output bandwidth cannot handle the amount of traffic of the entire network being monitored. Also, packet capturing is not trivial because in modern networks, the amount of data can be very high (up to 4000GB/hour for high link transports).
-
-\section{Collect And Process Less Informations}
+\section{Summary}
 
 \begin{itemize}
-    \item \textblue{Packet header monitoring}
-    \begin{itemize}
-        \item Still some valuable informations (port numbers, source and destination addresses, TCP flags, packet size, ...)
-    \end{itemize}
-    \item \textblue{Packet aggregation by flows}
-    \begin{itemize}
-        \item A flow is a sequence of packets with common properties (source and destination address, port number, layer 3 protocol, ...) that record contains informations about a flow (flow size, flow duration, number of packets, ...)
-        \item 2 types of flow monitoring : flow exporter is either part of the router or not. They work as :
-        \begin{enumerate}
-            \item When packets arrives, calculate hash value for packet's flow key \& lookup in hash table whether the flow exists. Then update/create new flow entry
-            \item Entry from the table is remove \& flow record exported (as UDP packet) if :
-            \begin{itemize}
-                \item Packet observed with special TCP flags (FIN, RST)
-                \item Inactivity timeout (no new packets since $x$ seconds)
-                \item Activity timeout (entry in table is older than $y$ seconds)
-            \end{itemize}
-        \end{enumerate}
-        \item With flow monitoring, you lose information but you gain space
-    \end{itemize}
-    \item \textblue{Sampling}
-    \begin{itemize}
-        \item Do not take every packet
-        \item Can be systematic, random, or dynamic
-        \item Can also be done in flow-based measurements (before or after doing the flow)
-        \item But : sampling can introduce a bias
-    \end{itemize}
+    \item \textblue{Deny by default}
+    \item \textblue{Principles of least privileges} : only allow what is absolutely needed
+    \item \textblue{Choke point} : it is easier to implement security if all data has to go through one point
+    \item \textblue{Defence in depth} : deploy multiple defence systems
+    \item \textblue{Zoning} : establish trust zones
 \end{itemize}
 
-\section{Common Mistakes}
+\chapter{Network Address Translation (NAT)}
 
+NAT is how our home network works. You have only 1 public IP address (assigned to your box) and multiple private addresses (assigned to each of the devices in your local network)
+
+NAT's goal is to manipulate packets on network and transport layer to make the translation between one private address and the public address by replacing the source IP address (by the public address) and the source port (by an arbitrary unused port).
+
+Network Address Translation will then keep an internal translation table and do the opposite algorithm for each incoming packet in order to dispatch it to the right device. The complete procedure for outgoing packets is :
+\begin{enumerate}
+    \item Check if there is a matching entry in the table
+    \item If no entre found, insert a new one
+    \item Replace address and port number in the packet
+\end{enumerate}
+
+You can also add a static table entry (port forwarding) if you for example want to access an internal device from the outside. If there is no matching entry in the table for the incoming packets, it is dropped by default.
+
+\section{Advantages}
 \begin{itemize}
-    \item Measuring the wrong thing (e.g. measuring TCP traffic when attacks uses UDP)
-    \item Overestimating the capabilities of your measurement system (DDoS can overwhelm the system)
-    \item Ignoring measurement bias
+    \item Entire network only needs one public IP address
+    \item Hosts inside the private network are not any more directly reachable from the internet (not intended as a security solution, every entry in the table "punches a hole" in the perimeter)
+    \item NAT is able to hide sequentially incrementing source port number
 \end{itemize}
 
-\begingroup
-% Prevent new pages between chapters (in group)
-\let\clearpage\relax
-\chapter{Honeypots}
-
-\textblue{Goal} : operating fake resources and service to attract attackers to identify/analyse them.
-
-Different types :
+\section{Drawbacks}
 \begin{itemize}
-    \item \textblue{High interaction honeypots} : imitate the behaviour of real web servers. They are like web servers in an isolated and restricted VM
-    \item \textblue{Low interaction honeypots} : just wait for incoming connections
-    \item \textblue{Tarpits} : answers very slowly to incoming requests in order to slow down attackers and worms
-    \item \textblue{Canary traps} : "secret" information that you intentionally publish to trap attackers
+    \item Violates the separation of protocol layers
+    \item Makes network debugging and forensic analysis network traffic harder
+    \item An incorrectly implemented NAT might not choose port number randomly and makes them predictable for attacks
+    \item Resource intensive
+    \item Break the end-to-end principle of Internet (problem for p2p protocols)
 \end{itemize}
 
-Honeypots can be very complex in order to look convincing (they can simulate an entire database/company network honeynet)
+\section{Attacks}
 
-\chapter{Network Telescopes}
+An attacker \textblue{inside} the company network sends many SYN packets to different IP addresses. This will result of NAT running out of available port numbers, so any new outgoing connection will be blocked.
 
-Researches discovered that even unused IP addresses constantly receive IP packets (from attackers looking for victims, misconfiguration, ...).
+\chapter{Cryptography}
 
-Network telescopes run measurements on large unused IP subnetworks and can be used for :
-\begin{itemize}
-    \item Detecting new attack trends
-    \item Indirectly detecting DDoS attacks through their background radiation (backscatter = SYN/ACK packets sent from victim hosts attacked with SYN flooding attacks using spoofed IP addresses)
-    \item Identifying typical configuration mistakes
-\end{itemize}
-\endgroup
-
-\chapter{Symmetric-Key Cryptography}
+\section{Symmetric-Key Cryptography}
 
 Cryptography is the art of making a message unreadable. Several algorithm exists.
 
@@ -914,7 +825,7 @@ E : K \times M \rightarrow C \text{ and } D : K \times C \rightarrow M\\
 \end{align*}
 Where $K$, $M$, and $C$ being bit strigs. The key is pre-shared, as both sender and receiver of the message have to know the key $k$.
 
-\section{Perfect Security}
+\subsection{Perfect Security}
 
 $c$ does not reveal any information about $m$ (besides its length).
 
@@ -922,7 +833,7 @@ For any two messages, $m_1$ and $m_2$, the distributions of $E(k, m_1)$ and $E(k
 
 If the symmetric cipher $(E, D)$ is perfectly secure, then key length $\geq$ message length.
 
-\section{One-Time Pad (OTP)}
+\subsection{One-Time Pad (OTP)}
 
 In OPT, the key $k$ is a random bit string at least as long as the message $m$, and the encrypt and decrypt functions uses XOR :
 
@@ -932,13 +843,13 @@ E(k, m) = k \oplus m \text{ and } D(k, c) = k \oplus c
 
 OTP is perfectly secure, but becomes no longer secure if the same key is used twice on two different messages.
 
-\section{Non-Perfect Security}
+\subsection{Non-Perfect Security}
 
 The requirement that the key has to have at least the same length as the message is not very practical. In practice, one often uses a shorter key $s$ and the key $k$ is generated by a pseudo-random number generator $k = RNG(s)$.
 
 A symmetric cipher used like this is called a \textblue{stream cipher}. It is not perfectly secure (attacker can try all $2^{|s|}$ combination), but infeasible if $|s|$ is long enough (e.g. $\geq 128$ bits).
 
-\section{One-Time Semantic Security}
+\subsection{One-Time Semantic Security}
 
 \begin{itemize}
     \item Let's assume that we have an encryption $E$ and a "Challenge Oracle"
@@ -953,7 +864,7 @@ A symmetric cipher used like this is called a \textblue{stream cipher}. It is no
     \item Then, E is semantically secure if $Adv(A, E)$ is negligibly small for all efficient attackers $A$, i.e. no attacker can distinguish $m_1$ and $m_2$ once encrypted in a "reasonable" (polynomial) time
 \end{itemize}
 
-\section{Chosen Plaintext Attack}
+\subsection{Chosen Plaintext Attack}
 
 So far, we assumed that a key is only used once (vulnerable is cipher is deterministic). For multi-use keys, we need stronger security. Same game as in One-time Semantic Security, but attacker can send as many message pairs as they want.
 
@@ -965,7 +876,7 @@ Let's assume the same key is used multiple times :
 
 Therefore : A cipher with multi-use key cipher can only be secure under CPA if $E$ has some random component.
 
-\section{Cipher Operation Modes}
+\subsection{Cipher Operation Modes}
 
 \textblue{Block ciphers} encrypt the plaintext data by blocks of a certain number of bits $b$. Since block ciphers are deterministic algorithms, this would result in identical ciphertext blocks for identical message blocks.
 
@@ -977,7 +888,7 @@ Many block ciphers are built by applying an invertible transinformation, the "ro
     \includegraphics[width=0.3\textwidth,keepaspectratio]{iterated_block}
 \end{figure}
 
-\subsection{Data Encryption Standard (DES)}
+\subsubsection{Data Encryption Standard (DES)}
 
 The original DES has 16 rounds and a 56-bits key. A block of 64 bits is split into two 32-bits blocks $R_0$ (right part) and $L_0$ (left part), then is processed by a \textit{Feistel scheme} :
 \begin{align*}
@@ -989,7 +900,7 @@ L_i &= R_{i-1}
     \includegraphics[width=0.5\textwidth,keepaspectratio]{des}
 \end{figure}
 
-\subsection{Triple-DES (3DES)}
+\subsubsection{Triple-DES (3DES)}
 
 DES became too short for modern systems. Here, the idea is to run DES 3 times with 3 different keys :
 \[
@@ -997,11 +908,11 @@ E_{3DES}((k_1, k_2, k_3), m) = E(K_1, D(k_2, E(k_3, m)))
 \]
 Hence, the size of the key is $3*50 = 128$ bits. This is 3 times slower than DES but much more secure against bruteforce attacks. It is \textit{vulnerable to a "meet-in-the-middle" attack} since the attacker can compute all $2^{56+56}$ possible combination of $D(k_2, E(k_3, m))$ and compare with the remaining $2^{56}$ combination of $D(k_1, c)$
 
-\subsection{Advanced Encryption Standards (AES)}
+\subsubsection{Advanced Encryption Standards (AES)}
 
 Established at NIST in 2001. Based on Rijndael cipher and uses CBC with blocks of 128 bits. 3 version (10 rounds, 12 rounds, 14 rounds)
 
-\chapter{Public-Key Cryptography}
+\section{Public-Key Cryptography}
 
 \textblue{Idea} : Sender encrypts using a public key $pk$, receiver decrypts using a secret (private) key $sk$.
 
@@ -1019,7 +930,7 @@ A \textblue{public-key cryptosystem} consists of :
 
 There is also a consistency requirement : $\forall (pk, sk)$ generated by $G : \forall m \in M : D(sk, E(pk, m)) = m$.
 
-\section{Properties}
+\subsection{Properties}
 
 \begin{minipage}[t]{0.45\textwidth}
     \textgreen{Pros}
@@ -1037,7 +948,7 @@ There is also a consistency requirement : $\forall (pk, sk)$ generated by $G : \
     \end{itemize}
 \end{minipage}
 
-\section{RSA}
+\subsection{RSA}
 
 Example for public-key cryptography. Key length should be at least 1024 bits. Is roughly 1000 times slower than DES. In RSA, the key is generated in the following way :
 \begin{enumerate}
@@ -1056,7 +967,7 @@ The encryption and decryption in RSA are :
     \item $D((d, n), c) = c^d\ mod\ n$
 \end{itemize}
 
-\subsection{Security Of RSA}
+\subsubsection{Security Of RSA}
 
 RSA as presented before is not secure and should not be used in its simple form. Also, it is deterministic, so it can be broken with a chosen plaintext attack. It is also multiplicatively homomorphic ($E(pk, m_1 * m_2 = E(pk, m_1) * E(pk, m_2)$).
 
@@ -1065,7 +976,7 @@ To make RSA more secure, long keys are used and short messages are padded with r
 In practice, to make RSA more secure,  long keys are used and short messages are padded with random bits. Basically, using a symmetric cipher to encrypt the message and public-key cryptography to encrypt the key of the chosen symmetric cipher.
 
 
-\section{Diffie-Hellman Key Exchange Protocol}
+\subsection{Diffie-Hellman (DH) Key Exchange Protocol}
 
 A secure way to share a secret between two parties $A$ and $B$ :
 \begin{enumerate}
@@ -1078,7 +989,7 @@ A secure way to share a secret between two parties $A$ and $B$ :
 
 Note that is vulnerable to Man in The Middle Attack in step 1. This can be countered with an authentication protocol (e.g. TLS).
 
-\chapter{Cryptographic Hash Functions}
+\section{Cryptographic Hash Functions}
 
 A h\textblue{ash function} takes a variable length input string and return a fixed-length result. Hard function to invert, more expensive to compute than non-crypto hashs (sometimes called "Message Digest"). We want it to have the following properties :
 \begin{itemize}
@@ -1087,7 +998,7 @@ A h\textblue{ash function} takes a variable length input string and return a fix
     \item \textblue{Random Oracle Property} : $H(m)$ is indistinguishable from a random $n$-bit value
 \end{itemize}
 
-\section{Collisions}
+\subsection{Collisions}
 
 The birthday paradox says that, given $b$ possibilities and $r$ random samples $x_1, ..., x_r$. What is the probability that there are at least two messages $x_i$ and $x_j$ with $x_i = x_j$ ?
 
@@ -1114,7 +1025,8 @@ Generate $2^{\frac{n}{2}}$ random messages $m_1, ..., m_{2^{\frac{n}{2}}} \in M$
     \includegraphics[width=0.6\textwidth,keepaspectratio]{collision}
 \end{figure}
 
-\chapter{Message Authentication Code (MAC)}
+\newpage
+\section{Message Authentication Code (MAC)}
 
 Basically using a hash function to sign the message + the key.
 
@@ -1253,3 +1165,107 @@ The resource owner decides what access rights the client will get. The client au
 
 \textblue{Token introspection} : resource server sends validation request to authorization server. This could be used by an attacker to find valid tokens (token scanning). To prevent this, the sender of the request also needs a token.
 
+\chapter{Secure DNS}
+
+\section{Weaknesses}
+
+The original DNS protocol has several weaknesses, as it was mainly designed for redundancy and responsiveness. They include :
+\begin{itemize}
+    \item DNS server is not authenticated (allowing man in the middle to manipulate DNS responses, and attackers to send fake DNS responses
+    \item DNS communication is not encrypted (privacy leak, outsiders can see which domains you visit)
+    \item Attackers try to perform DoS attacks against DNS servers
+    \item DNS is used for malicious activities (to send people to phishing websites, in botnets,...)
+\end{itemize}
+
+\section{DNS-over-TLS (DoT)}
+
+DNS-over-TLS (DoT) servers now runs on port 853 (TCP), and clients opens long-lasting TLS connection over which it can send multiple DNS queries
+
+Two models :
+\begin{itemize}
+    \item \textblue{Opportunistic DoT} : Client only knows IP address of DNS server (TLS only offers encryption, no authentication)
+    \item \textblue{Strict DoT} : Client knows domain name of DNS server: client can verify certificate of server
+\end{itemize}
+
+At the moment, Cloudflare, Google, Quad9 offer DoT (more ISPs are coming), it is supported by Android, iOS, but it is not by default supported by Windows and macOS.
+
+\section{DNS-over-HTTPS (DoH)}
+
+\textblue{DNS-over-TLS (DoT)} servers now runs on port 443 (like HTTPS), meaning that it is difficult to block by network operator, but also difficult to detect when used by malware.
+
+It makes it very simple for any application to send queries to any
+DNS server of their choice, and it is supported by all modern browsers.
+
+There are also draft specifications for DNS-over-DTLS (“TLS for UDP”) and DNS over QUIC
+
+\section{QNAME minimization}
+
+In recursive resolution, the entire domain name is sent to the server, even if only information for a part of the name is needed. \textblue{QNAME minimization} should reduce this privacy leak by only sending the relevant information (e.g., “be” to the root NS).
+
+It is activated by default in several open-source resolvers, but also more complex than described here because a server can be responsible for more than one component of a domain name.
+
+\section{DNSSEC}
+
+Development started in 1994, as it was not possible before the introduction of larger messages with Extended DNS. In fact, the original DNS messages were limited to 512-byte UDP packets (not enough for the additional security information of DNSSEC)
+
+In \textblue{DNSSEC}, the DNS server’s \textit{response is signed} (DNSSEC responses are authenticated, not encrypted (no confidentiality)).
+
+\subsection{Verifying a DNS response}
+
+New record fields :
+\begin{itemize}
+    \item RRSIG: contains signature
+    \item DNSKEY: contains public key
+\end{itemize}
+
+Like in TLS, there is a chain of trust to the root servers verified by the resolver :
+\begin{itemize}
+    \item The chain is included in the response
+    \item Public keys of the root servers are built in resolver
+    \item Domain owners generate their own keys (distributed by the registrar)
+    \item DNS responses are signed using the private key
+\end{itemize}
+
+\subsection{Amplification}
+
+DNS can be used to amplify attacks, the average amplification factor of ANY queries is $4.9$x, theoretically up to $60$x with EDNS. DNSSEC \textit{increases the size of responses}, amplification average $47.2$x
+
+$\rightarrow$ DNSSEC can be misused, but is not an enabler for DoS reflection attacks
+
+\chapter{Botnets}
+
+Collection of compromised / hijacked machines (bots, zombies) under control of an attacker (botmaster). Machines can be compromised with a malware containing a virus, a worm (a virus that spreads to other computers), ...
+
+Once a machine has been "recruited" for a botnet it is ready to receive instructions from the botmaster (commands, updates, transfer informations, ...). Botmaster operates a \textit{Command-and-Control} server that communicates with the bots.
+
+This is challenging because he has to operate 
+\begin{itemize}
+    \item without revealing its identify
+    \item without raising alarms of admins/users who monitor the traffic of their machines
+    \item in a flexible way (ability to find a new C\&C if the first one is shut down)
+\end{itemize}
+
+\section{Storm Architecture}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{storm_architecture}
+\end{figure}
+
+Used for spamming :
+\begin{itemize}
+    \item \textit{Worker bots} : Computers that request jobs from the master servers and execute them
+    \item \textit{Public bots} : Infected computers that are externally accessible
+    \item \textit{Master servers} : Compromised computers managed by the botmaster directly and hosted in data centres using an NGINX reversed proxy server to hide the top-level server of the botmaster.
+\end{itemize}
+
+To find the master servers, bots resolve a domain name. The IP address of the domain name is rapidly changed, pointing to a compromised computer.
+
+\section{Fight Botnets}
+
+\begin{itemize}
+    \item Prevent infection with bot malware (hard)
+    \item Take down C\&C servers (hard because of botnet architecture)
+    \item Intrude the botnet and send switch-off commands (but modern botnets use encryption and authentication)
+    \item Seize the domain names used by the botnet (successful in the past, but not possible today since they generate large lists of possible domains)
+\end{itemize}
