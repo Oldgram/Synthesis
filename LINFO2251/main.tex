@@ -26,7 +26,7 @@
 	\vfill
 	{\Large Dylan \textsc{Goffinet}\par}
 	\vspace{0.2cm}
-	{\small Based on \url{https://www.overleaf.com/4685621966pzdpvkrkszhq}\par}
+	{\small Based on : \url{https://www.overleaf.com/4685621966pzdpvkrkszhq}\par}
 	\vspace{0.5cm}
 	{\Large\bfseries 2022-2023\par}
 	{\large \par}
@@ -34,11 +34,11 @@
 
 %----------------------------------------------------------------------------------------------%
 
-\pagenumbering{roman}
+\pagenumbering{gobble}
+\tableofcontents\addtocontents{toc}{\protect\thispagestyle{empty}}
 \setcounter{tocdepth}{1} %sets toc depth
-\tableofcontents
-\thispagestyle{empty} % Remove numbering on toc page
 \clearpage
+\pagestyle{fancy}
 \pagenumbering{arabic}
 
 %----------------------------------------------------------------------------------------------%

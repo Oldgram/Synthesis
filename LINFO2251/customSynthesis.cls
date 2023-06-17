@@ -101,12 +101,12 @@
 %\fi
 
 %---Multicolumn TOC---%
-\makeatletter
-\patchcmd{\l@section}
-  {\hfil}
-  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep     mu$}\hfill}
-  {}{}
-
+%\makeatletter
+%\patchcmd{\l@section}
+%  {\hfil}
+%  {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep     mu$}\hfill}
+%  {}{}
+%
 %\renewcommand\tableofcontents{%
 %    \begin{multicols}{2}[\chapter*{ \contentsname
 %        \@mkboth{%
@@ -114,7 +114,7 @@
 %    \@starttoc{toc}%
 %    \end{multicols}%
 %    }
-\makeatother
+%\makeatother
 
 %---Custom TOC title---%
 \addto\captionsenglish{%
@@ -170,7 +170,6 @@
 \titlespacing{\chapter}{0pt}{2pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
 
 %---Page numbering---%
-\pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
 \fancyfoot[C]{\thepage \hspace{1pt} \textblue{|} \pageref{LastPage}}
@@ -228,3 +227,10 @@
 % For debug purposes
 \showboxdepth=5
 \showboxbreadth=5
+
+% Pseudocode listing style
+\lstdefinestyle{pseudoCode} {
+    basicstyle = \small\ttfamily,
+    breaklines = true,
+}
+

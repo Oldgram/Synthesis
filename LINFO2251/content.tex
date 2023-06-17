@@ -17,18 +17,18 @@
 \begin{enumerate}
         \item \textblue{Defect prevention} :
         \begin{itemize}
-            \item [$\bullet$]Prevent faults from being injected
-            \item [$\bullet$]Error blocking, error source removal
+            \item  Prevent faults from being injected
+            \item  Error blocking, error source removal
         \end{itemize}
         \item \textblue{Defect removal} :
         \begin{itemize}
-            \item [$\bullet$]Remove faults
-            \item [$\bullet$]Inspection (find faults), testing (find failures from faults
+            \item  Remove faults
+            \item  Inspection (find faults), testing (find failures from faults
         \end{itemize}
         \item \textblue{Defect containment} :
         \begin{itemize}
-            \item [$\bullet$]Keep failures local, reduce failure impact
-            \item [$\bullet$]Fault-tolerance, failure containment
+            \item  Keep failures local, reduce failure impact
+            \item  Fault-tolerance, failure containment
         \end{itemize}
     \end{enumerate}
 \end{minipage}
@@ -93,10 +93,10 @@ Quality models relate the user's external view to the developer's internal view 
 
 These are "dependability properties" (Correctness properties are \textit{undecidable} for non-trivial programs): 
 \begin{itemize}
-    \item [$\bullet$]\textblue{Correctness:} a program is correct if it is consistent with its specification (seldom practical for non-trivial systems)
-    \item [$\bullet$]\textblue{Reliability:} likelihood of correct function for some "unit" of behaviour, relative to a specification and usage profile, statistical approximation to correctness (100\% reliable = correct)
-    \item [$\bullet$]\textblue{Safety:} preventing hazards, which are system-specific undesirable behaviours
-    \item [$\bullet$]\textblue{Robustness:} acceptable (degraded) behaviour under extreme conditions
+    \item  \textblue{Correctness:} a program is correct if it is consistent with its specification (seldom practical for non-trivial systems)
+    \item  \textblue{Reliability:} likelihood of correct function for some "unit" of behaviour, relative to a specification and usage profile, statistical approximation to correctness (100\% reliable = correct)
+    \item  \textblue{Safety:} preventing hazards, which are system-specific undesirable behaviours
+    \item  \textblue{Robustness:} acceptable (degraded) behaviour under extreme conditions
 \end{itemize}
 
 \begin{figure}[H]
@@ -529,7 +529,7 @@ Even with loop‐free paths, the number of paths in a graph can be \textblue{exp
     \item \textblue{Test case} : A set of inputs, execution conditions, and a pass/fail criterion for judging test execution
     \item \textblue{Test case specification} : A requirement to be satisfied by one or more test cases
     \item \textblue{Test obligation} : A partial test case specification, requiring some property deemed (= considered) important to thorough testing
-    \item \textblue{Adequacy criterion}: A predicate that a <program, test suite> pair must satisfy; usually expressed in the form of a rule for deriving a set of test obligations from another artefact (program, specification)
+    \item \textblue{Adequacy criterion}: A predicate that a <program, test suite> pair must satisfy to be adequate; usually expressed in the form of a rule for deriving a set of test obligations from another artefact (program, specification)
     \item \textblue{Test satisfaction}:
     A test suite (set of test cases) satisfies an adequacy criterion if :
     \begin{itemize}
@@ -1319,12 +1319,12 @@ To verify program correctness, we do the following:
         \item[$\Rightarrow$] Prove that block satisfies pre/post then use the contract wherever the block is used
     \end{itemize}
 
-    \item \textbf{On data structures} :\\
+    \item \textblue{On data structures} :\\
     Data structure module $=$ data (encapsulated) + operations = variables + procedures (methods)\\
     Contract $=$ 
     \begin{enumerate}
-        \item \textbf{Abstraction function} "abs" : relates data structures D to an abstract model abs(D) (e.g. abs : Dictionary $\rightarrow$ {<key, value>})
-        \item \textbf{Structural invariant} "ok" : data structure characteristics that must be maintained (e.g. ok : Dictionary $\rightarrow$ bool)
+        \item \textblue{Abstraction function} "abs" : relates data structures D to an abstract model abs(D) (e.g. abs : Dictionary $\rightarrow$ {<key, value>})
+        \item \textblue{Structural invariant} "ok" : data structure characteristics that must be maintained (e.g. ok : Dictionary $\rightarrow$ bool)
     \end{enumerate}
     Contract for Dictionary.get :
     \begin{itemize}
@@ -1336,17 +1336,696 @@ To verify program correctness, we do the following:
 
 \chapter{Program analysis}
 
+\section{Describe the principles of program inspection, static and dynamic program analysis}
+
+\begin{enumerate}
+    \item \textblue{Program inspection} : Systematic, detailed review of artifacts (= code but also specifications, documentation, tests, ...) to find defects and assess quality.\\ 
+    Used for :
+    \begin{enumerate}
+        \item Find and remove defects
+        \item Incentive to produce good code
+        \item Share coding norms and practices
+        \item Familiarize new staff with the code
+    \end{enumerate}
+    \textblue{Team}: the programmer(s) + experts (+ usage of \textblue{checklist})\\
+    With different perspectives : junior and senior engineers, testers, managers, analysts, architects, ...\\
+    Moderator: external senior manager
+    \item \textblue{Static analysis} : examine source code. Examine the complete execution space but may lead to false alarm
+    \item \textblue{Dynamic analysis} : examine execution traces. No infeasible path problem but cannot examine the execution space exhaustively
+\end{enumerate}
+
+\section{Explain symbolic testing and its application to pointer analysis}
+
+\textblue{Symbolic testing} : 
+\begin{itemize}
+    \item Abstract variables with \textblue{few symbolic values}
+    \item Apply \textblue{symbolic execution}
+    \item \textblue{No need} to follow \textblue{all paths}
+    \begin{itemize}
+        \item Explore paths to a limited depth
+        \item Prune exploration by some criterion
+    \end{itemize}
+    \item Sensitivity :
+     \begin{itemize}
+        \item Symbolic testing is \textblue{path sensitive}: different symbolic states from paths to the same location
+        \item Symbolic testing is \textblue{partly context sensitive}: different symbolic states implies different call sequences
+        \item This is a strength of symbolic checking
+        \begin{enumerate}
+            \item Detailed description of how fault is reached
+            \item Costly
+            \item Reduce costs by memorizing entry and exit conditions
+        \end{enumerate}
+    \end{itemize}
+    \item Example (\textblue{pointer analysis}) : every \textblue{pointer variable} is represented by a \textblue{machine} with three states.\\
+    Possible errors : deallocation in \textit{maybe null}, dereference in \textit{maybe null} and dereference in \textit{invalid}.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{pointer_analysis}
+\end{figure}
+
+\section{Explain dynamic analysis and its application to lockset analysis}
+
+\textblue{Dynamic program analysis} :
+\begin{itemize}
+    \item Track program execution
+    \begin{itemize}
+        \item Instrument program to trace memory accesses
+        \item Record the state of each memory location
+        \item Detect accesses incompatible with the current state
+        \begin{itemize}
+            \item Access unallocated memory
+            \item Read from uninitialized memory
+            \item Array bounds violations
+        \end{itemize}
+    \end{itemize}
+    \item Amplify sensitivity of testing to detect potential data races (two threads access a location, and at least one is a write, and there is no lock protecting that location).
+\end{itemize}
+
+\textblue{Lockset analysis} :
+\begin{itemize}
+    \item \textblue{Lockset discipline} : Every shared variable must be protected by a lock
+    \item \textblue{Dynamic lockset analysis} : detects violation of the locking discipline
+    \item \textblue{Algorithm} :
+    \begin{lstlisting}[style=pseudoCode]
+Identify set of locks held by threads when accessing each shared variable.
+For each variable x, a set Lockset(x)
+INIT: Lockset(x) = {all locks}
+thread A accesses x: Lockset(x) = Lockset(x) $\bigcap$ Locks(A)
+END: if Lockset(x) = {} report ERROR (no lock consistently protects v)
+    \end{lstlisting}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth,keepaspectratio]{lockset_analysis}
+\end{figure}
+
 \chapter{Finite state analysis I}
+
+\section{Describe the principles of finite-state analysis}
+
+\textblue{Finite state verification} :
+\begin{itemize}
+    \item Prove some significant properties on a finite model of the infinite execution space
+    \item Techniques from symbolic execution and formal verification
+    \item Iterative process :
+    \begin{enumerate}
+        \item Prepare a model and specification
+        \item Repeat :
+        \begin{enumerate}
+            \item Attempt verification
+            \item Receive reports of impossible or unimportant faults
+            \item Refine the specification and/or the model
+        \end{enumerate}
+        \item Until no impossible or unimportant faults
+    \end{enumerate}
+    \item Is complementary to testing (can find bugs that are extremely hard to test for {[concurrency, race conditions]} but is limited in scope)
+\end{itemize}
+
+\section{Define safety and liveness properties and discuss their verification}
+
+\begin{minipage}[t]{0.48\textwidth}
+    \textblue{Safety} :
+    \begin{itemize}
+        \item Bad things should not happen\\
+        Example :
+        \begin{enumerate}
+            \item invariant violation, assertion violation
+            \item mutual exclusion: two process should not modify a variable at the same time
+            \item[3.] [P] S [Q]: partial correctness
+        \end{enumerate}
+        \item Specify with \textit{assert(...)}
+        \item \textblue{Verify with reachability (easy)}    
+    \end{itemize}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth,keepaspectratio]{safety_reachability}
+    \end{figure}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \textblue{Liveness} :
+    \begin{itemize}
+        \item Good things should eventually happen\\
+        Examples : 
+        \begin{enumerate}
+            \item Response : if I push the button, eventually the elevator should arrive
+            \item Fairness : all enabled threads get executed
+            \item Program termination
+        \end{enumerate}
+        \item Specify in \textblue{temporal logic}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.6\textwidth,keepaspectratio]{temporal_logic}
+        \end{figure}
+        \item Verify with automata, repeated reachability (more expensive)
+    \end{itemize}
+\end{minipage}
+
+\newpage
+\section{Discuss the model size and correspondence problems}
+
+\begin{enumerate}
+    \item \textblue{State explosion} : the \textblue{size of the state model} grows very quickly and can become too large.\\
+    With $\#K$ processes and $\#N$ states each, the number of global states is : $\#K^{\#N}$
+    \item \textblue{Model correspondence problem} : consistency between model and program?
+    \begin{enumerate}
+        \item \textblue{Model extracted from the program}
+        \begin{itemize}
+            \item [$\Rightarrow$] Verify the \textblue{extraction} procedures (once for all)
+            \item Challenge: right level of detail
+            \begin{enumerate}
+                \item All details $\Rightarrow$ state space explosion
+                \item Missing details $\Rightarrow$ "false alarm" reports
+            \end{enumerate}
+        \end{itemize}
+        \item \textblue{Program generated from the model}
+        \begin{itemize}
+            \item [$\Rightarrow$] Verify the \textblue{generation} procedures (once for all)
+        \end{itemize}
+        Most applicable within well-understood domains
+        \item \textblue{Model written (partially or entirely) by hand}
+        \begin{itemize}
+            \item [$\Rightarrow$] Check \textblue{conformance} by (model-based) testing
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}
 
 \chapter{Finite state analysis II}
 
+\section{Explain intensional representations for finite state analysis and describe the use of binary decision diagrams}
+
+Enumerating (and storing) all reachable states costs a lot, it is a limiting factor of finite state verification. The alternative is to use intensional (symbolic) representations which describes sets of reachable states without enumerating each one individually.
+\begin{itemize}
+    \item Intensional representations may be more compact than the set they represent
+    $$\{x \in N | x\  mod \ 2 = 0 \wedge 0 < x < 1000  \} \rightarrow 500\  elem$$
+    This is only because of structure or regularity in the set that is captured by the representation !
+    \item Unstructured, irregular sets will necessarily have a larger intensional representation
+    \item \textblue{Information theory} : representing subsets of N elements ($2^N$ possibilities) requires \bigO$(N)$ in average
+\end{itemize}
+
+\textblue{Binary decision diagrams (BDDs)} are a type of intensional model and a compact representation of Boolean functions. A BDD $=$ a binary decision tree with a fixed order on the variables with merged identical subtrees. Operations can be efficiently computed on BDDs.
+
+\section{Discuss iterative model refinement}
+
+Construction of finite state models (balancing precision and efficiency).\\
+Often the first model is unsatisfactory
+\begin{itemize}
+    \item Report unfeasible failures
+    \item Exhaust resources before producing any result
+    \item [$\Rightarrow$] Idea : improve the model and restart (finite state verification as iterative process)
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{iterative_process}
+\end{figure}
+
+\newpage
+\section{Describe the principles of data model verification}
+
+Many information systems are characterized by 
+\begin{enumerate}
+    \item simple program logic and algorithms
+    \item complex data structures
+\end{enumerate}
+A key element is the data model (class and object diagrams + OCL assertions) = sets of data and relations among them.
+
+Challenge : prove that 
+\begin{enumerate}
+    \item Individual constraints are consistent
+    \item Together they ensure the desired properties of the system as a whole
+\end{enumerate}
+
+In a complex data models, we use the same general verification principles
+\begin{enumerate}
+    \item systematic analysis of models
+    \item thorough testing is impractical
+\end{enumerate}
+The difficulty is to consider all the possible combinations of choices in a complex data model. (take the website as an example)
+
 \chapter{Software measurement: size}
+
+\section{State the general principles of software measurement}
+
+\textblue{Principles} :
+\begin{itemize}
+    \item \textblue{Software measurement} : deriving a numeric value of a property of a software product or a process. (To allow comparison)
+    \item \textblue{Measurement} (more general) : mapping from the empirical world to the formal world.
+    \item \textblue{Metrics} : a means of measurement of a property of a software product or a process.
+    \item \textblue{Objective} : understand, control and improve the quality of a software.
+    \item \textblue{Attributes} :
+    \begin{enumerate}
+        \item \textblue{Internal} (structural) : size, complexity
+        \item \textblue{External} (functional) : quality, reliability
+    \end{enumerate}
+\end{itemize}
+
+\section{Discuss size measurement metrics based on lines of code}
+
+\textit{Note} : A size measurement should be non-negative, zero iff empty and additive.
+
+There are different size metrics: lines of code, number of bytes, number of modules.... The choice of measure is made according to the question to be answered (complexity, disk footprint,...)
+
+\textblue{Line Of Code ($LOC$)} $\rightarrow$ How to count them ? What about blank lines, comments, data declarations, several instructions on a line
+\begin{itemize}
+    \item \textblue{$NCLOC$} : No Commented $LOC$. (No commented line, no blank line, everything else counts as 1 per line)
+    \item \textblue{$CLOC$}: Commented $LOC$. (Line commented)
+    \item [$\Rightarrow$] \textblue{$LOC$} $= NCLOC + CLOC$
+    \item [$\Rightarrow$] \textblue{Comment Density} $= CLOC / LOC$
+\end{itemize}
+\noindent What count ? What files ? 
+\begin{enumerate}
+    \item Which files ? 
+    \begin{itemize}
+        \item [$\Rightarrow$]Program code, test drivers, automatically generated code, imported code
+    \end{itemize}
+    \item Which code ? the delivered or the developed ?
+    \begin{itemize}
+        \item \textblue{Executable Statement ($ES$)} : No blank, no comments, no data nor headers, 1 per statement.
+        \item \textblue{Delivered Source Instruction ($DSI$)} : No blank, no comment, 1 per statement or data declaration
+    \end{itemize}
+\end{enumerate}
+
+\section{Explain functional size measurement using function points}
+
+\textblue{Function point ($FP$)} : measures the amount of functionality.\\
+Useful to : 
+\begin{enumerate}
+    \item Estimate the development effort and duration ($mm/FP$)
+    \item Express defect density ($\#defects/FP$)
+    \item Bill the development ($\$/FP$)
+\end{enumerate}
+
+\newpage
+\textblue{Example : Spell-checker spec}\\
+The checker accepts as input a document file and an optional personal dictionary file. The checker lists all words not contained in either of these files. The user can query the number of words processed and the number of spelling errors found at any stage during processing.
+
+\begin{itemize}
+    \item \textblue{Point 1} : Number of items
+    \begin{itemize}
+        \item $A$ : external files (file names, menu selection)
+        \item $B$ : external output (report message)
+        \item $C$ : external inquiries (interactive inputs requiring a response)
+        \item $D$ : external files (interfaces to other systems)
+        \item $E$ : internal files (master files in the system)
+    \end{itemize}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth,keepaspectratio]{function_point_1}
+    \end{figure}
+    
+    \item \textblue{Point 2} : Complexity for each item (weight)\\
+    Unadjusted function points :
+    $$UFC = \sum(\#item\ of\ type\ i) * (weight\ of\ type\ i)$$
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth,keepaspectratio]{function_point_2}
+    \end{figure}
+    Example : all average complexity
+    \begin{itemize}
+        \item $A = 2,\ B = 3,\ C = 2,\ D = 2,\ E = 1$
+        \item $UFC = 4 A + 5 B + 4 C + 10 D + 7 E = 58$
+    \end{itemize}
+    \item \textblue{Point 3} : Technical complexity factors (TFC)\\
+    Each $F_i$ is between $0$ and $5$ :
+    \begin{itemize}
+        \item $TFC = 0.65 + 0.01 \sum F_t$
+        \item $FP = UFC * TFC$
+    \end{itemize}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth,keepaspectratio]{function_point_3}
+    \end{figure}
+    Example : $6$ factors at $0$, $6$ factors at $3$, $2$ factors at $5$
+    \begin{itemize}
+        \item $TCF = 0.65 + 0.01 (6 * 3 + 2 * 5) = 0.93$
+        \item $FP = 58 * 0.93 = 54$
+    \end{itemize}
+\end{itemize}
 
 \chapter{Software measurement: structure}
 
+\section{Describe the principles of structure measurement}
+
+The \textblue{size} doesn't tell everything, the \textblue{structure} plays a very important role too to capture the \textblue{complexity} of the product. The structure measurement is applicable to design or code seen as a graph.
+
+\textblue{Two perspectives} :  Control Flow \& Data Flow
+
+Structural attributes : 
+\begin{enumerate}
+    \item \textblue{Complexity} : complicatedness of the connections between elements in a system model (positive, monotonic, additive on disjoints elements)
+    \item \textblue{Length} : distance between elements (positive, monotonic, max on disjoints elements)
+    \item \textblue{Coupling} : links to/from the elements outside the module (positive, monotonic, at most sum on merged modules)
+    \item \textblue{Cohesion} : connections between internal elements (0 to 1, monotonic, at most sum on merged modules)
+\end{enumerate}
+
+\section{Describe hierarchical measures based on prime decomposition of control flow graphs}
+
+\begin{itemize}
+    \item \textblue{Control flow graph} : a graph with distinguished start and stop nodes. We want measures that are independent of a particular view (granularity) of the graph
+    \item \textblue{Prime decomposition} : A structured flow graph can be decomposed into primes (corresponds to a structured program construction). The decomposition is unique, can be done automatically and allows to check whether a program is S-structured (we decompose into primes and we check if all primes are in S).\\
+    Given a family S of prime flowgraphs, a flow graph is S-structured iff it is generated from S by a finite number of sequencing and nesting.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth,keepaspectratio]{sequencing_nesting}
+    \end{figure}
+    \item \textblue{Prime flow graph}: a graph that cannot be decomposed by sequencing or nesting
+    \item [$\Rightarrow$]\textblue{Hierarchical measures}: measures defined on the prime decomposition tree.\\
+    For example: depth of nesting.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth,keepaspectratio]{hierarchical_ex1}
+    \end{figure}
+    More generally, we define :
+    \begin{enumerate}
+        \item $M_1$ : $M(F)$ for each $F$ in $S$
+        \item $M_2$ : $M(F_1;...;F_n)$ from $M(F_i)$
+        \item $M_3$ : $M(F(F_1,...,F_n$)) from $M(F_i)$
+        \item [$\Rightarrow$] $M_1$, $M_2$, $M_3$ gives hierarchical measures (ex: size $v(F) \equiv$ number of nodes)
+    \end{enumerate}
+    Example for size $v(F)$ (number of nodes)
+    \begin{itemize}
+        \item $M_1$ : $v(P_1) = 1$, and for each prime $F \neq P_1$, $v(F) = n+1$, where $n$ is the number of procedure nodes in $F$
+        \item $M_2$ : $v(F_1; ...; F_n) = \sum v(F_i)$
+        \item $M_3$ : $v(F(F_1, ..., F_m)) = 1 + \sum v(F_i)$ for each prime $F \neq P_1$
+    \end{itemize}
+\end{itemize}
+
+
+\section{Define cyclomatic complexity measure}
+
+\begin{itemize}
+    \item \textblue{Basis set} : a maximal set of linearly independent paths (any path is a linear combination of paths from the basis set)
+    \item \textblue{Cyclomatic number}: the number of path in a basis set.
+    $$v(CFG)= \#edges - \#nodes + 2 = \#decision\ points + 1$$
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth,keepaspectratio]{cyclomatic_number}
+    \end{figure}
+    \item Cyclomatic complexity is hierarchical
+    \begin{itemize}
+        \item $M_1$ : $v(D) = 1 + d$, for each prime $F$, where $d$ is the number of predicates in $F$
+        \item $M_2$ : $v(F_1; ...; F_n) = \sum_{i=1}^n v(F_i) - n + 1$ for each $n$
+        \item $M_3$ : $v(F(F_1, ..., F_m)) = v(F) + \sum_{i=1}^n v(F_i) - n$ for each prime $F$
+    \end{itemize}
+\end{itemize}
+
+\section{Discuss design-level, inter-modular complexity measures}
+
+So far we have talked about intra-modular measures (inside a procedure). Now we will present inter-modular measures (dependencies between modules). We thus consider design (module structure is the same for code).
+
+\textblue{Dependency graphs} : graph representing the dependency between modules (information flow or call graph). Inside modules we have data dependency graphs.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth,keepaspectratio]{dependency_graph}
+\end{figure}
+
 \chapter{Software measurement: quality}
+
+\section{Describe the principles and elements of quality models}
+
+The question here is: Does a product have desirable attributes? (A product can be a document, a file, a system,... while an attribute can be completeness, consistency, reliability,...). Product quality models give a hierarchical nomenclature of product quality characteristics.
+
+A quality models has different elements :
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth,keepaspectratio]{quality_model}
+\end{figure}
+
+
+There are different models such like McCall's (left) or Boehm's (right) quality model which are \textblue{fixed models}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.49\textwidth,keepaspectratio]{mccall_model}\hfill
+    \includegraphics[width=0.49\textwidth,keepaspectratio]{boehm_model}
+\end{figure}
+
+\newpage
+\textblue{But we can also define our own models} :
+\begin{itemize}
+    \item Keep general philosophy of quality models (factors, criteria, metrics)
+    \item Select attributes suited for a particular product
+    \begin{itemize}
+        \item Discuss with customers, users
+        \item Possibly taken from some fixed model
+    \end{itemize}
+    \item Refine to criteria, metrics
+\end{itemize}
+
+\textblue{We can design it by measurable objectives} :
+\begin{itemize}
+        \item Measurable attributes identified in the specification
+        \item Applicable to small, evolutionary development, agile processes
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth,keepaspectratio]{standard_model}
+\end{figure}
+
+\section{Discuss defect-based quality measures}
+
+We take a narrow view : 
+\begin{enumerate}
+    \item \textblue{Quality} = lack of defects
+    \item \textblue{Defects} = errors, faults, failures
+\end{enumerate}
+There are known defects (from testing, inspection,...) and latent defects (unknown). 
+$$defect\ density = \frac{\#know\ defects}{product\ size}$$
+
+From this equation, one need to define what counts as defects (faults, failures, post-test, post-release,...) and what counts as size (comments, data binaries, tests,...). It is also important to not confuse with
+defect rate which is relative to time and not size.
+
+There are different type of defect-based measures, another example :
+$$Spoilage = \frac{time\ to\ fix\ defects}{total\ dev\ time}$$
+
+\section{Discuss usability, maintainability and security measures}
+
+\textblue{Usability} :
+
+The degree to which a product or system can be used by specified users to achieve specified goals with effectiveness, efficiency and satisfaction in a specified context of use.
+
+\textblue{Example} : User-friendliness (ease to learn, use, remember) or user satisfaction.\\
+$\Rightarrow$ This is not a directly measurable attribute, so we need to define usability measurements
+\begin{itemize}
+    \item \textblue{Effectiveness} : \% of correctly completed tasks. User recall = remember information provided (task effectiveness = quantity x quality of tasks)
+    \item \textblue{Efficiency} : time to complete a task, input rate
+    \begin{itemize}
+        \item time efficiency = effectiveness / task time
+        \item productive period = productive time / task time
+        \item relative user efficiency = user efficiency / expert efficiency
+    \end{itemize}
+    \item \textblue{Satisfaction} : questionnaires, biological measurements
+\end{itemize}
+
+Other usability measurements, not in ISO 25010 :
+\begin{itemize}
+    \item \textblue{Accessibility} : disabilities (visual, hearing, physical)
+    \item \textblue{Universality} : cultural norms, naming conventions
+    \item \textblue{Trustfulness} : trust of users in the system ($\rightarrow$ security)
+\end{itemize}
+
+Internal elements related to usability:
+\begin{itemize}
+    \item Good use of menus and graphics
+    \item Informative error messages
+    \item Help functions
+    \item Consistent interfaces
+    \item Well-structured manuals
+\end{itemize}
+
+Size and structure can also be measured. In particular, text structure affects readability and comprehensibility. But size and structure are poor measures of quality.
+
+\textblue{Maintainability} :
+
+The degree of effectiveness and efficiency with which a product or system can be modified by the intended maintainers. Easy to understand, enhance and correct. Maintenance can be :
+\begin{itemize}
+    \item Corrective (fix bugs)
+    \item Adaptive (changes, upgrades)
+    \item Preventive (before failures occur)
+    \item Perfective (enhance, extend)
+\end{itemize}
+
+They apply to code, documentation, specs, design, tests,... Maintenance is about making changes to the product. There are different maintainability measures :
+\begin{itemize}
+    \item (\textblue{Most important one}) \textblue{Mean Time To Repair (MTTR)}: average time to implement a change and restore the system to working order, can be split in different measure times :
+    \begin{itemize}
+        \item Problem recognition time
+        \item Administrative delay time
+        \item Maintenance tools collection time
+        \item Problem analysis time
+        \item Change specification time
+        \item Change time (including testing and review) 
+    \end{itemize}
+    \item Change time/number of changes
+    \item Number of unresolved problems
+    \item Time spent on unresolved problems
+    \item \% changes that introduce new faults
+    \item Number of modules modified for a change
+\end{itemize}
+
+Concerning internal elements related to maintainability:
+\begin{itemize}
+    \item \textblue{Structural complexity} : this is more an indication, not really a measure. Used in correlation with external measures (e.g. identify a module with poor structure)
+    \item Readability : for texts, we can use the Fog Index
+\end{itemize}
+
+
+\textblue{Security} :
+
+The degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization.\\
+No "competent programmer" hypothesis: assume that attackers try to overcome security protections and hide their activities.
+
+Security measures :
+\begin{enumerate}
+    \item \textblue{Risk} = Impact $\times$ Likelihood $\times$ Threat $\times$ Vulnerability (where impact, likelihood and vulnerability depend on threat).
+    \item \textblue{Common vulnerability Scoring System (CVSS)} gives a metric between 0 and 1 based on 6 measures. $\textblue{CVSS} = f(AV, AC, Au, C, I, A)$
+    \begin{enumerate}
+        \item Access vector ($AV$) : how remote an attacker can be
+        \item Access complexity ($AC$): how complex the attack needs to be
+        \item Authentication ($Au$) : how many authentications needed
+        \item Confidentiality impact ($C$) : impact to system information confidentiality
+        \item Integrity impact ($I$) : impact to system integrity
+        \item Availability impact ($A$) : reduced performance, shutdown
+    \end{enumerate}
+    \item \textblue{Bayesian analysis (probabilistic)} : based on attack probabilities and costs
+    \item \#vulnerabilities / \#defects
+\end{enumerate}
+
+\noindent \textblue{Internal measures} : Number of entry points, exit points, data channels, persistent data items
 
 \chapter{Software reliability}
 
+\section{Describe the model of reliability based on failure rates}
+
+Reliability is a key quality attribute: top-level in all quality models and the most extensively studied.
+Reliability has as objectives :
+\begin{enumerate}
+    \item Measure failures
+    \item Predict future failures from past failures
+    \item Reliability growth: predict reliability from past faults found and fixed
+    \item[$\Rightarrow$] Want to answer a basic question : When will the system fail?
+\end{enumerate}
+
+
+Software failures are different from hardware failures. A component may fail due to physical wear. The probability that the component will fail at time $t$ is given by the probability density function $f(t)$
+
+\section{Define failure probability functions, reliability, maintainability, availability, MTTF and MTTR}
+
+\begin{itemize}
+    \item Failure probability \textblue{density function} is the probability that a failure will occur between time $t $and time $t+dt$ :\\
+    $f(t)dt=Prob$(failure between $t$ and $t+dt$)
+    \item Failure probability \textblue{distribution function} is the probability that a failure will occur between 0 and $t$ :\\
+    $F(t)=\int f(t)dt =$ Prob(failure between $0$ and $t$)
+    \item \textblue{Reliability} : operating without failure for a given time interval. It is time-dependent :\\
+    $R(t) = 1-F(t)$ = Prob(no failure before $t$)
+    \item \textblue{Maintainability} : maintenance activity can be carried out within stated time interval, procedures and resources. Also time-dependent :\\
+    $M(t)$ = Prob(restored before $t$)
+    \item \textblue{Availability} : operation without failure at a given point in time, time-independent.\\
+    $A=Prob(not \ failed)= MTTF/(MTTF+MTTR)$
+    \item \textblue{MTTF} : Mean Time To Failure is the average time before failure occurs. It measures reliability.
+    \item \textblue{MTTR} : Mean Time To Repair is the average time to fix a fault. It measures maintainability.
+\end{itemize}
+
+\section{Describe the case of constant failure rates}
+
+\textblue{Constant failure rate}: it is when the software will fail purely randomly independently of the past, no memory. We have a constant probability rate $\lambda$.
+\begin{enumerate}
+    \item $f(t)= \lambda exp(-\lambda t)$
+    \item $F(t) = 1-exp(-\lambda t)$
+    \item $R(t)= exp(-\lambda t)$
+\end{enumerate} 
+
 \chapter{Failure prediction}
 
+\section{Describe the principles of failure prediction systems}
+
+Some basic notions first :
+\begin{itemize}
+    \item Given a series of failure times $(t_1, t_2, ..., t_i-1)$ where the fault has been fixed after each failure. The goal of these systems is to predict future failure times $T_i, T_{i+1},....$
+    \item In software, as we fix faults, we expect the reliability to grow.
+    \item The \textblue{goal of a prediction system} is to predict the probability distributions $F_i, F_{i+1},...$
+    \item A \textblue{prediction system} has three elements :
+    \begin{itemize}
+        \item \textblue{Prediction model} : probability specification of the stochastic process (distributions $F_i(T_i)$)
+        \item \textblue{Inference procedure} : infer unknown parameters of the model from $t_1, t_2, ..., t_{n-1}$
+        \item \textblue{Prediction procedure} : combine the model and inference procedure to make predictions about future failure behaviour
+    \end{itemize}
+\end{itemize}
+
+\section{Discuss the example of the Jelinski-Moranda model}
+
+\begin{itemize}
+    \item \textblue{Model} : constant rate $\phi$ identical for all faults
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.45\textwidth,keepaspectratio]{jelinski-moranda_1}
+    \end{figure}
+    \begin{itemize}
+        \item Type-1 uncertainty = random, exponential rate
+        \item No type-2 uncertainty = corrections are perfect
+        \item Fixing any fault contributes equally to improving the reliability
+    \end{itemize}
+    \item \textblue{Inference procedure} : maximum likelihood estimation (Gives predictions for $N_i$ and $\phi_i$)
+    \item \textblue{Prediction procedure} : predict mean time to next failure ($T_i = 1/\lambda_i = 1/(N_i - i + 1)\phi_1$)
+\end{itemize}
+\begin{minipage}[t]{0.48\textwidth}
+    \begin{itemize}
+        \item Example :
+        \begin{figure}[H]
+            \centering
+            \includegraphics[height=\textwidth,keepaspectratio]{jelinski-moranda_2}
+        \end{figure}
+    \end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \begin{itemize}
+        \item Criticisms :
+        \begin{itemize}
+            \item \textblue{Unrealistic assumptions} :
+            \begin{itemize}
+                \item The sequence of $\lambda_i$ is purely deterministic
+                \item All faults equally contribute to the hazard rate
+            \end{itemize}
+            \item The \textblue{reliability predictions} obtained from the model are \textblue{poor} and usually \textblue{too optimistic}
+        \end{itemize}
+    \end{itemize}
+\end{minipage}
+
+\section{Discuss statistical testing}
+
+\textblue{Idea }: reliability predictions based on failures occurring during testing may not correspond to typical system usage (with different users, tasks, experience levels,...).
+\begin{enumerate}
+    \item \textblue{Operational Profile} : probability distribution on inputs (reflecting usage)
+    \item \textblue{Statistical testing} : select tests according to \textblue{operational profile}
+    \begin{itemize}
+        \item Tests focus on more used parts $\rightarrow$ better observed reliability
+        \item Test reflects usage $\rightarrow$ reliability predictions more accurate.
+    \end{itemize}
+\end{enumerate}
+
+
+Operational profiles are difficult to define.\\
+$\Rightarrow$ A \textblue{small \% of the operational profil}e may account for a \textblue{large \% of failures}.
+
+Examples :
+\begin{enumerate}
+    \item Airplane : take-off and landing
+    \item Printer : 
+    \begin{itemize}
+        \item Non-saturated : available, no queue $\rightarrow$ print immediately (20\%)
+        \item Saturated : busy, queue $\rightarrow$ add to queue (79\%)
+        \item Transitional : busy, no queue $\rightarrow$ create queue and add to queue (1\%)
+        \item Probability of failures : 0.001 per test case
+    \end{itemize}
+    To have a 50\% chance of detecting each fault, me must run :
+    \begin{itemize}
+        \item Non saturated : 2500 test cases
+        \item Saturated : 633 test cases
+        \item Transitional : 50 000 test cases
+    \end{itemize}
+    \item Transitional likely the most complex and failure-prone
+\end{enumerate}
