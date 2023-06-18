@@ -240,7 +240,7 @@ These are "dependability properties" (Correctness properties are \textit{undecid
     \end{itemize}
 \end{itemize}
 
-Essentially \textblue{infinite}
+Essentially \textblue{infinite}\\
 \textblue{Finite models} of program execution $\Rightarrow$ abstraction
 \begin{enumerate}
     \item Execution is \textblue{coarsened} (fewer steps)
@@ -266,7 +266,7 @@ Essentially \textblue{infinite}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.65\textwidth,keepaspectratio]{cfg_example}
+    \includegraphics[width=0.6\textwidth,keepaspectratio]{cfg_example}
 \end{figure}
 
 $\Rightarrow$ \textblue{Intra-procedural} (ignore calls). May not cover some flows (e.g : exceptions are not covered)
@@ -467,11 +467,27 @@ Even with loop‐free paths, the number of paths in a graph can be \textblue{exp
 \end{itemize}
 
 \textblue{Worklist Algorithm} :
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth,keepaspectratio]{worklist_alg}
-\end{figure}
+\begin{minipage}{0.48\textwidth}
 
+\end{minipage}
+\begin{minted}[escapeinside=@@]{py}
+foreach n @$\in$@ nodes {
+    ReachOut(n) = {}
+}
+worklist = nodes
+while worklist @$\neq$@ {} {
+    n = choose (worklist)
+    worklist = worklist \ {n}
+    oldVal = ReachOut(n);
+    Reach(n) = @$\bigcup_{m \in pred(n)}$@ ReachOut(m)
+    ReachOut(n) = (Reach(n) \ kill(n)) @$\cup$@ gen(n)
+    if ReachOut(n) @$\neq$@ oldVal {
+        worklist = worklist @$\cup$@ succ (n)
+    }
+}
+\end{minted}
+
+\newpage
 \textblue{Example} :
 \begin{figure}[H]
     \centering
@@ -514,7 +530,7 @@ Even with loop‐free paths, the number of paths in a graph can be \textblue{exp
     \textblue{Solution}: 
     \begin{enumerate}
         \item \textblue{Any-path} : Gen sets contains all potential aliases, kill sets contain only what is definitely modified.
-        \item \textblue{All-path} : Vice versa
+        \item \textblue{All-path} : Gen sets contains only the defined variables, kill sets contain the what is definitely modified and the potential aliases
     \end{enumerate}
     \item \textblue{Procedures} : \textblue{interprocedural} (Across several methods or procedures) data flow analysis has critical and difficult cost/precision trade-offs: context sensitivity and flow sensitivity.
     
@@ -735,8 +751,8 @@ $$C_{bcond} = \frac{
         \item \textblue{Boundary interior path coverage} : each path up to the first repeated node must be executed at least once
         \begin{enumerate}
             \item Group together paths that differ only in the subpath they follow when repeating the body of a loop
-            \item construction: unfold the CFG up to the first repeated node
-            \item limitations: the number of paths can still grow exponentially
+            \item Construction: unfold the CFG up to the first repeated node
+            \item Limitations: the number of paths can still grow exponentially
         \end{enumerate}
         \item \textblue{Cyclomatic coverage}: a basis of independent paths must be executed
         \item \textblue{Loop boundary coverage}: each loop body must be iterated zero times, one time and more than one time at least once.
@@ -964,7 +980,7 @@ Testing history approach :
 \begin{enumerate}
     \item \textblue{crp}: constant for constant replacement : $(x < 5) \rightarrow (x < 12)$
     \item \textblue{ror}: relational operator replacement : $(x \leq 5) \rightarrow (x < 5)$
-    \item \textblue{vie}: variable initialization elimination : $int x = 5; \rightarrow int x;$
+    \item \textblue{vie}: variable initialization elimination : $int\ x = 5; \rightarrow int\ x;$
 \end{enumerate}
 
 \section{Discuss fault-based coverage measures}
@@ -1408,11 +1424,11 @@ To verify program correctness, we do the following:
     \item \textblue{Lockset discipline} : Every shared variable must be protected by a lock
     \item \textblue{Dynamic lockset analysis} : detects violation of the locking discipline
     \item \textblue{Algorithm} :
-    \begin{lstlisting}[style=pseudoCode]
+    \begin{lstlisting}[style=pseudoCode, escapeinside=@@]
 Identify set of locks held by threads when accessing each shared variable.
 For each variable x, a set Lockset(x)
 INIT: Lockset(x) = {all locks}
-thread A accesses x: Lockset(x) = Lockset(x) $\bigcap$ Locks(A)
+thread A accesses x: Lockset(x) = Lockset(x) @$\bigcap$@ Locks(A)
 END: if Lockset(x) = {} report ERROR (no lock consistently protects v)
     \end{lstlisting}
 \end{itemize}
@@ -1452,9 +1468,9 @@ END: if Lockset(x) = {} report ERROR (no lock consistently protects v)
         \item Bad things should not happen\\
         Example :
         \begin{enumerate}
-            \item invariant violation, assertion violation
-            \item mutual exclusion: two process should not modify a variable at the same time
-            \item[3.] [P] S [Q]: partial correctness
+            \item Invariant violation, assertion violation
+            \item Mutual exclusion: two process should not modify a variable at the same time
+            \item [3.] [P] S [Q]: partial correctness
         \end{enumerate}
         \item Specify with \textit{assert(...)}
         \item \textblue{Verify with reachability (easy)}    
@@ -1915,7 +1931,7 @@ Software failures are different from hardware failures. A component may fail due
 \section{Define failure probability functions, reliability, maintainability, availability, MTTF and MTTR}
 
 \begin{itemize}
-    \item Failure probability \textblue{density function} is the probability that a failure will occur between time $t $and time $t+dt$ :\\
+    \item Failure probability \textblue{density function} is the probability that a failure will occur between time $t$ and time $t+dt$ :\\
     $f(t)dt=Prob$(failure between $t$ and $t+dt$)
     \item Failure probability \textblue{distribution function} is the probability that a failure will occur between 0 and $t$ :\\
     $F(t)=\int f(t)dt =$ Prob(failure between $0$ and $t$)
@@ -1942,7 +1958,6 @@ Software failures are different from hardware failures. A component may fail due
 
 \section{Describe the principles of failure prediction systems}
 
-Some basic notions first :
 \begin{itemize}
     \item Given a series of failure times $(t_1, t_2, ..., t_i-1)$ where the fault has been fixed after each failure. The goal of these systems is to predict future failure times $T_i, T_{i+1},....$
     \item In software, as we fix faults, we expect the reliability to grow.
