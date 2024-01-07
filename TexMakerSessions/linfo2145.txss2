@@ -1,0 +1,31 @@
+{
+    "InternalPDFViewer": {
+        "Embedded": false,
+        "File": "../LINFO2145/main.pdf"
+    },
+    "Session": {
+        "Bookmarks": [
+        ],
+        "CurrentFile": "../LINFO2145/content.tex",
+        "FileVersion": 1,
+        "Files": [
+            {
+                "Col": 0,
+                "EditorGroup": 0,
+                "FileName": "../LINFO2145/main.tex",
+                "FirstLine": 0,
+                "FoldedLines": "",
+                "Line": 0
+            },
+            {
+                "Col": 389,
+                "EditorGroup": 0,
+                "FileName": "../LINFO2145/content.tex",
+                "FirstLine": 18,
+                "FoldedLines": "",
+                "Line": 32
+            }
+        ],
+        "MasterFile": "../LINFO2145/main.tex"
+    }
+}

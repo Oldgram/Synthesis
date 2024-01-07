@@ -62,6 +62,7 @@
 \usepackage{xcolor}
 %\usepackage{fourier}
 %\usepackage[pages=some]{background}
+\usepackage[export]{adjustbox}
 \usepackage{wrapfig}
 \graphicspath{ {./pictures/} }
 
